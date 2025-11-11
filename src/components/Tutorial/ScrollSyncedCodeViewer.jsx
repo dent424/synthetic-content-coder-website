@@ -113,27 +113,34 @@ export default function ScrollSyncedCodeViewer({ example }) {
                 </div>
               )}
 
-              <SyntaxHighlighter
-                language="python"
-                style={vscDarkPlus}
-                customStyle={{
-                  margin: 0,
-                  padding: '1.5rem',
-                  fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)',
-                  lineHeight: '1.8',
-                  background: 'transparent',
-                  whiteSpace: 'pre-wrap',
-                  wordBreak: 'break-word',
-                  overflowWrap: 'break-word',
-                  maxWidth: '100%',
-                }}
-                showLineNumbers={true}
-                startingLineNumber={group.startLine}
-                wrapLines={true}
-                wrapLongLines={true}
-              >
-                {group.lines.map(l => l.line).join('\n')}
-              </SyntaxHighlighter>
+              <div className="w-full overflow-hidden">
+                <SyntaxHighlighter
+                  language="python"
+                  style={vscDarkPlus}
+                  customStyle={{
+                    margin: 0,
+                    padding: '1.5rem',
+                    fontSize: 'clamp(0.65rem, 1.2vw, 0.8rem)',
+                    lineHeight: '1.8',
+                    background: 'transparent',
+                    whiteSpace: 'pre-wrap',
+                    wordBreak: 'break-all',
+                    overflowWrap: 'anywhere',
+                    maxWidth: '100%',
+                    width: '100%',
+                  }}
+                  showLineNumbers={true}
+                  startingLineNumber={group.startLine}
+                  lineNumberStyle={{
+                    minWidth: '2.5em',
+                    paddingRight: '0.5em',
+                  }}
+                  wrapLines={true}
+                  wrapLongLines={true}
+                >
+                  {group.lines.map(l => l.line).join('\n')}
+                </SyntaxHighlighter>
+              </div>
             </div>
           );
         })}
