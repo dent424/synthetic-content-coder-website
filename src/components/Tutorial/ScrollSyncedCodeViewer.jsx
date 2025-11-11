@@ -85,7 +85,7 @@ export default function ScrollSyncedCodeViewer({ example }) {
   return (
     <div className="flex gap-6 h-[calc(100vh-250px)]">
       {/* Code Panel - 70% */}
-      <div className="w-[70%] overflow-y-auto rounded-lg border border-slate-700 bg-[#1e1e1e]" ref={codeContainerRef}>
+      <div className="w-[70%] overflow-y-auto overflow-x-hidden rounded-lg border border-slate-700 bg-[#1e1e1e]" ref={codeContainerRef}>
         <div className="bg-slate-800 px-4 py-2 border-b border-slate-700">
           <div className="flex items-center justify-between text-sm">
             <span className="text-white font-mono">{example.title}.py</span>
@@ -119,10 +119,12 @@ export default function ScrollSyncedCodeViewer({ example }) {
                 customStyle={{
                   margin: 0,
                   padding: '1.5rem',
-                  fontSize: '0.875rem',
+                  fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)',
                   lineHeight: '1.8',
                   background: 'transparent',
-                  overflowX: 'auto',
+                  whiteSpace: 'pre-wrap',
+                  wordBreak: 'break-word',
+                  overflowWrap: 'break-word',
                   maxWidth: '100%',
                 }}
                 showLineNumbers={true}

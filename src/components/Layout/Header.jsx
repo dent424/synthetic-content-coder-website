@@ -34,10 +34,10 @@ export default function Header({ activeTab, setActiveTab }) {
                   className={`
                     flex items-center gap-2 px-4 py-2 rounded-lg
                     transition-all duration-200
-                    focus:outline-none focus:ring-2 focus:ring-primary/30
+                    focus:outline-none focus:ring-2 focus:ring-slate-400
                     ${isActive
-                      ? 'bg-primary text-white shadow-md font-bold active:bg-primary/80 active:text-white'
-                      : 'bg-slate-100 text-slate-700 font-medium hover:bg-slate-200 active:bg-slate-300 active:text-slate-700 active:font-semibold'
+                      ? 'bg-slate-300 text-slate-700 shadow-md font-bold active:bg-slate-400'
+                      : 'bg-slate-100 text-slate-700 font-medium hover:bg-slate-200 active:bg-slate-300 active:font-bold'
                     }
                   `}
                 >
