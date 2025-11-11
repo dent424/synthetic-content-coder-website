@@ -55,15 +55,15 @@ export default function TutorialSection() {
                 flex items-center gap-2 px-6 py-3 rounded-lg transition-all
                 focus:outline-none focus:ring-2 focus:ring-primary/30
                 ${isActive
-                  ? 'bg-primary text-white shadow-lg font-bold active:bg-primary/80'
-                  : 'bg-white border border-slate-200 text-slate-700 font-medium hover:border-primary/50 hover:text-primary active:bg-slate-100 active:font-semibold'
+                  ? 'bg-primary text-white shadow-lg font-bold active:bg-primary/80 active:text-white'
+                  : 'bg-white border border-slate-200 text-slate-700 font-medium hover:border-primary/50 hover:text-primary active:bg-slate-100 active:text-slate-700 active:font-semibold'
                 }
               `}
             >
               <Icon size={18} />
               <div className="text-left">
                 <div className={isActive ? 'font-bold' : 'font-semibold'}>{tab.label}</div>
-                <div className={`text-xs ${isActive ? 'text-white/80' : 'text-slate-500'}`}>
+                <div className={`text-xs ${isActive ? 'text-white/80 active:text-white/80' : 'text-slate-500 active:text-slate-500'}`}>
                   {tab.data.model}
                 </div>
               </div>

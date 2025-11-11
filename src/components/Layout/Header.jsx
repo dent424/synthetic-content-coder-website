@@ -36,8 +36,8 @@ export default function Header({ activeTab, setActiveTab }) {
                     transition-all duration-200
                     focus:outline-none focus:ring-2 focus:ring-primary/30
                     ${isActive
-                      ? 'bg-primary text-white shadow-md font-bold active:bg-primary/80'
-                      : 'bg-slate-100 text-slate-700 font-medium hover:bg-slate-200 active:bg-slate-300 active:font-semibold'
+                      ? 'bg-primary text-white shadow-md font-bold active:bg-primary/80 active:text-white'
+                      : 'bg-slate-100 text-slate-700 font-medium hover:bg-slate-200 active:bg-slate-300 active:text-slate-700 active:font-semibold'
                     }
                   `}
                 >
