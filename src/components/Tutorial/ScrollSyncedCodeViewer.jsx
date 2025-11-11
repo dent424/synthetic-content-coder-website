@@ -122,9 +122,13 @@ export default function ScrollSyncedCodeViewer({ example }) {
                   fontSize: '0.875rem',
                   lineHeight: '1.8',
                   background: 'transparent',
+                  overflowX: 'auto',
+                  maxWidth: '100%',
                 }}
                 showLineNumbers={true}
                 startingLineNumber={group.startLine}
+                wrapLines={true}
+                wrapLongLines={true}
               >
                 {group.lines.map(l => l.line).join('\n')}
               </SyntaxHighlighter>
