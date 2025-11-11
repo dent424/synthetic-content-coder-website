@@ -53,9 +53,10 @@ export default function TutorialSection() {
               onClick={() => setActiveExample(tab.id)}
               className={`
                 flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all
+                focus:outline-none focus:ring-2 focus:ring-primary/30
                 ${isActive
-                  ? 'bg-primary text-white shadow-lg'
-                  : 'bg-white border border-slate-200 text-slate-700 hover:border-primary/50 hover:text-primary'
+                  ? 'bg-primary text-white shadow-lg active:bg-primary/90'
+                  : 'bg-white border border-slate-200 text-slate-700 hover:border-primary/50 hover:text-primary active:bg-slate-50'
                 }
               `}
             >

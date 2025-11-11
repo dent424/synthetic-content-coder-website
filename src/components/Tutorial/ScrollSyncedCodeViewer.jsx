@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Info } from 'lucide-react';
 
@@ -85,11 +85,11 @@ export default function ScrollSyncedCodeViewer({ example }) {
   return (
     <div className="flex gap-6 h-[calc(100vh-250px)]">
       {/* Code Panel - 70% */}
-      <div className="w-[70%] overflow-y-auto rounded-lg border border-slate-700" ref={codeContainerRef}>
-        <div className="bg-slate-800 px-4 py-2 border-b border-slate-700">
+      <div className="w-[70%] overflow-y-auto rounded-lg border border-slate-300 bg-white" ref={codeContainerRef}>
+        <div className="bg-slate-700 px-4 py-2 border-b border-slate-600">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-slate-300 font-mono">{example.title}.py</span>
-            <span className="text-slate-400">{example.model}</span>
+            <span className="text-white font-mono">{example.title}.py</span>
+            <span className="text-slate-200">{example.model}</span>
           </div>
         </div>
 
@@ -105,22 +105,22 @@ export default function ScrollSyncedCodeViewer({ example }) {
                 }
               }}
               data-section-id={group.sectionId}
-              className={`relative ${activeSection?.id === group.sectionId ? 'bg-slate-900/50' : ''}`}
+              className={`relative ${activeSection?.id === group.sectionId ? 'bg-blue-50' : 'bg-white'}`}
             >
               {section && (
-                <div className="sticky top-0 bg-slate-700/90 backdrop-blur px-4 py-1 border-b border-slate-600 z-10">
-                  <span className="text-xs font-semibold text-slate-200">{section.title}</span>
+                <div className="sticky top-0 bg-primary/90 backdrop-blur px-4 py-2 border-b border-primary z-10">
+                  <span className="text-sm font-semibold text-white">{section.title}</span>
                 </div>
               )}
 
               <SyntaxHighlighter
                 language="python"
-                style={vscDarkPlus}
+                style={tomorrow}
                 customStyle={{
                   margin: 0,
-                  padding: '1rem',
+                  padding: '1.5rem',
                   fontSize: '0.875rem',
-                  lineHeight: '1.7',
+                  lineHeight: '1.8',
                   background: 'transparent',
                 }}
                 showLineNumbers={true}
@@ -196,13 +196,14 @@ export default function ScrollSyncedCodeViewer({ example }) {
                             }
                           }}
                           className={`
-                            h-2 rounded-full transition-all
+                            h-2 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-primary/50
                             ${activeSection.id === section.id
                               ? 'w-8 bg-primary'
-                              : 'w-2 bg-slate-300 hover:bg-slate-400'
+                              : 'w-2 bg-slate-300 hover:bg-slate-400 active:bg-slate-500'
                             }
                           `}
                           title={section.title}
+                          aria-label={`Jump to ${section.title}`}
                         />
                       ))}
                     </div>
