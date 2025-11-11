@@ -6,6 +6,7 @@ import { Info } from 'lucide-react';
 
 export default function ScrollSyncedCodeViewer({ example }) {
   const [activeSection, setActiveSection] = useState(example.sections[0]);
+  const [highlightedLine, setHighlightedLine] = useState(null);
   const codeContainerRef = useRef(null);
   const sectionRefs = useRef({});
 
@@ -137,6 +138,17 @@ export default function ScrollSyncedCodeViewer({ example }) {
                   }}
                   wrapLines={true}
                   wrapLongLines={true}
+                  lineProps={(lineNumber) => {
+                    const actualLineNumber = group.startLine + lineNumber - 1;
+                    const style = { display: 'block' };
+                    if (actualLineNumber === highlightedLine) {
+                      style.backgroundColor = 'rgba(59, 130, 246, 0.2)';
+                      style.borderLeft = '4px solid #3b82f6';
+                      style.paddingLeft = '0.5rem';
+                      style.transition = 'all 0.3s ease';
+                    }
+                    return { style };
+                  }}
                 >
                   {group.lines.map(l => l.line).join('\n')}
                 </SyntaxHighlighter>
@@ -182,9 +194,28 @@ export default function ScrollSyncedCodeViewer({ example }) {
 
                       {activeSection.details.map((detail, idx) => (
                         <div key={idx} className="flex gap-3">
-                          <div className="flex-shrink-0 w-12 h-6 rounded bg-annotation/20 text-annotation flex items-center justify-center text-xs font-mono font-bold">
+                          <button
+                            onClick={() => {
+                              setHighlightedLine(detail.line);
+                              // Find the section containing this line
+                              const section = example.sections.find(
+                                s => detail.line >= s.lineStart && detail.line <= s.lineEnd
+                              );
+                              if (section) {
+                                const element = sectionRefs.current[section.id];
+                                if (element) {
+                                  element.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                  });
+                                }
+                              }
+                            }}
+                            className="flex-shrink-0 w-12 h-6 rounded bg-annotation/20 text-annotation flex items-center justify-center text-xs font-mono font-bold cursor-pointer hover:bg-annotation/30 hover:scale-105 transition-all focus:outline-none focus:ring-2 focus:ring-annotation/50"
+                            title={`Jump to line ${detail.line}`}
+                          >
                             {detail.line}
-                          </div>
+                          </button>
                           <p className="text-sm text-slate-700 leading-relaxed">
                             {detail.text}
                           </p>

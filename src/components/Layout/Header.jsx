@@ -14,11 +14,8 @@ export default function Header({ activeTab, setActiveTab }) {
           {/* Title */}
           <div>
             <h1 className="text-2xl font-bold text-primary">
-              Synthetic Content Coders
+              Interactive Supplement: Synthetic Content Coders
             </h1>
-            <p className="text-sm text-slate-600 mt-1">
-              Interactive Supplement for &quot;From Human to Synthetic Coders&quot;
-            </p>
           </div>
 
           {/* Tabs */}
