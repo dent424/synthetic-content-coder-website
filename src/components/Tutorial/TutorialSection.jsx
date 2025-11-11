@@ -52,17 +52,17 @@ export default function TutorialSection() {
               key={tab.id}
               onClick={() => setActiveExample(tab.id)}
               className={`
-                flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all
+                flex items-center gap-2 px-6 py-3 rounded-lg transition-all
                 focus:outline-none focus:ring-2 focus:ring-primary/30
                 ${isActive
-                  ? 'bg-primary text-white shadow-lg active:bg-primary/90'
-                  : 'bg-white border border-slate-200 text-slate-700 hover:border-primary/50 hover:text-primary active:bg-slate-50'
+                  ? 'bg-primary text-white shadow-lg font-bold active:bg-primary/80'
+                  : 'bg-white border border-slate-200 text-slate-700 font-medium hover:border-primary/50 hover:text-primary active:bg-slate-100 active:font-semibold'
                 }
               `}
             >
               <Icon size={18} />
               <div className="text-left">
-                <div className="font-semibold">{tab.label}</div>
+                <div className={isActive ? 'font-bold' : 'font-semibold'}>{tab.label}</div>
                 <div className={`text-xs ${isActive ? 'text-white/80' : 'text-slate-500'}`}>
                   {tab.data.model}
                 </div>
