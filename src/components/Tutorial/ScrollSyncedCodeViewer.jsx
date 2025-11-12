@@ -9,6 +9,7 @@ export default function ScrollSyncedCodeViewer({ example }) {
   const [highlightedLine, setHighlightedLine] = useState(null);
   const codeContainerRef = useRef(null);
   const sectionRefs = useRef({});
+  const isManualNavigation = useRef(false);
 
   // Calculate which lines belong to which section
   const getSectionForLine = (lineNum) => {
@@ -63,6 +64,9 @@ export default function ScrollSyncedCodeViewer({ example }) {
     };
 
     const callback = (entries) => {
+      // Ignore observer updates during manual navigation
+      if (isManualNavigation.current) return;
+
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const sectionId = entry.target.dataset.sectionId;
@@ -219,6 +223,10 @@ export default function ScrollSyncedCodeViewer({ example }) {
                                 s => detail.line >= s.lineStart && detail.line <= s.lineEnd
                               );
                               if (section) {
+                                // Set manual navigation flag to prevent observer updates
+                                isManualNavigation.current = true;
+                                setActiveSection(section);
+
                                 const element = sectionRefs.current[section.id];
                                 if (element) {
                                   element.scrollIntoView({
@@ -226,6 +234,11 @@ export default function ScrollSyncedCodeViewer({ example }) {
                                     block: 'center'
                                   });
                                 }
+
+                                // Re-enable observer after scroll completes
+                                setTimeout(() => {
+                                  isManualNavigation.current = false;
+                                }, 1000);
                               }
                             }}
                             className="flex-shrink-0 w-12 h-6 rounded bg-annotation/20 text-annotation flex items-center justify-center text-xs font-mono font-bold cursor-pointer hover:bg-annotation/30 hover:scale-105 transition-all focus:outline-none focus:ring-2 focus:ring-annotation/50"
@@ -248,6 +261,10 @@ export default function ScrollSyncedCodeViewer({ example }) {
                         <button
                           key={section.id}
                           onClick={() => {
+                            // Set manual navigation flag to prevent observer updates
+                            isManualNavigation.current = true;
+                            setActiveSection(section);
+
                             const element = sectionRefs.current[section.id];
                             if (element) {
                               element.scrollIntoView({
@@ -255,6 +272,11 @@ export default function ScrollSyncedCodeViewer({ example }) {
                                 block: 'start'
                               });
                             }
+
+                            // Re-enable observer after scroll completes
+                            setTimeout(() => {
+                              isManualNavigation.current = false;
+                            }, 1000);
                           }}
                           className={`
                             h-2 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-primary/50
