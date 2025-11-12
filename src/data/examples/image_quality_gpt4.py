@@ -76,7 +76,7 @@ def get_ratings(path, n=N_RATINGS):
     print(f"  Average: {avg}, StdDev: {std}")
     return ratings, avg, std
 
-image_files = [f for f in os.listdir(IMAGE_FOLDER) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+image_files = [f for f in os.listdir(IMAGE_FOLDER) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
 results = []
 
 for index, filename in enumerate(image_files):

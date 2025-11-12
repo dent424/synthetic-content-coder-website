@@ -159,7 +159,7 @@ export default function ScrollSyncedCodeViewer({ example }) {
                     // we set startingLineNumber={group.startLine} on the SyntaxHighlighter
                     const style = { display: 'block' };
                     if (lineNumber === highlightedLine) {
-                      style.backgroundColor = 'rgba(59, 130, 246, 0.2)';
+                      style.backgroundColor = 'rgba(59, 130, 246, 0.1)';
                       style.borderLeft = '4px solid #3b82f6';
                       style.paddingLeft = '0.5rem';
                       style.transition = 'all 0.3s ease';
@@ -223,7 +223,7 @@ export default function ScrollSyncedCodeViewer({ example }) {
                                 if (element) {
                                   element.scrollIntoView({
                                     behavior: 'smooth',
-                                    block: 'nearest'
+                                    block: 'center'
                                   });
                                 }
                               }
