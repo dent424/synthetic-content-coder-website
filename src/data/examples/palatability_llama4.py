@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Food Palatability Rating with Llama 4 (URL-based images)
+Food Palatability Rating from Images with Llama 4 Using Stored on the Internet
 
-This script rates food palatability using Llama 4 Maverick via DeepInfra.
-Demonstrates open-source LLM usage with an alternative API provider.
+This script rates food palatability using Llama 4 Maverick, an open source model
+It uses a model provider called DeepInfra
+Each file is rated 25 times and then returned in a file.
 """
 
 import time

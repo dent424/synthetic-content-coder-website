@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Emotional Expressiveness Rating with GPT-4.1 (URL-based images)
+Emotional Expressiveness Rating from Images with GPT-4.1 Stored on the Internet
 
-This script rates facial expressions using GPT-4.1
-It takes a file of urls of images and passes them to the LLM
+It takes a file of URLs of images and passes them to the LLM.
+Each file is rated 25 times and then returned in a file.
 """
 
 import time

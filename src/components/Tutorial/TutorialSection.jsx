@@ -91,7 +91,6 @@ export default function TutorialSection() {
           <li>• <strong>Scroll through the code</strong> - The description panel automatically updates to explain the current section</li>
           <li>• <strong>Click line numbers</strong> in the description panel to jump to specific lines of code</li>
           <li>• <strong>Compare approaches</strong> - Switch tabs to see different models (GPT-4.1 vs Llama 4) and techniques (URLs vs base64, single vs batched calls)</li>
-          <li>• <strong>Copy and adapt</strong> - All code is production-ready. Replace API keys and file paths for your own projects</li>
         </ul>
       </div>
     </div>

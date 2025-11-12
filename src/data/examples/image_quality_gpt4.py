@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Image Quality Rating with GPT-4.1 (Base64-encoded local images)
+Subjective Image Quality Rating from Images with GPT-4.1 using files on your computer
 
-This script rates image quality from local image files using base64 encoding.
-Uses a 1-100 scale for quality assessment.
+This script rates image quality from image files stored on your computer on a scale from 1 to 100
+Each file is rated 25 times and then returned in a file
 """
 
 import time
