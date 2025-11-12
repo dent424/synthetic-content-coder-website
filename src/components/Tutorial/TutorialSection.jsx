@@ -12,7 +12,7 @@ const exampleTabs = [
   },
   {
     id: 'sentiment',
-    label: 'Text Sentiment',
+    label: 'Sentiment',
     icon: MessageSquare,
     data: codeExamples.sentiment
   },
