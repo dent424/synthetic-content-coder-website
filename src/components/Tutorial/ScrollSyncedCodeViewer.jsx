@@ -84,9 +84,25 @@ export default function ScrollSyncedCodeViewer({ example }) {
   }, [example]);
 
   return (
-    <div className="flex gap-6 h-[calc(100vh-250px)]">
-      {/* Code Panel - 70% */}
-      <div className="w-[70%] overflow-y-auto overflow-x-hidden rounded-lg border border-slate-700 bg-[#1e1e1e]" ref={codeContainerRef}>
+    <div className="flex flex-col gap-4">
+      {/* Overview Panel */}
+      {example.overview && (
+        <div className="bg-gradient-to-r from-slate-50 to-slate-100 rounded-lg border border-slate-300 shadow-sm">
+          <div className="px-6 py-4">
+            <div className="flex items-start gap-3">
+              <Info size={20} className="text-accent flex-shrink-0 mt-0.5" />
+              <div className="text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+                {example.overview}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Main Content Area */}
+      <div className="flex gap-6 h-[calc(100vh-320px)]">
+        {/* Code Panel - 70% */}
+        <div className="w-[70%] overflow-y-auto overflow-x-hidden rounded-lg border border-slate-700 bg-[#1e1e1e]" ref={codeContainerRef}>
         <div className="bg-slate-800 px-4 py-2 border-b border-slate-700">
           <div className="flex items-center justify-between text-sm">
             <span className="text-white font-mono">{example.title}.py</span>
@@ -261,6 +277,8 @@ export default function ScrollSyncedCodeViewer({ example }) {
           </div>
         </div>
       </div>
+      {/* End of Main Content Area */}
     </div>
+    {/* End of Outer Container */}
   );
 }

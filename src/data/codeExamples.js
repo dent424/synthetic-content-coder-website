@@ -3,13 +3,28 @@ import expressivenessCode from './examples/expressiveness_gpt4.py?raw';
 import imageQualityCode from './examples/image_quality_gpt4.py?raw';
 import palatabilityCode from './examples/palatability_llama4.py?raw';
 
+// Helper function to extract docstring from Python code
+function extractDocstring(code) {
+  const docstringMatch = code.match(/^#.*\n"""([\s\S]*?)"""/);
+  if (docstringMatch) {
+    return docstringMatch[1].trim();
+  }
+  return '';
+}
+
+// Helper function to remove docstring from code for display
+function removeDocstring(code) {
+  return code.replace(/^#.*\n"""[\s\S]*?"""\n\n/, '');
+}
+
 export const codeExamples = {
   expressiveness: {
     id: 'expressiveness',
     title: 'Emotional Expressiveness',
     model: 'GPT-4.1 (OpenAI)',
     description: 'Rate facial emotional expressions using GPT-4.1 with URL-based S3 images',
-    code: expressivenessCode,
+    overview: extractDocstring(expressivenessCode),
+    code: removeDocstring(expressivenessCode),
     sections: [
       {
         id: 'imports',
@@ -95,7 +110,8 @@ export const codeExamples = {
     title: 'Image Quality',
     model: 'GPT-4.1 (OpenAI)',
     description: 'Rate image quality using GPT-4.1 with base64-encoded local images',
-    code: imageQualityCode,
+    overview: extractDocstring(imageQualityCode),
+    code: removeDocstring(imageQualityCode),
     sections: [
       {
         id: 'imports',
@@ -189,7 +205,8 @@ export const codeExamples = {
     title: 'Food Palatability',
     model: 'Llama 4 Maverick (DeepInfra)',
     description: 'Rate food palatability using open-source Llama 4 with batched API calls',
-    code: palatabilityCode,
+    overview: extractDocstring(palatabilityCode),
+    code: removeDocstring(palatabilityCode),
     sections: [
       {
         id: 'imports',
