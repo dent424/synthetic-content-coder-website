@@ -76,7 +76,7 @@ export default function TutorialSection() {
               <div className="text-left">
                 <div className={isActive ? 'font-bold' : 'font-semibold'}>{tab.label}</div>
                 <div className={`text-xs ${isActive ? 'text-slate-600' : 'text-slate-500'}`}>
-                  {tab.data.model}
+                  {tab.data.contentType} • {tab.data.model}
                 </div>
               </div>
             </button>
