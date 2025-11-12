@@ -35,42 +35,32 @@ Respond with only a single number (1-5)."""
 def rate_image(image_url):
     """Get multiple ratings for a single image."""
 
-    try:
-        response = client.chat.completions.create(
-            model="gpt-4-turbo",
-            messages=[
-                {
-                    "role": "user",
-                    "content": [
-                        {"type": "text", "text": PROMPT},
-                        {
-                            "type": "image_url",
-                            "image_url": {"url": image_url}
-                        }
-                    ]
-                }
-            ],
-            n=RATINGS_PER_IMAGE,
-            max_tokens=10,
-            temperature=1
-        )
+    response = client.chat.completions.create(
+        model="gpt-4-turbo",
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": PROMPT},
+                    {
+                        "type": "image_url",
+                        "image_url": {"url": image_url}
+                    }
+                ]
+            }
+        ],
+        n=RATINGS_PER_IMAGE,
+        max_tokens=10,
+        temperature=1
+    )
 
-        # Extract ratings from responses
-        ratings = []
-        for choice in response.choices:
-            rating_text = choice.message.content.strip()
-            try:
-                rating = int(rating_text)
-                if 1 <= rating <= 5:
-                    ratings.append(rating)
-            except ValueError:
-                continue
+    # Extract ratings from responses
+    ratings = []
+    for choice in response.choices:
+        rating = int(choice.message.content.strip())
+        ratings.append(rating)
 
-        return ratings
-
-    except Exception as e:
-        print(f"Error rating image: {e}")
-        return []
+    return ratings
 
 # --------------------- Main Process ---------------------
 
@@ -84,13 +74,10 @@ def main():
         print(f"Rating image {i}...")
         ratings = rate_image(url)
 
-        if ratings:
-            avg = sum(ratings) / len(ratings)
-            print(f"  URL: {url}")
-            print(f"  Ratings: {ratings}")
-            print(f"  Average: {avg:.2f}\n")
-        else:
-            print(f"  Failed to get ratings for {url}\n")
+        avg = sum(ratings) / len(ratings)
+        print(f"  URL: {url}")
+        print(f"  Ratings: {ratings}")
+        print(f"  Average: {avg:.2f}\n")
 
         # Brief delay between images
         if i < len(IMAGE_URLS):
