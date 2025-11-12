@@ -13,20 +13,15 @@ import statistics
 import base64
 import os
 
-# --------------------- Configuration ---------------------
-
-# Replace with your actual OpenAI API key
 API_KEY = 'your-api-key-here'
 client = OpenAI(api_key=API_KEY)
-# Alternatively, you can set the API key as an environment variable:
-# openai.api_key = os.getenv("OPENAI_API_KEY")
 
-RATINGS_PER_IMAGE = 25
+N_RATINGS = 25
 
 IMAGE_FOLDER = r"path/to/your/image/folder"
 OUTPUT_CSV = r"path/to/output/gpt_quality_ratings.csv"
 
-RATING_PROMPT = """You are an average US participant from mTurk in a study on the perception of image quality.
+PROMPT = """You are an average US participant from mTurk in a study on the perception of image quality.
 How would you rate the quality of this image? Please focus on image quality rather than image aesthetics.
 Please provide a Image Quality rating on a scale from 1 to 100 where
 1 is "Bad"
@@ -41,15 +36,12 @@ Rules:
 - Must rate even if uncertain
 - Use the full scale range appropriately"""
 
-def encode_image(image_path):
-    """Encode image file to base64 string"""
-    with open(image_path, "rb") as image_file:
-        return base64.b64encode(image_file.read()).decode('utf-8')
+def encode_image(path):
+    with open(path, "rb") as f:
+        return base64.b64encode(f.read()).decode('utf-8')
 
-
-def get_quality_ratings(image_path, num_ratings=RATINGS_PER_IMAGE):
-
-    base64_image = encode_image(image_path)
+def get_ratings(path, n=N_RATINGS):
+    base64_image = encode_image(path)
 
     response = client.chat.completions.create(
         model="gpt-4.1-2025-04-14",
@@ -57,7 +49,7 @@ def get_quality_ratings(image_path, num_ratings=RATINGS_PER_IMAGE):
             {
                 "role": "user",
                 "content": [
-                    {"type": "text", "text": RATING_PROMPT},
+                    {"type": "text", "text": PROMPT},
                     {
                         "type": "image_url",
                         "image_url": {
@@ -68,7 +60,7 @@ def get_quality_ratings(image_path, num_ratings=RATINGS_PER_IMAGE):
                 ],
             }
         ],
-        n=num_ratings,
+        n=n,
         max_tokens=10,
         temperature=1,
     )
@@ -79,54 +71,33 @@ def get_quality_ratings(image_path, num_ratings=RATINGS_PER_IMAGE):
         ratings.append(rating)
         print(f"  Rating: {rating}")
 
-    avg_rating = round(statistics.mean(ratings), 2)
-    rating_std = round(statistics.stdev(ratings), 2)
-    print(f"  Average rating: {avg_rating}, StdDev: {rating_std}")
-    return ratings, avg_rating, rating_std
+    avg = round(statistics.mean(ratings), 2)
+    std = round(statistics.stdev(ratings), 2)
+    print(f"  Average: {avg}, StdDev: {std}")
+    return ratings, avg, std
 
+image_files = [f for f in os.listdir(IMAGE_FOLDER) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+results = []
 
-def process_image_folder(folder_path, output_csv_path):
+for index, filename in enumerate(image_files):
+    path = os.path.join(IMAGE_FOLDER, filename)
+    print(f"Processing {index + 1}/{len(image_files)}: {filename}")
 
-    results = []
+    ratings, avg, std = get_ratings(path)
 
-    # Get all files in the directory
-    image_files = [f for f in os.listdir(folder_path) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+    results.append({
+        'Filename': filename,
+        'Average_Rating': avg,
+        'Standard_Deviation': std,
+        'All_Ratings': str(ratings)
+    })
 
-    print(f"Found {len(image_files)} images to process")
+    if index < len(image_files) - 1:
+        time.sleep(1)
 
-    # Process each image
-    for index, image_file in enumerate(image_files):
-        image_path = os.path.join(folder_path, image_file)
+results_df = pd.DataFrame(results)
+results_df.to_csv(OUTPUT_CSV, index=False)
 
-        print(f"Processing image {index + 1}/{len(image_files)}: {image_file}")
-
-        # Get ratings from OpenAI API
-        ratings, avg_rating, rating_std = get_quality_ratings(image_path)
-
-        # Add to results
-        results.append({
-            'Filename': image_file,
-            'Average_Rating': avg_rating,
-            'Standard_Deviation': rating_std,
-            'All_Ratings': str(ratings)
-        })
-
-        # Add delay to avoid API rate limits between images
-        if index < len(image_files) - 1:
-            time.sleep(1)
-
-    # Create and save the dataframe
-    results_df = pd.DataFrame(results)
-    results_df.to_csv(output_csv_path, index=False)
-
-    print(f"Processing complete. Results saved to {output_csv_path}")
-    print(f"Average quality rating across all images: {results_df['Average_Rating'].mean():.2f}")
-    print(f"Rating range: {results_df['Average_Rating'].min()} - {results_df['Average_Rating'].max()}")
-
-
-def main():
-    """Main function to run the script"""
-    process_image_folder(IMAGE_FOLDER, OUTPUT_CSV)
-
-if __name__ == "__main__":
-    main()
+print(f"\nResults saved to {OUTPUT_CSV}")
+print(f"Average rating: {results_df['Average_Rating'].mean():.2f}")
+print(f"Range: {results_df['Average_Rating'].min()} - {results_df['Average_Rating'].max()}")

@@ -11,27 +11,22 @@ from openai import OpenAI
 import pandas as pd
 import statistics
 
-# --------------------- Configuration ---------------------
-
 API_KEY = 'your-api-key-here'
 client = OpenAI(
     api_key=API_KEY,
-    base_url="https://api.deepinfra.com/v1/openai"  # DeepInfra endpoint for Llama
+    base_url="https://api.deepinfra.com/v1/openai"
 )
-# Alternatively, you can set the API key as an environment variable:
-# openai.api_key = os.getenv("DEEPINFRA_API_KEY")
 
-TOTAL_RATINGS = 25  # Number of ratings to collect per image
+N_RATINGS = 25
 
-# Input/Output Configuration
-INPUT_CSV = r"path/to/image_names.csv"  # CSV with filenames
-BASE_URL = "https://your-bucket.s3.amazonaws.com/food-images/"  # Base URL for S3 images
+INPUT_CSV = r"path/to/image_names.csv"
+BASE_URL = "https://your-bucket.s3.amazonaws.com/food-images/"
 OUTPUT_CSV = r"path/to/output/palatability_ratings_llama4.csv"
 
-RATING_PROMPT = """You are an average US participant from mTurk
+PROMPT = """You are an average US participant from mTurk
 in a study on the perception of food.
 How palatable is this food for you in general?
-Please provide a Palatability rating on a scale from 1 to 100 
+Please provide a Palatability rating on a scale from 1 to 100
 where 1 is "Not at all" and 100 is "Extremely"
 
 Rules:
@@ -40,24 +35,22 @@ Rules:
 - Must rate even if uncertain
 - Use the full scale range appropriately"""
 
-
-def get_ratings(image_url, num_ratings=TOTAL_RATINGS):
-
+def get_ratings(url, n=N_RATINGS):
     response = client.chat.completions.create(
         model="meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
         messages=[
             {
                 "role": "user",
                 "content": [
-                    {"type": "text", "text": RATING_PROMPT},
+                    {"type": "text", "text": PROMPT},
                     {
                         "type": "image_url",
-                        "image_url": {"url": image_url}
+                        "image_url": {"url": url}
                     },
                 ],
             }
         ],
-        n=num_ratings,
+        n=n,
         max_tokens=10,
         temperature=1,
     )
@@ -68,51 +61,34 @@ def get_ratings(image_url, num_ratings=TOTAL_RATINGS):
         ratings.append(rating)
         print(f"  Rating: {rating}")
 
-    avg_rating = round(statistics.mean(ratings), 2)
-    rating_std = round(statistics.stdev(ratings), 2)
-    print(f"  Average rating: {avg_rating}, StdDev: {rating_std}")
-    return ratings, avg_rating, rating_std
+    avg = round(statistics.mean(ratings), 2)
+    std = round(statistics.stdev(ratings), 2)
+    print(f"  Average: {avg}, StdDev: {std}")
+    return ratings, avg, std
 
+df = pd.read_csv(INPUT_CSV)
+results = []
 
-def process_from_csv(filenames_csv, output_csv_path):
+for index, row in df.iterrows():
+    fname = str(row['Filename'])
+    url = BASE_URL + fname
+    print(f"Processing {index + 1}/{len(df)}: {fname}")
 
-    df = pd.read_csv(filenames_csv)
-    results = []
+    ratings, avg, std = get_ratings(url)
 
-    # Process each image
-    for index, row in df.iterrows():
-        fname = str(row['Filename'])
-        image_url = BASE_URL + fname
+    results.append({
+        'Filename': fname,
+        'Average_Rating': avg,
+        'Standard_Deviation': std,
+        'All_Ratings': str(ratings)
+    })
 
-        print(f"Processing {index + 1}/{len(df)}: {fname}")
+    if index < len(df) - 1:
+        time.sleep(1)
 
-        # Get ratings from Llama API
-        ratings, avg_rating, rating_std = get_ratings(image_url)
+results_df = pd.DataFrame(results)
+results_df.to_csv(OUTPUT_CSV, index=False)
 
-        # Add to results
-        results.append({
-            'Filename': fname,
-            'Average_Rating': avg_rating,
-            'Standard_Deviation': rating_std,
-            'All_Ratings': str(ratings)
-        })
-
-        # Add delay to avoid API rate limits between images
-        if index < len(df) - 1:
-            time.sleep(1)
-
-    # Create and save the dataframe
-    results_df = pd.DataFrame(results)
-    results_df.to_csv(output_csv_path, index=False)
-
-    print(f"Processing complete. Results saved to {output_csv_path}")
-    print(f"Average palatability rating across all images: {results_df['Average_Rating'].mean():.2f}")
-    print(f"Rating range: {results_df['Average_Rating'].min()} - {results_df['Average_Rating'].max()}")
-
-
-def main():
-    """Main function to run the script"""
-    process_from_csv(INPUT_CSV, OUTPUT_CSV)
-
-if __name__ == "__main__":
-    main()
+print(f"\nResults saved to {OUTPUT_CSV}")
+print(f"Average rating: {results_df['Average_Rating'].mean():.2f}")
+print(f"Range: {results_df['Average_Rating'].min()} - {results_df['Average_Rating'].max()}")
