@@ -29,9 +29,11 @@ INPUT_CSV = r"path/to/image_names.csv"  # CSV with filenames
 BASE_URL = "https://your-bucket.s3.amazonaws.com/food-images/"  # Base URL for S3 images
 OUTPUT_CSV = r"path/to/output/palatability_ratings_llama4.csv"
 
-RATING_PROMPT = """You are an average US participant from mTurk in a study on the perception of food.
+RATING_PROMPT = """You are an average US participant from mTurk
+in a study on the perception of food.
 How palatable is this food for you in general?
-Please provide a Palatability rating on a scale from 1 to 100 where 1 is "Not at all" and 100 is "Extremely"
+Please provide a Palatability rating on a scale from 1 to 100 
+where 1 is "Not at all" and 100 is "Extremely"
 
 Rules:
 - Respond with only a single number (1-100)

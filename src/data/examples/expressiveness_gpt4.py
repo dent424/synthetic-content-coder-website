@@ -26,11 +26,14 @@ INPUT_CSV = r"path/to/expressiveness_filenames.csv"
 BASE_URL = "https://your-bucket.s3.amazonaws.com/images/"
 OUTPUT_CSV = r"path/to/output/gpt_expressiveness_ratings.csv"
 
-RATING_PROMPT = """You are an expert research assistant hired to code thousands of facial images for a psychology study on emotional expression. 
-Your job is to evaluate each image and provide a consistent rating based on the intensity of the emotional expression shown.
+RATING_PROMPT = """You are an expert research assistant hired to code thousands 
+of facial images for a psychology study on emotional expression. 
+Your job is to evaluate each image and provide a consistent rating based 
+on the intensity of the emotional expression shown.
 
 Rating Instructions:
-For this image, provide a score based on a 1–7 scale, with 7 being high happy or sad expression and 1 indicating low happy or sad expression.
+For this image, provide a score based on a 1–7 scale, with 
+7 being high happy or sad expression and 1 indicating low happy or sad expression.
 
 Rules:
 - Respond with only a single number (1-7) using standard numerals

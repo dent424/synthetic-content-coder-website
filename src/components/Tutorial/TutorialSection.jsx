@@ -1,9 +1,15 @@
 import { useState } from 'react';
 import ScrollSyncedCodeViewer from './ScrollSyncedCodeViewer';
 import { codeExamples } from '../../data/codeExamples';
-import { Code2, Image, Smile, Utensils } from 'lucide-react';
+import { Code2, Image, Smile, Utensils, Sparkles } from 'lucide-react';
 
 const exampleTabs = [
+  {
+    id: 'basic',
+    label: 'Basic',
+    icon: Sparkles,
+    data: codeExamples.basic
+  },
   {
     id: 'expressiveness',
     label: 'Expressiveness',
@@ -25,7 +31,7 @@ const exampleTabs = [
 ];
 
 export default function TutorialSection() {
-  const [activeExample, setActiveExample] = useState('expressiveness');
+  const [activeExample, setActiveExample] = useState('basic');
   const currentExample = exampleTabs.find(tab => tab.id === activeExample)?.data;
 
   return (
@@ -81,11 +87,11 @@ export default function TutorialSection() {
       <div className="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg">
         <h3 className="font-semibold text-blue-900 mb-2">How to Use These Examples</h3>
         <ul className="space-y-2 text-sm text-blue-800">
+          <li>• <strong>Start with Basic</strong> - The Basic tab shows the simplest possible implementation with minimal code</li>
           <li>• <strong>Scroll through the code</strong> - The description panel automatically updates to explain the current section</li>
-          <li>• <strong>Click the progress dots</strong> at the bottom of the description panel to jump to specific sections</li>
-          <li>• <strong>Compare approaches</strong> - Switch tabs to see different models (GPT-4.1 vs Llama 4) and image handling methods (URLs vs base64)</li>
+          <li>• <strong>Click line numbers</strong> in the description panel to jump to specific lines of code</li>
+          <li>• <strong>Compare approaches</strong> - Switch tabs to see different models (GPT-4.1 vs Llama 4) and techniques (URLs vs base64, single vs batched calls)</li>
           <li>• <strong>Copy and adapt</strong> - All code is production-ready. Replace API keys and file paths for your own projects</li>
-          <li>• <strong>Key settings</strong> - Note the consistent use of temperature=1 and 25 repetitions across all examples</li>
         </ul>
       </div>
     </div>
