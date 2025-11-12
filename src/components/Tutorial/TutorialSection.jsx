@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ScrollSyncedCodeViewer from './ScrollSyncedCodeViewer';
 import { codeExamples } from '../../data/codeExamples';
-import { Code2, Image, Smile, Utensils, Sparkles } from 'lucide-react';
+import { Code2, Image, Smile, Utensils, Sparkles, MessageSquare } from 'lucide-react';
 
 const exampleTabs = [
   {
@@ -9,6 +9,12 @@ const exampleTabs = [
     label: 'Basic',
     icon: Sparkles,
     data: codeExamples.basic
+  },
+  {
+    id: 'sentiment',
+    label: 'Text Sentiment',
+    icon: MessageSquare,
+    data: codeExamples.sentiment
   },
   {
     id: 'expressiveness',

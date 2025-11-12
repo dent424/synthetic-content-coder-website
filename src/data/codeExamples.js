@@ -1,5 +1,6 @@
 // Import the raw Python code files as strings
 import basicCode from './examples/basic_gpt4.py?raw';
+import sentimentCode from './examples/sentiment_gpt4.py?raw';
 import expressivenessCode from './examples/expressiveness_gpt4.py?raw';
 import imageQualityCode from './examples/image_quality_gpt4.py?raw';
 import palatabilityCode from './examples/palatability_llama4.py?raw';
@@ -85,6 +86,80 @@ export const codeExamples = {
           { line: 48, text: 'Call rate_image() for each URL.' },
           { line: 51, text: 'Calculate and display average rating.' },
           { line: 53, text: 'Add 1-second delay between images.' }
+        ]
+      }
+    ]
+  },
+
+  sentiment: {
+    id: 'sentiment',
+    title: 'Text Sentiment',
+    model: 'GPT-4.1 (OpenAI)',
+    description: 'Rate sentiment of text responses from survey data',
+    overview: extractDocstring(sentimentCode),
+    code: removeDocstring(sentimentCode),
+    sections: [
+      {
+        id: 'imports',
+        title: 'Imports',
+        lineStart: 1,
+        lineEnd: 4,
+        description: 'Import essential libraries for API calls, CSV processing, and statistics.'
+      },
+      {
+        id: 'config',
+        title: 'Configuration',
+        lineStart: 6,
+        lineEnd: 12,
+        description: 'Set up API credentials and file paths. Using 25 ratings per text for reliable sentiment estimates.',
+        details: [
+          { line: 6, text: 'Store your OpenAI API key.' },
+          { line: 7, text: 'Initialize the OpenAI client.' },
+          { line: 9, text: '25 ratings per text provides stable estimates.' },
+          { line: 11, text: 'CSV file with ResponseID and ResponseText columns.' }
+        ]
+      },
+      {
+        id: 'prompt',
+        title: 'Rating Prompt',
+        lineStart: 14,
+        lineEnd: 23,
+        description: 'Define a clear 1-7 sentiment scale with anchors (1=Very Negative, 4=Neutral, 7=Very Positive).',
+        details: [
+          { line: 15, text: 'Position the LLM as a research assistant for consistency.' },
+          { line: 16, text: '1-7 scale with clear negative-neutral-positive anchors.' },
+          { line: 19, text: 'Strict formatting rules ensure numeric-only responses.' }
+        ]
+      },
+      {
+        id: 'api-call',
+        title: 'API Call Function',
+        lineStart: 25,
+        lineEnd: 48,
+        description: 'Core function that sends text to GPT-4 for sentiment rating. Returns 25 ratings for statistical analysis.',
+        details: [
+          { line: 26, text: 'Make API call to GPT-4 turbo model.' },
+          { line: 31, text: 'Embed the text to rate directly in the prompt.' },
+          { line: 35, text: 'Request 25 ratings in a single API call.' },
+          { line: 36, text: 'Limit to 10 tokens (only need 1 digit).' },
+          { line: 37, text: 'Temperature=1 for rating diversity.' },
+          { line: 42, text: 'Extract each rating from the responses.' },
+          { line: 46, text: 'Calculate mean and standard deviation.' }
+        ]
+      },
+      {
+        id: 'processing',
+        title: 'Batch Processing',
+        lineStart: 50,
+        lineEnd: 73,
+        description: 'Process all responses from CSV. Load data, rate each text, and save results with all ratings for transparency.',
+        details: [
+          { line: 50, text: 'Load CSV file containing survey responses.' },
+          { line: 53, text: 'Extract ResponseID and ResponseText from each row.' },
+          { line: 57, text: 'Get 25 sentiment ratings for this text.' },
+          { line: 59, text: 'Store results including original text and all ratings.' },
+          { line: 68, text: 'Add 1-second delay between texts to respect rate limits.' },
+          { line: 71, text: 'Save all results to CSV.' }
         ]
       }
     ]
