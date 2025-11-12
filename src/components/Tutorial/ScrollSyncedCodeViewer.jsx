@@ -279,7 +279,7 @@ export default function ScrollSyncedCodeViewer({ example }) {
       </div>
       {/* End of Main Content Area */}
       </div>
-    </div>
     {/* End of Outer Container */}
+    </div>
   );
 }
