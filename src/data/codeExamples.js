@@ -38,53 +38,53 @@ export const codeExamples = {
         id: 'config',
         title: 'Configuration',
         lineStart: 4,
-        lineEnd: 17,
+        lineEnd: 13,
         description: 'Set up API key, define 5 ratings per image, and list 3 sample image URLs.',
         details: [
-          { line: 6, text: 'Store your OpenAI API key.' },
-          { line: 7, text: 'Initialize the OpenAI client.' },
-          { line: 10, text: 'Collect 5 ratings per image instead of 25 for simplicity.' },
-          { line: 13, text: 'Hardcoded list of 3 image URLs - no CSV processing needed.' }
+          { line: 4, text: 'Store your OpenAI API key.' },
+          { line: 5, text: 'Initialize the OpenAI client.' },
+          { line: 7, text: 'Collect 5 ratings per image instead of 25 for simplicity.' },
+          { line: 9, text: 'Hardcoded list of 3 image URLs - no CSV processing needed.' }
         ]
       },
       {
         id: 'prompt',
         title: 'Prompt',
-        lineStart: 19,
-        lineEnd: 23,
+        lineStart: 15,
+        lineEnd: 17,
         description: 'Simple rating prompt using 1-5 scale. Short and direct.',
         details: [
-          { line: 21, text: 'Clear 1-5 scale with quality anchors.' },
-          { line: 23, text: 'Request numeric-only response.' }
+          { line: 15, text: 'Clear 1-5 scale with quality anchors.' },
+          { line: 17, text: 'Request numeric-only response.' }
         ]
       },
       {
         id: 'function',
         title: 'Rating Function',
-        lineStart: 25,
-        lineEnd: 73,
+        lineStart: 19,
+        lineEnd: 44,
         description: 'Single function to get ratings for one image. Contains all core API logic.',
         details: [
-          { line: 31, text: 'Make API call to GPT-4 turbo model.' },
-          { line: 39, text: 'Send prompt as text content.' },
-          { line: 42, text: 'Send image as URL.' },
-          { line: 49, text: 'Request 5 ratings in a single call.' },
-          { line: 50, text: 'Limit to 10 tokens for brief responses.' },
-          { line: 51, text: 'Temperature=1 for rating diversity.' },
-          { line: 55, text: 'Extract and validate each rating (1-5 range).' }
+          { line: 20, text: 'Make API call to GPT-4 turbo model.' },
+          { line: 26, text: 'Send prompt as text content.' },
+          { line: 29, text: 'Send image as URL.' },
+          { line: 34, text: 'Request 5 ratings in a single call.' },
+          { line: 35, text: 'Limit to 10 tokens for brief responses.' },
+          { line: 36, text: 'Temperature=1 for rating diversity.' },
+          { line: 41, text: 'Extract each rating from the response.' }
         ]
       },
       {
         id: 'main',
         title: 'Main Process',
-        lineStart: 75,
-        lineEnd: 100,
+        lineStart: 46,
+        lineEnd: 54,
         description: 'Simple loop to rate all images and print results. No CSV export.',
         details: [
-          { line: 82, text: 'Loop through the 3 hardcoded image URLs.' },
-          { line: 83, text: 'Call rate_image() for each URL.' },
-          { line: 86, text: 'Calculate and display average rating.' },
-          { line: 93, text: 'Add 1-second delay between images.' }
+          { line: 46, text: 'Loop through the 3 hardcoded image URLs.' },
+          { line: 48, text: 'Call rate_image() for each URL.' },
+          { line: 51, text: 'Calculate and display average rating.' },
+          { line: 53, text: 'Add 1-second delay between images.' }
         ]
       }
     ]
@@ -109,70 +109,63 @@ export const codeExamples = {
         id: 'config',
         title: 'Configuration',
         lineStart: 6,
-        lineEnd: 19,
+        lineEnd: 13,
         description: 'Set up API credentials, file paths, and key parameters. Using 25 ratings per image following best practices for stable estimates.',
         details: [
-          { line: 9, text: 'Store your OpenAI API key. Use environment variables in production.' },
-          { line: 10, text: 'Initialize the OpenAI client with your API key.' },
-          { line: 14, text: '25 ratings per image provides stable mean estimates while balancing cost.' },
-          { line: 17, text: 'CSV file containing image filenames to process.' },
-          { line: 18, text: 'Base URL for S3-hosted images. Images are accessed via URLs rather than local files.' }
+          { line: 6, text: 'Store your OpenAI API key.' },
+          { line: 7, text: 'Initialize the OpenAI client with your API key.' },
+          { line: 9, text: '25 ratings per image provides stable mean estimates while balancing cost.' },
+          { line: 11, text: 'CSV file containing image filenames to process.' },
+          { line: 12, text: 'Base URL for S3-hosted images. Images are accessed via URLs rather than local files.' }
         ]
       },
       {
         id: 'prompt',
         title: 'Rating Prompt',
-        lineStart: 21,
-        lineEnd: 35,
+        lineStart: 15,
+        lineEnd: 29,
         description: 'Define the prompt that instructs the LLM on how to rate images. Clear scale definition (1-7) and strict output formatting are critical for consistent results.',
         details: [
-          { line: 21, text: 'Multi-line string containing the full rating prompt.' },
-          { line: 24, text: 'Explicit scale definition with anchors (1=low, 7=high expression).' },
-          { line: 27, text: 'Strict formatting rules ensure numeric-only responses for easy parsing.' }
+          { line: 15, text: 'Multi-line string containing the full rating prompt.' },
+          { line: 21, text: 'Explicit scale definition with anchors (1=low, 7=high expression).' },
+          { line: 24, text: 'Strict formatting rules ensure numeric-only responses for easy parsing.' }
         ]
       },
       {
         id: 'api-call',
         title: 'API Call Function',
-        lineStart: 34,
-        lineEnd: 97,
+        lineStart: 31,
+        lineEnd: 63,
         description: 'Core function that makes API calls to GPT-4.1 for rating images. Returns multiple ratings per image for statistical analysis.',
         details: [
-          { line: 47, text: 'Start the API call using OpenAI\'s chat completions endpoint.' },
-          { line: 48, text: 'model: GPT-4.1 turbo model optimized for vision tasks.' },
-          { line: 53, text: 'Combine text prompt with image in a single message.' },
-          { line: 57, text: 'image_url: URL of the S3-hosted image to rate.' },
-          { line: 58, text: 'detail="high": Request high-resolution image analysis for better quality.' },
-          { line: 64, text: 'n: Request 25 ratings in a single API call (more efficient than 25 separate calls).' },
-          { line: 65, text: 'max_tokens: Limit response to 10 tokens (only need 1-2 digits for rating).' },
-          { line: 66, text: 'temperature=1: Higher diversity in ratings to capture full distribution.' },
-          { line: 70, text: 'Loop through all 25 responses returned by the API.' },
-          { line: 75, text: 'Parse and validate each rating to ensure it\'s numeric and in range (1-7).' },
-          { line: 86, text: 'Calculate mean and standard deviation across the 25 ratings.' }
+          { line: 32, text: 'Start the API call using OpenAI\'s chat completions endpoint.' },
+          { line: 33, text: 'model: GPT-4.1 model optimized for vision tasks.' },
+          { line: 38, text: 'Combine text prompt with image in a single message.' },
+          { line: 42, text: 'image_url: URL of the S3-hosted image to rate.' },
+          { line: 43, text: 'detail="high": Request high-resolution image analysis for better quality.' },
+          { line: 49, text: 'n: Request 25 ratings in a single API call (more efficient than 25 separate calls).' },
+          { line: 50, text: 'max_tokens: Limit response to 10 tokens (only need 1-2 digits for rating).' },
+          { line: 51, text: 'temperature=1: Higher diversity in ratings to capture full distribution.' },
+          { line: 55, text: 'Loop through all 25 responses returned by the API.' },
+          { line: 56, text: 'Parse each rating to integer.' },
+          { line: 60, text: 'Calculate mean and standard deviation across the 25 ratings.' }
         ]
       },
       {
         id: 'processing',
         title: 'Batch Processing',
-        lineStart: 100,
-        lineEnd: 152,
+        lineStart: 65,
+        lineEnd: 90,
         description: 'Process multiple images from a CSV file. Constructs URLs, calls the rating function for each image, and saves results to a new CSV.',
         details: [
-          { line: 108, text: 'Load CSV file containing image filenames.' },
-          { line: 116, text: 'Construct full S3 URL by combining base URL with filename.' },
-          { line: 121, text: 'Get 25 ratings for this image (single API call).' },
-          { line: 124, text: 'Store results: filename, average rating, standard deviation, and all raw ratings.' },
-          { line: 133, text: 'Add 1-second delay between images to respect API rate limits.' },
-          { line: 137, text: 'Save all results to CSV for analysis and transparency.' }
+          { line: 65, text: 'Load CSV file containing image filenames.' },
+          { line: 68, text: 'Construct full S3 URL by combining base URL with filename.' },
+          { line: 73, text: 'Get 25 ratings for this image (single API call).' },
+          { line: 75, text: 'Store results: filename, average rating, standard deviation, and all raw ratings.' },
+          { line: 82, text: 'Add 1-second delay between images to respect API rate limits.' },
+          { line: 85, text: 'Save all results to CSV for analysis.' },
+          { line: 88, text: 'Print summary statistics.' }
         ]
-      },
-      {
-        id: 'main',
-        title: 'Main Execution',
-        lineStart: 155,
-        lineEnd: 160,
-        description: 'Entry point for the script. Runs the batch processing function when script is executed directly.',
-        details: []
       }
     ]
   },
@@ -189,85 +182,79 @@ export const codeExamples = {
         id: 'imports',
         title: 'Imports & Setup',
         lineStart: 1,
-        lineEnd: 7,
+        lineEnd: 6,
         description: 'Import required libraries including base64 for encoding local image files.',
         details: [
-          { line: 6, text: 'base64: Encode image files as strings for API transmission.' },
-          { line: 7, text: 'os: Navigate local file system to find images.' }
+          { line: 5, text: 'base64: Encode image files as strings for API transmission.' },
+          { line: 6, text: 'os: Navigate local file system to find images.' }
         ]
       },
       {
         id: 'config',
         title: 'Configuration',
-        lineStart: 9,
-        lineEnd: 24,
+        lineStart: 8,
+        lineEnd: 14,
         description: 'Set up paths for local image folder processing. Using a 1-100 scale instead of 1-7 for finer granularity.',
         details: [
-          { line: 12, text: 'Store API key. Never commit keys to version control.' },
-          { line: 17, text: '25 ratings per image for stable estimates.' },
-          { line: 19, text: 'Path to folder containing local image files.' },
-          { line: 20, text: 'Output CSV will contain quality ratings for all images.' }
+          { line: 8, text: 'Store API key. Never commit keys to version control.' },
+          { line: 11, text: '25 ratings per image for stable estimates.' },
+          { line: 13, text: 'Path to folder containing local image files.' },
+          { line: 14, text: 'Output CSV will contain quality ratings for all images.' }
         ]
       },
       {
         id: 'prompt',
         title: 'Rating Prompt',
-        lineStart: 22,
-        lineEnd: 39,
+        lineStart: 16,
+        lineEnd: 29,
         description: 'Prompt designed for image quality assessment on 1-100 scale. Distinguishes between quality and aesthetics, providing clear anchor points.',
         details: [
-          { line: 26, text: 'Key instruction: Focus on quality (resolution, clarity) not aesthetics (composition, subject).' },
-          { line: 28, text: '1-100 scale with labeled anchors (Bad, Poor, Fair, Good, Excellent) for consistency.' }
+          { line: 17, text: 'Key instruction: Focus on quality (resolution, clarity) not aesthetics (composition, subject).' },
+          { line: 18, text: '1-100 scale with labeled anchors (Bad, Poor, Fair, Good, Excellent) for consistency.' }
         ]
       },
       {
         id: 'encoding',
         title: 'Image Encoding',
-        lineStart: 41,
-        lineEnd: 44,
+        lineStart: 31,
+        lineEnd: 33,
         description: 'Function to convert local image files to base64-encoded strings for API transmission.',
         details: [
-          { line: 43, text: 'Read image as binary and convert to base64 string for embedding in API request.' }
+          { line: 32, text: 'Read image as binary and convert to base64 string for embedding in API request.' }
         ]
       },
       {
         id: 'api-call',
         title: 'API Call Function',
-        lineStart: 47,
-        lineEnd: 111,
+        lineStart: 35,
+        lineEnd: 69,
         description: 'Core rating function using base64-encoded images instead of URLs. Otherwise similar to URL-based approach.',
         details: [
-          { line: 56, text: 'Encode the local image file to base64 string.' },
-          { line: 61, text: 'Start GPT-4.1 API call for image quality rating.' },
-          { line: 62, text: 'model: GPT-4.1 for vision-language tasks.' },
-          { line: 71, text: 'Format as data URI: "data:image/png;base64,{encoded_string}".' },
-          { line: 72, text: 'detail="high": High-resolution analysis important for quality assessment.' },
-          { line: 78, text: 'n=25: Request all 25 ratings in one API call.' },
-          { line: 79, text: 'max_tokens=10: Brief responses (just need the number).' },
-          { line: 80, text: 'temperature=1: Full diversity in ratings.' },
-          { line: 89, text: 'Validate ratings are within 1-100 range.' }
+          { line: 36, text: 'Encode the local image file to base64 string.' },
+          { line: 38, text: 'Start GPT-4.1 API call for image quality rating.' },
+          { line: 39, text: 'model: GPT-4.1 for vision-language tasks.' },
+          { line: 48, text: 'Format as data URI: "data:image/png;base64,{encoded_string}".' },
+          { line: 49, text: 'detail="high": High-resolution analysis important for quality assessment.' },
+          { line: 55, text: 'n=25: Request all 25 ratings in one API call.' },
+          { line: 56, text: 'max_tokens=10: Brief responses (just need the number).' },
+          { line: 57, text: 'temperature=1: Full diversity in ratings.' },
+          { line: 62, text: 'Parse each rating from the responses.' }
         ]
       },
       {
         id: 'processing',
         title: 'Folder Processing',
-        lineStart: 114,
-        lineEnd: 169,
+        lineStart: 71,
+        lineEnd: 95,
         description: 'Process all images in a local folder. Scans for image files, rates each one, and saves results to CSV.',
         details: [
-          { line: 127, text: 'Scan folder for image files (.png, .jpg, .jpeg, .gif, .bmp).' },
-          { line: 133, text: 'Construct full file path for each image.' },
-          { line: 138, text: 'Call rating function which handles base64 encoding internally.' },
-          { line: 149, text: 'Add 1-second delay to avoid rate limits.' }
+          { line: 71, text: 'Scan folder for image files (.png, .jpg, .jpeg, .gif, .bmp).' },
+          { line: 74, text: 'Construct full file path for each image.' },
+          { line: 78, text: 'Call rating function which handles base64 encoding internally.' },
+          { line: 87, text: 'Add 1-second delay to avoid rate limits.' },
+          { line: 90, text: 'Save all results to CSV.' },
+          { line: 93, text: 'Print summary statistics.' }
         ]
-      },
-      {
-        id: 'main',
-        title: 'Main Execution',
-        lineStart: 172,
-        lineEnd: 178,
-        description: 'Entry point that processes the configured image folder.',
-        details: []
       }
     ]
   },
@@ -276,7 +263,7 @@ export const codeExamples = {
     id: 'palatability',
     title: 'Food Palatability',
     model: 'Llama 4 Maverick (DeepInfra)',
-    description: 'Rate food palatability using open-source Llama 4 with batched API calls',
+    description: 'Rate food palatability using open-source Llama 4 via DeepInfra',
     overview: extractDocstring(palatabilityCode),
     code: removeDocstring(palatabilityCode),
     sections: [
@@ -292,66 +279,57 @@ export const codeExamples = {
         id: 'config',
         title: 'Configuration',
         lineStart: 6,
-        lineEnd: 20,
-        description: 'Configure for Llama 4 via DeepInfra. Note the base_url change and batching strategy.',
+        lineEnd: 16,
+        description: 'Configure for Llama 4 via DeepInfra. Note the base_url change to DeepInfra endpoint.',
         details: [
-          { line: 8, text: 'DeepInfra API key (different from OpenAI).' },
-          { line: 10, text: 'base_url: Point OpenAI SDK to DeepInfra endpoint instead of OpenAI.' },
-          { line: 14, text: 'BATCH=4: Llama API has stricter limits, so batch ratings (4 per call instead of 25).' },
-          { line: 15, text: 'TOTAL_RATINGS=25: Still collect 25 total, but spread across multiple calls.' },
-          { line: 18, text: 'CSV with image filenames.' },
-          { line: 19, text: 'Base URL for S3 bucket hosting food images.' }
+          { line: 6, text: 'DeepInfra API key (different from OpenAI).' },
+          { line: 7, text: 'base_url: Point OpenAI SDK to DeepInfra endpoint instead of OpenAI.' },
+          { line: 12, text: '25 ratings per image, collected in a single API call.' },
+          { line: 14, text: 'CSV with image filenames.' },
+          { line: 15, text: 'Base URL for S3 bucket hosting food images.' }
         ]
       },
       {
         id: 'prompt',
         title: 'Rating Prompt',
-        lineStart: 22,
-        lineEnd: 34,
+        lineStart: 18,
+        lineEnd: 28,
         description: 'Palatability prompt using 1-100 scale. Simple and direct - open-source models sometimes perform better with simpler prompts.',
         details: [
-          { line: 26, text: 'Context: "Average US participant from mTurk" helps ground the LLM\'s perspective.' },
-          { line: 27, text: 'Single clear question: "How palatable is this food?"' },
-          { line: 28, text: '1-100 scale from "Not at all" to "Extremely" palatable.' }
+          { line: 18, text: 'Context: "Average US participant from mTurk" helps ground the LLM\'s perspective.' },
+          { line: 20, text: 'Single clear question: "How palatable is this food?"' },
+          { line: 21, text: '1-100 scale from "Not at all" to "Extremely" palatable.' }
         ]
       },
       {
         id: 'api-call',
-        title: 'Batched API Call Function',
-        lineStart: 37,
-        lineEnd: 102,
-        description: 'Core rating function with batching strategy. Makes multiple API calls of 4 ratings each until reaching 25 total.',
+        title: 'API Call Function',
+        lineStart: 30,
+        lineEnd: 59,
+        description: 'Core rating function for Llama 4. Makes single API call requesting 25 ratings at once.',
         details: [
-          { line: 45, text: 'ratings list will be populated across multiple API calls.' },
-          { line: 47, text: 'While loop continues until we have 25 total ratings.' },
-          { line: 49, text: 'Try-except with retry logic handles API errors gracefully.' },
-          { line: 50, text: 'model: Llama 4 Maverick 17B model hosted on DeepInfra.' },
-          { line: 65, text: 'n: Request min(4, remaining) ratings. Last batch might be < 4.' },
-          { line: 67, text: 'temperature=1: Same as GPT examples for consistency.' },
-          { line: 87, text: 'On API error, wait 2 seconds and retry (continue loop).' },
-          { line: 92, text: 'After loop completes, calculate statistics across all 25 ratings.' }
+          { line: 31, text: 'Start API call to DeepInfra Llama endpoint.' },
+          { line: 32, text: 'model: Llama 4 Maverick 17B model hosted on DeepInfra.' },
+          { line: 45, text: 'n: Request 25 ratings in single call.' },
+          { line: 47, text: 'temperature=1: Same as GPT examples for consistency.' },
+          { line: 51, text: 'Parse ratings from all responses.' },
+          { line: 56, text: 'Calculate statistics across the 25 ratings.' }
         ]
       },
       {
         id: 'processing',
         title: 'CSV Processing',
-        lineStart: 100,
-        lineEnd: 153,
-        description: 'Process images from CSV with batched rating collection. Same overall structure as other examples.',
+        lineStart: 61,
+        lineEnd: 86,
+        description: 'Process images from CSV. Same structure as other examples - load CSV, construct URLs, collect ratings, save results.',
         details: [
-          { line: 110, text: 'Load CSV containing image filenames.' },
-          { line: 116, text: 'Construct S3 URL from base URL + filename.' },
-          { line: 121, text: 'Call batched rating function (makes multiple API calls internally).' },
-          { line: 133, text: 'Delay between images to respect rate limits.' }
+          { line: 61, text: 'Load CSV containing image filenames.' },
+          { line: 64, text: 'Construct S3 URL from base URL + filename.' },
+          { line: 69, text: 'Call rating function to get 25 ratings.' },
+          { line: 78, text: 'Delay between images to respect rate limits.' },
+          { line: 81, text: 'Save results to CSV.' },
+          { line: 84, text: 'Print summary statistics.' }
         ]
-      },
-      {
-        id: 'main',
-        title: 'Main Execution',
-        lineStart: 156,
-        lineEnd: 162,
-        description: 'Entry point for the script.',
-        details: []
       }
     ]
   }
