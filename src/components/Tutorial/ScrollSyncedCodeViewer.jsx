@@ -155,9 +155,10 @@ export default function ScrollSyncedCodeViewer({ example }) {
                   wrapLines={true}
                   wrapLongLines={true}
                   lineProps={(lineNumber) => {
-                    const actualLineNumber = group.startLine + lineNumber - 1;
+                    // lineNumber is already the absolute line number because
+                    // we set startingLineNumber={group.startLine} on the SyntaxHighlighter
                     const style = { display: 'block' };
-                    if (actualLineNumber === highlightedLine) {
+                    if (lineNumber === highlightedLine) {
                       style.backgroundColor = 'rgba(59, 130, 246, 0.2)';
                       style.borderLeft = '4px solid #3b82f6';
                       style.paddingLeft = '0.5rem';
@@ -222,7 +223,7 @@ export default function ScrollSyncedCodeViewer({ example }) {
                                 if (element) {
                                   element.scrollIntoView({
                                     behavior: 'smooth',
-                                    block: 'start'
+                                    block: 'nearest'
                                   });
                                 }
                               }
