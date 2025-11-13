@@ -52,8 +52,8 @@ const steps = [
   },
   {
     number: 9,
-    title: 'Deploy or Iterate',
-    description: 'Apply the validated SCC to your full dataset, or iterate on earlier steps if validation is insufficient.',
+    title: 'Deploy or Start Over',
+    description: 'Apply the validated SCC to your full dataset, or start over if validation is insufficient.',
     details: 'If validation metrics are sufficiently high, the protocol can be applied to code the entire content database. If validation metrics fall short, researchers may adjust the prompt, modify cleaning procedures, or undertake more complex procedures like fine-tuning. In many cases, it will be necessary to adjust aspects of the system setup, cleaning, and validation stages before final implementation.'
   }
 ];
