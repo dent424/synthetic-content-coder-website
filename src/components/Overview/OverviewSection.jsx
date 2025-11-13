@@ -6,7 +6,45 @@ const steps = [
     number: 1,
     title: 'Define Construct & Collect Content',
     description: 'Clearly define the construct you want to measure and collect the content that needs to be coded.',
-    details: 'The process begins with researchers defining the construct(s) of interest and collecting content (data) that is thought to potentially reflect those constructs. This foundational step sets the stage for all subsequent work.'
+    details: `Understanding Your Measurement Goal
+
+Before implementing an SCC, you need to clearly define what observer judgment you want to measure. SCCs are specifically designed for observer judgments - properties that human coders can reliably assess when viewing content.
+
+Appropriate constructs for SCCs include:
+• Visual properties (e.g., image quality, emotional expressiveness in faces)
+• Content attributes (e.g., food palatability, advertisement style)
+• Perceptual qualities (e.g., trustworthiness, professionalism)
+
+SCCs are NOT appropriate for:
+• Internal states of content producers
+• Behavioral outcomes of content consumers
+• Constructs requiring context beyond the content itself
+
+The Criterion Test
+
+A construct qualifies as an observer judgment if a blinded human coder, given only the content and a coding protocol, can produce reliable ratings. If humans can't consistently code it, neither can an SCC.
+
+Content Collection Considerations
+
+Data Requirements:
+• Your content should represent the full scope of what you'll eventually code
+• Include sufficient variety to capture the range of your construct
+• Consider edge cases and boundary conditions
+
+Practical Guidelines:
+• Start with at least 200-300 items for robust validation
+• Ensure content quality (resolution, completeness, accessibility)
+• Document any exclusion criteria or preprocessing steps
+
+Setting Boundaries
+
+SCCs are validated for specific contexts. Define your boundaries clearly:
+• Content domain (e.g., restaurant reviews vs. product reviews)
+• Platform/source (e.g., Yelp images vs. Instagram posts)
+• Time period (if temporal factors matter)
+• Population scope (whose perceptions you're modeling)
+
+Remember: An SCC validated on one domain cannot be applied to another without revalidation. These boundaries aren't limitations—they ensure measurement validity.`
   },
   {
     number: 2,
