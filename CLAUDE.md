@@ -8,6 +8,14 @@ Interactive website supplement for "From Human to Synthetic Coders" - an academi
 
 **Target Audience**: Consumer behavior researchers at journals like JCR - assume limited programming experience. Use plain language, not technical jargon.
 
+### References Folder
+
+The `references/` folder contains the unpublished manuscripts that this website supports:
+- Main paper: "Psychometric Coding of Content - AKM - R1 UPDATED STARTING 11_3_2025_MAIN_PAPER.pdf"
+- Appendix: "Psychometric Coding of Content - AKM - R1 UPDATED STARTING 11_3_2025_ APPENDIX.pdf"
+
+**IMPORTANT**: This folder is excluded from version control via `.gitignore` as the manuscripts are not yet published. Do not commit or push any files from this folder to GitHub.
+
 ## Development Commands
 
 ```bash
@@ -24,10 +32,11 @@ npm run lint             # Run ESLint
 
 ## Architecture
 
-### Three-Tab Application Structure
+### Four-Tab Application Structure
 
 The app uses a simple tab-based navigation system controlled by state in `App.jsx`:
 
+- **Overview Tab** (default): Landing page presenting the 9-step SCC development process
 - **Tutorial Tab**: Scroll-synced code viewer with interactive line highlighting
 - **Generator Tab**: Form-based Python code generator for LLM content coding
 - **Resources Tab**: Placeholder for future tools and templates
@@ -141,6 +150,8 @@ src/
 ├── components/
 │   ├── Layout/
 │   │   └── Header.jsx              # Tab navigation + site title
+│   ├── Overview/
+│   │   └── OverviewSection.jsx     # Landing page with 9-step process
 │   ├── Tutorial/
 │   │   ├── TutorialSection.jsx     # Example tabs (Expressiveness, Image Quality, etc.)
 │   │   └── ScrollSyncedCodeViewer.jsx  # Core scroll-sync + highlighting logic

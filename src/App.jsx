@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import Header from './components/Layout/Header';
+import OverviewSection from './components/Overview/OverviewSection';
 import TutorialSection from './components/Tutorial/TutorialSection';
 import GeneratorSection from './components/Generator/GeneratorSection';
 import ResourcesSection from './components/Resources/ResourcesSection';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('tutorial');
+  const [activeTab, setActiveTab] = useState('overview');
 
   return (
     <div className="min-h-screen bg-slate-50">
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
 
       <main className="max-w-7xl mx-auto px-6 py-8">
+        {activeTab === 'overview' && <OverviewSection />}
         {activeTab === 'tutorial' && <TutorialSection />}
         {activeTab === 'generator' && <GeneratorSection />}
         {activeTab === 'resources' && <ResourcesSection />}
