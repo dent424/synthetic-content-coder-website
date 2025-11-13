@@ -50,7 +50,92 @@ Remember: An SCC validated on one domain cannot be applied to another without re
     number: 2,
     title: 'Separate Development & Validation Data',
     description: 'Split your dataset into separate development and validation sets to ensure proper evaluation.',
-    details: 'SCCs allow researchers to code content using large digital datasets, but evidence that coding has integrity needs to be presented. This is accomplished by excluding a subset of the data (ground-truth data) and having it rated by human coders, thereby producing a basis for comparison. While there is no set rule for how much data to hold back, validation sample size analyses show that small samples (around 100 items) are often sufficient for stable correlations.'
+    details: `Partition Your Data
+
+Why Partitioning Matters
+
+Proper data partitioning is crucial for obtaining unbiased estimates of SCC performance. The partitioning strategy differs based on whether you're using an unfinetuned or finetuned SCC.
+
+Unfinetuned SCCs: Two-Set Structure
+
+For unfinetuned SCCs (using prompts without updating model weights), you need:
+
+1. Test Set (Development)
+• Used to develop and refine prompts
+• Test different temperature settings
+• Evaluate multiple prompt variations
+• Size: ~100-150 items typically sufficient
+
+2. Validation Set
+• Held out for final, unbiased performance assessment
+• Never accessed during development
+• Used only once after finalizing prompts
+• Size: ~100-150 items for stable estimates
+
+3. Coding Set
+• The remaining data you'll code after validation
+• No human ratings needed for this set
+
+Finetuned SCCs: Three-Set Structure
+
+For finetuned SCCs (updating model parameters), you need:
+
+1. Training Set
+• Used to update model parameters
+• Requires human ratings
+• Size: Depends on complexity (200+ items common)
+
+2. Test Set
+• Evaluate performance during development
+• Tune hyperparameters
+• Size: ~100-150 items
+
+3. Validation Set
+• Final unbiased assessment
+• Size: ~100-150 items
+
+4. Coding Set
+• Remaining data for final coding
+
+Sampling Strategy
+
+Random Sampling:
+• Default approach for most applications
+• Ensures each set represents the full distribution
+• Use a fixed random seed for reproducibility
+
+Stratified Sampling:
+• When specific subgroups matter (e.g., content categories)
+• Ensures representation across important dimensions
+• Document stratification variables clearly
+
+Size Considerations
+
+The paper's analysis (Web Appendix 1) shows:
+• 100 images achieve correlations within 0.001 of full sample
+• Standard deviation of 0.037
+• 98% of correlations between r=0.70-0.87
+
+Practical recommendations:
+• Minimum 100 items per set for stable estimates
+• Larger sets (150-200) if resources permit
+• Consider your tolerance for uncertainty
+
+Critical Rules
+
+⚠️ Never violate these principles:
+• No peeking: Never look at validation set performance during development
+• One shot: Validation set can only be used once
+• Document everything: Record exact partitioning procedure
+• Maintain separation: Keep sets completely independent
+
+Bootstrap Enhancement
+
+While developing on the test set, use bootstrapping to estimate validation performance:
+• Resample test set (with replacement) 1,000+ times
+• Calculate performance metrics for each sample
+• Use median and confidence intervals to guide decisions
+• Helps avoid overfitting to test set idiosyncrasies`
   },
   {
     number: 3,
