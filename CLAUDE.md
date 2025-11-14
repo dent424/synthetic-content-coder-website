@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+**To understand what the website does and its content structure, first read [`WEBSITE_SUMMARY.md`](./WEBSITE_SUMMARY.md).** That file explains the user-facing functionality, the 9-step SCC process, and what each section of the site contains. This file (CLAUDE.md) focuses on technical implementation details.
+
 ## Project Overview
 
 Interactive website supplement for "From Human to Synthetic Coders" - an academic paper on using LLMs as Synthetic Content Coders for consumer behavior research. The site provides scroll-synced code tutorials with 5 examples (Basic, Sentiment, Expressiveness, Image Quality, Palatability), a code generator tool, and educational resources.

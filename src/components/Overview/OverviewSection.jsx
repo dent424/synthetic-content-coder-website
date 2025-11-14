@@ -187,6 +187,89 @@ export default function OverviewSection() {
   const toggleStep = (number) => {
     setExpandedStep(expandedStep === number ? null : number);
   };
+
+  // Helper function to format the details text with proper structure
+  const formatDetails = (text) => {
+    const lines = text.split('\n');
+    const elements = [];
+    let currentParagraph = [];
+    let currentList = [];
+    let key = 0;
+
+    const flushParagraph = () => {
+      if (currentParagraph.length > 0) {
+        elements.push(
+          <p key={`p-${key++}`} className="text-slate-700 leading-relaxed mb-4">
+            {currentParagraph.join(' ')}
+          </p>
+        );
+        currentParagraph = [];
+      }
+    };
+
+    const flushList = () => {
+      if (currentList.length > 0) {
+        elements.push(
+          <ul key={`ul-${key++}`} className="list-disc list-inside text-slate-700 leading-relaxed mb-4 space-y-1">
+            {currentList.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
+        );
+        currentList = [];
+      }
+    };
+
+    lines.forEach((line) => {
+      const trimmed = line.trim();
+
+      // Empty line - flush current paragraph or list
+      if (!trimmed) {
+        flushParagraph();
+        flushList();
+        return;
+      }
+
+      // Bullet point
+      if (trimmed.startsWith('•')) {
+        flushParagraph();
+        currentList.push(trimmed.substring(1).trim());
+        return;
+      }
+
+      // Numbered list item (e.g., "1. Training Set")
+      if (/^\d+\.\s/.test(trimmed)) {
+        flushParagraph();
+        currentList.push(trimmed);
+        return;
+      }
+
+      // Section header (detect by checking if next significant content is different or it's short and ends without punctuation)
+      // Heuristic: if line is short-ish and doesn't end with period, it's likely a header
+      const looksLikeHeader = trimmed.length < 50 && !trimmed.endsWith('.') && !trimmed.endsWith(',') && !trimmed.startsWith('⚠️');
+
+      if (looksLikeHeader) {
+        flushParagraph();
+        flushList();
+        elements.push(
+          <h4 key={`h-${key++}`} className="font-bold text-slate-900 mt-6 mb-2 first:mt-0">
+            {trimmed}
+          </h4>
+        );
+        return;
+      }
+
+      // Regular text - add to current paragraph
+      flushList();
+      currentParagraph.push(trimmed);
+    });
+
+    // Flush any remaining content
+    flushParagraph();
+    flushList();
+
+    return elements;
+  };
   return (
     <div className="space-y-8">
       {/* Hero Section */}
@@ -252,9 +335,7 @@ export default function OverviewSection() {
                 {isExpanded && (
                   <div className="px-6 pb-6 pt-2 border-t border-slate-100 mt-2">
                     <div className="pl-16">
-                      <p className="text-slate-700 leading-relaxed">
-                        {step.details}
-                      </p>
+                      {formatDetails(step.details)}
                     </div>
                   </div>
                 )}
