@@ -141,7 +141,134 @@ While developing on the test set, use bootstrapping to estimate validation perfo
     number: 3,
     title: 'Collect Human Criterion Data (Development)',
     description: 'Gather human ratings on the development data to establish the criterion standard.',
-    details: 'Human coders rate the development set to establish ground-truth ratings. These ratings serve as the standard against which the SCC will be evaluated. The development data helps you understand how well your approach is working before moving to validation.'
+    details: `The Criterion Standard
+
+Human ratings serve as your "ground truth" for validation. The quality of your SCC can never exceed the quality of your criterion data—garbage in, garbage out.
+
+Who Should Code?
+
+Options for human coders:
+
+1. Trained Expert Coders
+• Best for complex or specialized constructs
+• Higher inter-rater reliability
+• More expensive and time-consuming
+• Example from paper: Emotional expressiveness study used two trained coders (IRR = 0.9)
+
+2. Crowdsourced Panels (MTurk, Prolific)
+• Cost-effective for large samples
+• Access to diverse coder populations
+• Suitable for intuitive constructs
+• Example from paper: Image quality and food palatability used MTurk workers
+
+3. Student Coders
+• Good for academic research settings
+• Can be trained for consistency
+• Balance of cost and quality
+
+How Many Coders Per Item?
+
+Minimum recommendations:
+• Simple constructs: 3-5 coders per item
+• Complex constructs: 5-10 coders per item
+• Subjective constructs: 10+ coders per item
+
+From the paper's examples:
+• Food palatability: 35 raters per image (averaged)
+• Image quality: Multiple raters per image via MTurk
+• Emotional expressiveness: 2 trained coders (high agreement)
+
+Creating Your Coding Protocol
+
+Essential elements:
+• Clear instructions matching what you'll give the SCC
+• Scale definitions with anchors clearly specified
+• Example items (if not contaminating test/validation sets)
+• Quality checks to identify careless responses
+
+Quality Control Measures
+
+Pre-coding:
+• Training items to familiarize coders with scale range
+• Comprehension checks
+• Clear inclusion/exclusion criteria
+
+During coding:
+• Attention checks (trap questions)
+• Time stamps (flag too-fast responses)
+• Consistency checks (repeated items)
+
+Post-coding:
+• Remove outlier coders
+• Check inter-rater reliability
+• Document all exclusions
+
+Platform Considerations
+
+MTurk/Prolific/CloudResearch:
+• Qualifications (approval rate, location, language)
+• Fair payment (minimum $15/hour equivalent)
+• Batch management for consistency
+
+In-house coding:
+• Training sessions
+• Regular calibration meetings
+• Monitoring for drift over time
+
+Calculating Agreement
+
+For continuous scales:
+• Intraclass Correlation (ICC)
+• Average pairwise correlations
+• Standard deviation across raters
+
+For categorical coding:
+• Cohen's Kappa
+• Fleiss' Kappa (multiple raters)
+• Percent agreement (with caution)
+
+Critical Considerations
+
+Demographic Representation:
+
+The paper found SCCs better matched population averages than subgroups:
+• General correlation: r=0.714
+• Male coders only: r=0.609
+• Female coders only: r=0.644
+
+💡 Implication: Ensure your coder pool matches your intended inference population.
+
+Cost-Benefit Analysis
+
+When to invest in more/better coders:
+• High-stakes research claims
+• Novel or ambiguous constructs
+• Publication in top journals
+• Small validation sets
+
+When basic crowdsourcing suffices:
+• Well-established constructs
+• Large validation sets
+• Preliminary research
+• Clear, objective properties
+
+Data Processing
+
+Before comparison with SCC:
+• Average across multiple coders per item
+• Check distribution (floor/ceiling effects)
+• Transform if necessary (but document)
+• Create final criterion scores
+
+Documentation Requirements
+
+Record and report:
+• Coder demographics
+• Payment and incentives
+• Exact instructions provided
+• Exclusion criteria and counts
+• Inter-rater reliability metrics
+• Processing decisions`
   },
   {
     number: 4,
