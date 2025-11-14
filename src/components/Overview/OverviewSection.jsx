@@ -183,47 +183,67 @@ While developing on the test set, use bootstrapping to estimate validation perfo
 
 export default function OverviewSection() {
   const [expandedStep, setExpandedStep] = useState(null);
+  const [expandedSubsections, setExpandedSubsections] = useState({});
 
   const toggleStep = (number) => {
     setExpandedStep(expandedStep === number ? null : number);
   };
 
-  // Helper function to format the details text with proper structure
-  const formatDetails = (text) => {
+  const toggleSubsection = (stepNum, sectionIndex) => {
+    const key = `${stepNum}-${sectionIndex}`;
+    setExpandedSubsections(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
+
+  // Parse details text into structured sections
+  const parseDetails = (text) => {
     const lines = text.split('\n');
-    const elements = [];
+    const sections = [];
+    let currentSection = null;
     let currentParagraph = [];
     let currentList = [];
-    let key = 0;
 
     const flushParagraph = () => {
       if (currentParagraph.length > 0) {
-        elements.push(
-          <p key={`p-${key++}`} className="text-slate-700 leading-relaxed mb-4">
-            {currentParagraph.join(' ')}
-          </p>
-        );
+        if (!currentSection) {
+          currentSection = { title: null, content: [] };
+        }
+        currentSection.content.push({
+          type: 'paragraph',
+          text: currentParagraph.join(' ')
+        });
         currentParagraph = [];
       }
     };
 
     const flushList = () => {
       if (currentList.length > 0) {
-        elements.push(
-          <ul key={`ul-${key++}`} className="list-disc list-inside text-slate-700 leading-relaxed mb-4 space-y-1">
-            {currentList.map((item, i) => (
-              <li key={i}>{item}</li>
-            ))}
-          </ul>
-        );
+        if (!currentSection) {
+          currentSection = { title: null, content: [] };
+        }
+        currentSection.content.push({
+          type: 'list',
+          items: [...currentList]
+        });
         currentList = [];
+      }
+    };
+
+    const flushSection = () => {
+      flushParagraph();
+      flushList();
+      if (currentSection && currentSection.content.length > 0) {
+        sections.push(currentSection);
+        currentSection = null;
       }
     };
 
     lines.forEach((line) => {
       const trimmed = line.trim();
 
-      // Empty line - flush current paragraph or list
+      // Empty line
       if (!trimmed) {
         flushParagraph();
         flushList();
@@ -237,38 +257,53 @@ export default function OverviewSection() {
         return;
       }
 
-      // Numbered list item (e.g., "1. Training Set")
+      // Numbered list item
       if (/^\d+\.\s/.test(trimmed)) {
         flushParagraph();
         currentList.push(trimmed);
         return;
       }
 
-      // Section header (detect by checking if next significant content is different or it's short and ends without punctuation)
-      // Heuristic: if line is short-ish and doesn't end with period, it's likely a header
+      // Section header
       const looksLikeHeader = trimmed.length < 50 && !trimmed.endsWith('.') && !trimmed.endsWith(',') && !trimmed.startsWith('⚠️');
 
       if (looksLikeHeader) {
-        flushParagraph();
-        flushList();
-        elements.push(
-          <h4 key={`h-${key++}`} className="font-bold text-slate-900 mt-6 mb-2 first:mt-0">
-            {trimmed}
-          </h4>
-        );
+        flushSection();
+        currentSection = { title: trimmed, content: [] };
         return;
       }
 
-      // Regular text - add to current paragraph
+      // Regular text
       flushList();
       currentParagraph.push(trimmed);
     });
 
-    // Flush any remaining content
-    flushParagraph();
-    flushList();
+    // Flush remaining content
+    flushSection();
 
-    return elements;
+    return sections;
+  };
+
+  const renderSectionContent = (content, key) => {
+    return content.map((item, i) => {
+      if (item.type === 'paragraph') {
+        return (
+          <p key={`${key}-p-${i}`} className="text-slate-700 leading-relaxed mb-4">
+            {item.text}
+          </p>
+        );
+      }
+      if (item.type === 'list') {
+        return (
+          <ul key={`${key}-ul-${i}`} className="list-disc list-inside text-slate-700 leading-relaxed mb-4 space-y-1">
+            {item.items.map((listItem, j) => (
+              <li key={j}>{listItem}</li>
+            ))}
+          </ul>
+        );
+      }
+      return null;
+    });
   };
   return (
     <div className="space-y-8">
@@ -333,9 +368,48 @@ export default function OverviewSection() {
 
                 {/* Expandable Details */}
                 {isExpanded && (
-                  <div className="px-6 pb-6 pt-2 border-t border-slate-100 mt-2">
-                    <div className="pl-16">
-                      {formatDetails(step.details)}
+                  <div className="px-6 pb-6 pt-4 border-t border-slate-100 mt-2">
+                    <div className="pl-16 space-y-3">
+                      {parseDetails(step.details).map((section, sectionIndex) => {
+                        const subsectionKey = `${step.number}-${sectionIndex}`;
+                        const isSubsectionExpanded = expandedSubsections[subsectionKey];
+
+                        // If no title, just render content directly (no foldout)
+                        if (!section.title) {
+                          return (
+                            <div key={sectionIndex}>
+                              {renderSectionContent(section.content, subsectionKey)}
+                            </div>
+                          );
+                        }
+
+                        // Render as collapsible subsection
+                        return (
+                          <div key={sectionIndex} className="border-l-2 border-slate-200 pl-4">
+                            <button
+                              onClick={() => toggleSubsection(step.number, sectionIndex)}
+                              className="w-full text-left flex items-center gap-2 py-2 hover:text-accent transition-colors"
+                            >
+                              <div className="flex-shrink-0 text-slate-400">
+                                {isSubsectionExpanded ? (
+                                  <ChevronDown size={18} />
+                                ) : (
+                                  <ChevronRight size={18} />
+                                )}
+                              </div>
+                              <h4 className="font-bold text-slate-900 text-base">
+                                {section.title}
+                              </h4>
+                            </button>
+
+                            {isSubsectionExpanded && (
+                              <div className="pl-6 mt-2">
+                                {renderSectionContent(section.content, subsectionKey)}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 )}
