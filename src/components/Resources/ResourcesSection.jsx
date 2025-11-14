@@ -1,11 +1,11 @@
-import { Calculator, FileText, CheckSquare, BookOpen } from 'lucide-react';
+import { FileText, CheckSquare, Code } from 'lucide-react';
 
 const resources = [
   {
-    id: 'calculator',
-    title: 'Sample Size Calculator',
-    description: 'Calculate the recommended number of items for validation based on your expected effect size.',
-    icon: Calculator,
+    id: 'api-guide',
+    title: 'LLM API Guide',
+    description: 'Deep dive into LLM API anatomy: parameters, authentication, rate limits, structured outputs, and best practices for research applications.',
+    icon: Code,
     status: 'Coming Soon'
   },
   {
@@ -20,13 +20,6 @@ const resources = [
     title: 'Implementation Checklist',
     description: 'Step-by-step checklist for implementing and validating your SPC.',
     icon: CheckSquare,
-    status: 'Coming Soon'
-  },
-  {
-    id: 'best-practices',
-    title: 'Best Practices Guide',
-    description: 'Guidelines on when to use SPCs, calibration techniques, and when fine-tuning helps.',
-    icon: BookOpen,
     status: 'Coming Soon'
   }
 ];
