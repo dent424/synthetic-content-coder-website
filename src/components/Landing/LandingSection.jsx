@@ -108,11 +108,15 @@ export default function LandingSection({ setActiveTab }) {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-blue-600 mt-1">•</span>
-                <span><strong>Cost:</strong> Significantly less expensive than human coding panels</span>
+                <span><strong>Cost:</strong> Significantly less expensive than human coding</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-blue-600 mt-1">•</span>
                 <span><strong>Consistency:</strong> No coder fatigue or drift over time</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-600 mt-1">•</span>
+                <span><strong>Simplicity:</strong> Technically simpler than traditional machine learning coders</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-blue-600 mt-1">•</span>
