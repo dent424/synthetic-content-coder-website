@@ -439,7 +439,7 @@ export default function OverviewSection() {
         <h2 className="text-3xl font-bold text-slate-900">
           Developing Synthetic Content Coders
         </h2>
-        <p className="text-lg leading-relaxed text-slate-700">
+        <p className="leading-relaxed text-slate-700">
           For unfinetuned SCCs, development involves a systematic 9-step process
           to ensure reliability and validity. Follow these steps to create, validate,
           and deploy LLM-based content coding systems for your research.
