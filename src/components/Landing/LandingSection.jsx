@@ -131,10 +131,12 @@ export default function LandingSection({ setActiveTab }) {
             human ratings.
           </p>
 
-          <p className="text-slate-600 italic border-l-4 border-slate-300 pl-4 mt-6">
-            <strong>Important:</strong> SCCs must be validated before use. This site teaches you how to develop
-            a properly validated SCC following rigorous psychometric standards.
-          </p>
+          <div className="bg-red-50 border border-red-200 rounded-lg p-6 mt-6">
+            <p className="text-red-900">
+              <strong>Important:</strong> SCCs must be validated before use. This site teaches you how to develop
+              a properly validated SCC following rigorous psychometric standards.
+            </p>
+          </div>
         </div>
       </div>
 
