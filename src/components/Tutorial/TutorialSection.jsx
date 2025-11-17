@@ -48,8 +48,8 @@ export default function TutorialSection() {
           Interactive Code Examples
         </h2>
         <p className="text-slate-600 mt-2">
-          Explore production-ready Python code for LLM-based content coding.
-          Scroll through the code and watch the description panel update with relevant explanations.
+          Use this interactive Python code viewer to understand how to program an SCC.
+          Scroll through the code and watch the description panel update with explanations of the code.
         </p>
       </div>
 

@@ -50,7 +50,7 @@ Rating:`
           Code Generator
         </h2>
         <p className="text-slate-600 mt-2">
-          Generate customized Python code for your LLM-based content coding project.
+          Generate customized Python code for your SCC.
           Configure your prompt and settings, then copy or download the generated code.
         </p>
       </div>
