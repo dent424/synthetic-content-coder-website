@@ -6,7 +6,7 @@ const navigationCards = [
     title: 'Overview',
     icon: Home,
     description: 'Learn about the 9-step process for developing and validating Synthetic Content Coders',
-    color: 'from-blue-500 to-blue-600',
+    color: 'from-slate-500 to-slate-600',
     items: [
       'Define your construct and collect content',
       'Partition development and validation data',
@@ -19,7 +19,7 @@ const navigationCards = [
     title: 'Getting Started',
     icon: Rocket,
     description: 'Set up your development environment and get API credentials',
-    color: 'from-green-500 to-green-600',
+    color: 'from-emerald-500 to-emerald-600',
     items: [
       'Install Python and choose an IDE',
       'Install required packages',
@@ -32,7 +32,7 @@ const navigationCards = [
     title: 'Interactive Code Examples',
     icon: BookOpen,
     description: 'Explore working Python code with line-by-line explanations',
-    color: 'from-purple-500 to-purple-600',
+    color: 'from-violet-500 to-violet-600',
     items: [
       'Basic sentiment analysis',
       'Facial expression coding',
@@ -45,7 +45,7 @@ const navigationCards = [
     title: 'Code Generator',
     icon: Code2,
     description: 'Generate customized Python code for your specific research needs',
-    color: 'from-orange-500 to-orange-600',
+    color: 'from-amber-500 to-amber-600',
     items: [
       'Choose between GPT-4 or Claude',
       'Configure temperature and settings',
@@ -58,7 +58,7 @@ const navigationCards = [
     title: 'Resources',
     icon: Library,
     description: 'Access additional tools, templates, and best practices',
-    color: 'from-cyan-500 to-cyan-600',
+    color: 'from-sky-500 to-sky-600',
     items: [
       'Validation tools and calculators',
       'Prompt templates',
@@ -185,7 +185,7 @@ export default function LandingSection({ setActiveTab }) {
       </div>
 
       {/* Quick Start Recommendation */}
-      <div className="bg-gradient-to-r from-primary to-accent rounded-lg shadow-lg p-8 text-slate-900 max-w-4xl mx-auto">
+      <div className="bg-gradient-to-r from-slate-500 to-slate-600 rounded-lg shadow-lg p-8 text-white max-w-4xl mx-auto">
         <h3 className="text-2xl font-bold mb-4">New to SCCs?</h3>
         <p className="text-lg mb-6">
           We recommend following this path:
@@ -197,21 +197,21 @@ export default function LandingSection({ setActiveTab }) {
           >
             1. Overview
           </button>
-          <ArrowRight size={24} className="text-slate-900" />
+          <ArrowRight size={24} className="text-white" />
           <button
             onClick={() => setActiveTab('getting-started')}
             className="bg-white text-slate-900 px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors"
           >
             2. Getting Started
           </button>
-          <ArrowRight size={24} className="text-slate-900" />
+          <ArrowRight size={24} className="text-white" />
           <button
             onClick={() => setActiveTab('tutorial')}
             className="bg-white text-slate-900 px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors"
           >
             3. Tutorial
           </button>
-          <ArrowRight size={24} className="text-slate-900" />
+          <ArrowRight size={24} className="text-white" />
           <button
             onClick={() => setActiveTab('generator')}
             className="bg-white text-slate-900 px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors"
