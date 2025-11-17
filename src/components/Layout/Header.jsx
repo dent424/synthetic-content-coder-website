@@ -2,7 +2,7 @@ import { BookOpen, Code2, Library, Home, Rocket, Compass } from 'lucide-react';
 
 const tabs = [
   { id: 'home', label: 'Home', icon: Home },
-  { id: 'overview', label: 'Overview', icon: Compass },
+  { id: 'overview', label: 'Validation', icon: Compass },
   { id: 'getting-started', label: 'Getting Started', icon: Rocket },
   { id: 'tutorial', label: 'Tutorial', icon: BookOpen },
   { id: 'generator', label: 'Code Generator', icon: Code2 },

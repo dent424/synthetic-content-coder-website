@@ -3,7 +3,7 @@ import { Home, Rocket, BookOpen, Code2, Library, ArrowRight } from 'lucide-react
 const navigationCards = [
   {
     id: 'overview',
-    title: 'Overview',
+    title: 'Validation',
     icon: Home,
     description: 'Learn about the 9-step process for developing and validating Synthetic Content Coders',
     color: 'from-slate-500 to-slate-600',
@@ -201,7 +201,7 @@ export default function LandingSection({ setActiveTab }) {
             onClick={() => setActiveTab('overview')}
             className="bg-white text-slate-900 px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors"
           >
-            1. Overview
+            1. Validation
           </button>
           <ArrowRight size={24} className="text-white" />
           <button

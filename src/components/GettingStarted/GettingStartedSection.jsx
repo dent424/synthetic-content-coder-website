@@ -491,7 +491,7 @@ export default function GettingStartedSection() {
             <strong>Code Generator:</strong> Generate customized Python code for your SCC
           </p>
           <p>
-            <strong>Overview:</strong> Learn about the 9-step SCC development process
+            <strong>Validation:</strong> Learn about the 9-step SCC development process
           </p>
         </div>
       </div>
