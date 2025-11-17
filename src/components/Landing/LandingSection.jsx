@@ -72,11 +72,11 @@ export default function LandingSection({ setActiveTab }) {
   return (
     <div className="space-y-12">
       {/* Hero Section */}
-      <div className="text-center space-y-6 py-8">
-        <h1 className="text-5xl font-bold text-slate-900 leading-tight">
+      <div className="text-center space-y-4 py-8">
+        <h1 className="text-4xl font-bold text-slate-900 leading-tight">
           Synthetic Content Coders
         </h1>
-        <p className="text-2xl text-slate-600 max-w-4xl mx-auto">
+        <p className="text-xl text-slate-600 max-w-4xl mx-auto">
           Use Large Language Models to code content at scale
         </p>
       </div>
@@ -185,9 +185,9 @@ export default function LandingSection({ setActiveTab }) {
       </div>
 
       {/* Quick Start Recommendation */}
-      <div className="bg-gradient-to-r from-primary to-accent rounded-lg shadow-lg p-8 text-white max-w-4xl mx-auto">
+      <div className="bg-gradient-to-r from-primary to-accent rounded-lg shadow-lg p-8 text-slate-900 max-w-4xl mx-auto">
         <h3 className="text-2xl font-bold mb-4">New to SCCs?</h3>
-        <p className="text-lg mb-6 text-white/90">
+        <p className="text-lg mb-6">
           We recommend following this path:
         </p>
         <div className="flex flex-wrap gap-3 items-center text-lg font-semibold">
@@ -197,21 +197,21 @@ export default function LandingSection({ setActiveTab }) {
           >
             1. Overview
           </button>
-          <ArrowRight size={24} className="text-white" />
+          <ArrowRight size={24} className="text-slate-900" />
           <button
             onClick={() => setActiveTab('getting-started')}
             className="bg-white text-slate-900 px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors"
           >
             2. Getting Started
           </button>
-          <ArrowRight size={24} className="text-white" />
+          <ArrowRight size={24} className="text-slate-900" />
           <button
             onClick={() => setActiveTab('tutorial')}
             className="bg-white text-slate-900 px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors"
           >
             3. Tutorial
           </button>
-          <ArrowRight size={24} className="text-white" />
+          <ArrowRight size={24} className="text-slate-900" />
           <button
             onClick={() => setActiveTab('generator')}
             className="bg-white text-slate-900 px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors"
