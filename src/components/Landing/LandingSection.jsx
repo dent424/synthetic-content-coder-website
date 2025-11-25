@@ -2,21 +2,8 @@ import { Home, Rocket, BookOpen, Code2, Library, ArrowRight } from 'lucide-react
 
 const navigationCards = [
   {
-    id: 'overview',
-    title: 'Validation',
-    icon: Home,
-    description: 'Learn about the 9-step process for developing and validating Synthetic Content Coders',
-    color: 'from-slate-500 to-slate-600',
-    items: [
-      'Define your construct and collect content',
-      'Partition development and validation data',
-      'Collect human criterion ratings',
-      'Validate SCC performance'
-    ]
-  },
-  {
     id: 'getting-started',
-    title: 'Getting Started',
+    title: 'System Setup',
     icon: Rocket,
     description: 'Set up your development environment and get API credentials',
     color: 'from-emerald-500 to-emerald-600',
@@ -25,6 +12,19 @@ const navigationCards = [
       'Install required packages',
       'Get an OpenAI API key',
       'Optional: Get an Anthropic API key'
+    ]
+  },
+  {
+    id: 'overview',
+    title: 'Create SCC',
+    icon: Home,
+    description: 'Learn about the 9-step process for developing and validating Synthetic Content Coders',
+    color: 'from-slate-500 to-slate-600',
+    items: [
+      'Define your construct and collect content',
+      'Partition development and validation data',
+      'Collect human criterion ratings',
+      'Validate SCC performance'
     ]
   },
   {
@@ -194,17 +194,17 @@ export default function LandingSection({ setActiveTab }) {
         </p>
         <div className="flex flex-wrap gap-3 items-center text-lg font-semibold">
           <button
-            onClick={() => setActiveTab('overview')}
-            className="bg-white text-slate-900 px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors"
-          >
-            1. Validation
-          </button>
-          <ArrowRight size={24} className="text-white" />
-          <button
             onClick={() => setActiveTab('getting-started')}
             className="bg-white text-slate-900 px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors"
           >
-            2. Getting Started
+            1. System Setup
+          </button>
+          <ArrowRight size={24} className="text-white" />
+          <button
+            onClick={() => setActiveTab('overview')}
+            className="bg-white text-slate-900 px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors"
+          >
+            2. Create SCC
           </button>
           <ArrowRight size={24} className="text-white" />
           <button
