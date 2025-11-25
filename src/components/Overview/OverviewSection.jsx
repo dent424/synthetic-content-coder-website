@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 
-export default function OverviewSection() {
+export default function OverviewSection({ setActiveTab }) {
   const [expandedSteps, setExpandedSteps] = useState({});
   const [expandedSubsections, setExpandedSubsections] = useState({});
 
@@ -53,7 +53,14 @@ export default function OverviewSection() {
                 the LLM of your choice. We provide guidance on how to do this here:
               </p>
               <ul className="list-disc list-inside text-blue-900 space-y-2 ml-4">
-                <li>[LINK] Setting Up Python and a Development Environment</li>
+                <li>
+                  <button
+                    onClick={() => setActiveTab('getting-started')}
+                    className="text-blue-600 hover:text-blue-700 underline font-medium hover:no-underline transition-colors"
+                  >
+                    Setting Up Python and a Development Environment
+                  </button>
+                </li>
                 <li>[LINK] Generating API Keys</li>
               </ul>
             </div>

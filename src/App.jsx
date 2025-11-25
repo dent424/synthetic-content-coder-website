@@ -16,7 +16,7 @@ function App() {
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         {activeTab === 'home' && <LandingSection setActiveTab={setActiveTab} />}
-        {activeTab === 'overview' && <OverviewSection />}
+        {activeTab === 'overview' && <OverviewSection setActiveTab={setActiveTab} />}
         {activeTab === 'getting-started' && <GettingStartedSection />}
         {activeTab === 'tutorial' && <TutorialSection />}
         {activeTab === 'generator' && <GeneratorSection />}
