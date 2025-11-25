@@ -29,7 +29,7 @@ const navigationCards = [
   },
   {
     id: 'tutorial',
-    title: 'Interactive Code Examples',
+    title: 'Code Tutorial',
     icon: BookOpen,
     description: 'Explore working Python code with line-by-line explanations',
     color: 'from-violet-500 to-violet-600',
@@ -55,7 +55,7 @@ const navigationCards = [
   },
   {
     id: 'resources',
-    title: 'Resources',
+    title: 'Additional Resources',
     icon: Library,
     description: 'Access additional tools, templates, and best practices',
     color: 'from-sky-500 to-sky-600',
@@ -211,7 +211,7 @@ export default function LandingSection({ setActiveTab }) {
             onClick={() => setActiveTab('tutorial')}
             className="bg-white text-slate-900 px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors"
           >
-            3. Tutorial
+            3. Code Tutorial
           </button>
           <ArrowRight size={24} className="text-white" />
           <button

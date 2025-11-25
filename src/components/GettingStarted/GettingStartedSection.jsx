@@ -279,7 +279,7 @@ export default function GettingStartedSection() {
               <strong>Create SCC:</strong> Learn the 9-step process for developing and validating SCCs
             </li>
             <li>
-              <strong>Tutorial:</strong> See step-by-step code examples for different content types
+              <strong>Code Tutorial:</strong> See step-by-step code examples for different content types
             </li>
             <li>
               <strong>Code Generator:</strong> Generate customized Python code for GPT-4 or Claude

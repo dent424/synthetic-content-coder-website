@@ -4,9 +4,9 @@ const tabs = [
   { id: 'home', label: 'Home', icon: Home },
   { id: 'getting-started', label: 'System Setup', icon: Rocket },
   { id: 'overview', label: 'Create SCC', icon: Compass },
-  { id: 'tutorial', label: 'Tutorial', icon: BookOpen },
+  { id: 'tutorial', label: 'Code Tutorial', icon: BookOpen },
   { id: 'generator', label: 'Code Generator', icon: Code2 },
-  { id: 'resources', label: 'Resources', icon: Library },
+  { id: 'resources', label: 'Additional Resources', icon: Library },
 ];
 
 // Color mapping for each tab with subtle tints

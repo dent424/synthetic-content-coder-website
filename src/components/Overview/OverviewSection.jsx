@@ -969,13 +969,13 @@ export default function OverviewSection({ setActiveTab }) {
         <h3 className="font-bold text-slate-900 mb-3 text-lg">Ready to Get Started?</h3>
         <div className="space-y-2 text-slate-700">
           <p>
-            <strong>Tutorial:</strong> See step-by-step code examples for different content types
+            <strong>Code Tutorial:</strong> See step-by-step code examples for different content types
           </p>
           <p>
             <strong>Code Generator:</strong> Generate customized Python code for GPT-4 or Claude
           </p>
           <p>
-            <strong>Resources:</strong> Access validation tools, templates, and best practices
+            <strong>Additional Resources:</strong> Access validation tools, templates, and best practices
           </p>
         </div>
       </div>
