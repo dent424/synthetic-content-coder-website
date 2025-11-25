@@ -935,25 +935,26 @@ export default function OverviewSection() {
                 </button>
                 {expandedSubsections['9-restart'] && (
                   <div className="ml-6 mt-2">
-                    <p className="text-purple-900 mb-4">
+                    <p className="text-purple-900">
                       If the SCC fails to achieve the preregistered validity threshold, or if later checks reveal non-trivial performance changes (for example, after an LLM provider updates a model), treat the
                       validation as unsuccessful. In these cases, refine the construct definition, criterion data,
                       prompts, or model choice, and then repeat the development and validation steps with
                       newly sequestered validation data. This process includes collecting new human data.
                     </p>
-
-                    <div className="bg-purple-100 border border-purple-300 rounded-lg p-4 mt-4">
-                      <p className="text-purple-900 font-bold">
-                        Important: SCCs must be validated before use in a specific context. This site teaches you
-                        how to develop a properly validated SCC to apply to a specific context.
-                      </p>
-                    </div>
                   </div>
                 )}
               </div>
             </div>
           )}
         </div>
+      </div>
+
+      {/* Important Warning Box - RED */}
+      <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+        <p className="text-red-900 font-bold">
+          Important: SCCs must be validated before use in a specific context. This site teaches you
+          how to develop a properly validated SCC to apply to a specific context.
+        </p>
       </div>
 
       {/* Bottom CTA Section */}
