@@ -231,12 +231,240 @@ export default function GettingStartedSection() {
           </button>
 
           {expandedSteps[2] && (
-            <div className="ml-9 mt-3">
-              <div className="bg-emerald-100 border border-emerald-300 rounded-lg p-6">
-                <p className="text-emerald-900 italic">
-                  Content coming soon. This section will guide you through obtaining API keys from OpenAI and Anthropic.
-                </p>
+            <div className="ml-9 mt-3 space-y-6">
+
+              {/* Subsection 2a: What is an API Key? */}
+              <div className="border-l-2 border-emerald-300 pl-4">
+                <button
+                  onClick={() => toggleSubsection('2a-what')}
+                  className="w-full text-left flex items-start gap-2 hover:text-emerald-700 transition-colors py-2"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['2a-what'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-emerald-900">2a. What is an API Key?</h4>
+                </button>
+                {expandedSubsections['2a-what'] && (
+                  <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-emerald-900">
+                      Once your computer is set up, you need to connect it to the LLM. To do this, you will need
+                      an <strong>API Key</strong>. An API key is a code that tells the company running the AI that you are using
+                      their service. This allows them to charge you money each time you use their services.
+                    </p>
+                    <p className="text-emerald-900">
+                      In this walkthrough, we will show you how to get an API key from <strong>OpenAI</strong> (the company that
+                      runs ChatGPT). If this is your first time working with an API, we recommend that you work
+                      with an OpenAI API, as they are the best documented.
+                    </p>
+                  </div>
+                )}
               </div>
+
+              {/* Subsection 2b: Getting an OpenAI Account */}
+              <div className="border-l-2 border-emerald-300 pl-4">
+                <button
+                  onClick={() => toggleSubsection('2b-account')}
+                  className="w-full text-left flex items-start gap-2 hover:text-emerald-700 transition-colors py-2"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['2b-account'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-emerald-900">2b. Getting an OpenAI Account</h4>
+                </button>
+                {expandedSubsections['2b-account'] && (
+                  <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-emerald-900">
+                      The first thing you need to do is get an account with OpenAI. To do this, go to the{' '}
+                      <a
+                        href="https://openai.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-emerald-600 hover:text-emerald-700 underline font-medium"
+                      >
+                        OpenAI website
+                      </a>
+                      {' '}and create an account by clicking <strong>Log in</strong>, then <strong>API Platform</strong>, and then <strong>Sign Up</strong>.
+                    </p>
+                    <p className="text-emerald-900">
+                      You can either create an independent account or link it to other services like your Google or Apple account.
+                    </p>
+
+                    {/* Account Screenshot */}
+                    <div className="bg-white border border-emerald-200 rounded-lg p-4 my-4">
+                      <img
+                        src="/images/apikey/OpenAI Get Account.png"
+                        alt="OpenAI website showing Log in button and Sign Up options"
+                        className="w-full rounded-lg shadow-md"
+                      />
+                      <p className="text-sm text-slate-600 mt-3 text-center italic">
+                        Click Log in, then API Platform, then Sign Up to create an account
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Subsection 2c: The Main API Page */}
+              <div className="border-l-2 border-emerald-300 pl-4">
+                <button
+                  onClick={() => toggleSubsection('2c-mainpage')}
+                  className="w-full text-left flex items-start gap-2 hover:text-emerald-700 transition-colors py-2"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['2c-mainpage'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-emerald-900">2c. The Main API Page</h4>
+                </button>
+                {expandedSubsections['2c-mainpage'] && (
+                  <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-emerald-900">
+                      Once you've created an account and logged in, you'll be taken to a website full of useful
+                      materials. In the image below, we highlight some parts of this website that you might find
+                      particularly useful.
+                    </p>
+
+                    {/* Main Page Screenshot */}
+                    <div className="bg-white border border-emerald-200 rounded-lg p-4 my-4">
+                      <img
+                        src="/images/apikey/OpenAI Main Page.png"
+                        alt="OpenAI API Platform main page showing Get Started section, Core concepts, Models, and settings gear icon"
+                        className="w-full rounded-lg shadow-md"
+                      />
+                      <p className="text-sm text-slate-600 mt-3 text-center italic">
+                        The OpenAI Platform dashboard with helpful sections highlighted
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Subsection 2d: Adding Money to Your Account */}
+              <div className="border-l-2 border-emerald-300 pl-4">
+                <button
+                  onClick={() => toggleSubsection('2d-billing')}
+                  className="w-full text-left flex items-start gap-2 hover:text-emerald-700 transition-colors py-2"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['2d-billing'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-emerald-900">2d. Adding Money to Your Account</h4>
+                </button>
+                {expandedSubsections['2d-billing'] && (
+                  <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-emerald-900">
+                      APIs charge you money for each "token" they process. A <strong>token</strong> is a part of a word that an
+                      LLM uses as it processes text. You can think of a token as being a short word. It is harder to
+                      know how images map onto tokens.
+                    </p>
+                    <p className="text-emerald-900">
+                      Models also typically charge more for producing tokens than for reading them. At the time
+                      of this writing, GPT-4o charges $2.50 for every million tokens that you send it and $10 for
+                      every million tokens that it produces. Note that, whether you are processing text or images,
+                      a million tokens is a lot of content!
+                    </p>
+                    <p className="text-emerald-900">
+                      To add money to your account, click the <strong>gear icon</strong> in the upper right corner of the screen
+                      (see image in "The Main API Page" section). Then click on <strong>"Billing"</strong> in the navigation bar on
+                      the left side. This will allow you to add payment methods and specify how much money you
+                      want to add.
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Subsection 2e: Creating an API Key */}
+              <div className="border-l-2 border-emerald-300 pl-4">
+                <button
+                  onClick={() => toggleSubsection('2e-createkey')}
+                  className="w-full text-left flex items-start gap-2 hover:text-emerald-700 transition-colors py-2"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['2e-createkey'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-emerald-900">2e. Creating an API Key</h4>
+                </button>
+                {expandedSubsections['2e-createkey'] && (
+                  <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-emerald-900">
+                      An API key is a long, secret code that your app uses to identify itself when it talks to another
+                      company's service. It tells the company who is making the request so they can control
+                      what you're allowed to do, protect their data, and know who to bill for usage.
+                    </p>
+                    <p className="text-emerald-900">
+                      Once you have an account with OpenAI, you can create as many API keys as you want. It's
+                      very important to keep this key private. <strong>If someone has your key, they can use your account.</strong>
+                    </p>
+                    <p className="text-emerald-900">
+                      To create a key, click on the <strong>gear icon</strong>. Then click <strong>"API keys"</strong> on the left navigation panel.
+                      To create a new key, click the black button in the upper right corner that says <strong>"Create new secret key"</strong>.
+                    </p>
+
+                    {/* API Keys List Screenshot */}
+                    <div className="bg-white border border-emerald-200 rounded-lg p-4 my-4">
+                      <img
+                        src="/images/apikey/OpenAI Get Key 1.png"
+                        alt="OpenAI API keys page showing list of existing keys and Create new secret key button"
+                        className="w-full rounded-lg shadow-md"
+                      />
+                      <p className="text-sm text-slate-600 mt-3 text-center italic">
+                        Click "API keys" in the left panel, then "Create new secret key" button
+                      </p>
+                    </div>
+
+                    <p className="text-emerald-900">
+                      Once you click this button, you will see a new screen pop up. You can name your key in the Name field.
+                      You will also have to select a project – typically, you will simply select <strong>"Default project"</strong> if you
+                      are just getting started. Then click the black <strong>"Create secret key"</strong> button on the bottom right.
+                    </p>
+
+                    {/* Create Key Dialog Screenshot */}
+                    <div className="bg-white border border-emerald-200 rounded-lg p-4 my-4">
+                      <img
+                        src="/images/apikey/OpenAI Get Key 2.png"
+                        alt="OpenAI create new secret key dialog showing name field, project selection, and create button"
+                        className="w-full rounded-lg shadow-md"
+                      />
+                      <p className="text-sm text-slate-600 mt-3 text-center italic">
+                        Name your key, select a project, and click "Create secret key"
+                      </p>
+                    </div>
+
+                    <p className="text-emerald-900">
+                      Once you do this, a new screen will appear with your key. You can copy this key and paste it into
+                      any program that uses the API.
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Subsection 2f: Handling API Keys */}
+              <div className="border-l-2 border-emerald-300 pl-4">
+                <button
+                  onClick={() => toggleSubsection('2f-handling')}
+                  className="w-full text-left flex items-start gap-2 hover:text-emerald-700 transition-colors py-2"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['2f-handling'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-emerald-900">2f. Handling API Keys</h4>
+                </button>
+                {expandedSubsections['2f-handling'] && (
+                  <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-emerald-900">
+                      API keys are long strings of text and numbers. As noted earlier, <strong>if someone gains access to
+                      your API key they can use your account</strong>. This means that you should be careful to keep
+                      this key private. For example, if you are posting a computer program to OSF, you should
+                      never post it with your API key.
+                    </p>
+                    <p className="text-emerald-900">
+                      Once you generate an API key, OpenAI will never give it to you again. This means that if you
+                      lose the key, you'll have to generate a new one. Luckily, unlike with house keys, this isn't a
+                      big deal. It's free and quick to do so. Just repeat the steps you just followed.
+                    </p>
+                  </div>
+                )}
+              </div>
+
             </div>
           )}
         </div>

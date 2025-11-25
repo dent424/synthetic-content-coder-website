@@ -153,7 +153,7 @@ export default function LandingSection({ setActiveTab }) {
                 className="group bg-white rounded-lg shadow-md border border-slate-200 hover:shadow-xl transition-all duration-300 hover:scale-105 text-left overflow-hidden"
               >
                 {/* Card Header with Gradient */}
-                <div className={`bg-gradient-to-r ${card.color} p-6 text-white`}>
+                <div className={`bg-gradient-to-r ${card.color} p-6 text-white rounded-t-lg`}>
                   <div className="flex items-center gap-3 mb-2">
                     <Icon size={32} className="flex-shrink-0" />
                     <h3 className="text-2xl font-bold">{card.title}</h3>
