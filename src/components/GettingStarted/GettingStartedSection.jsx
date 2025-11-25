@@ -1,498 +1,290 @@
 import { useState } from 'react';
-import { ChevronDown, ChevronRight, ExternalLink } from 'lucide-react';
-
-const steps = [
-  {
-    number: 1,
-    title: 'Install Anaconda',
-    description: 'Download Anaconda, which includes Python, Jupyter Notebook, and essential scientific packages.',
-    content: `
-### What is Anaconda?
-
-Anaconda is a comprehensive Python distribution that includes:
-- Python programming language
-- Jupyter Notebook (for interactive coding)
-- Essential scientific packages (pandas, numpy, etc.)
-- Package manager (conda) for easy installation
-- Anaconda Navigator (graphical interface)
-
-Installing Anaconda gives you everything you need in one simple download.
-
-### Download and Install Anaconda
-
-**Step 1: Download**
-
-Visit [anaconda.com/download](https://www.anaconda.com/download) and download the installer for your operating system:
-- **Windows:** Download the .exe installer
-- **Mac:** Download the .pkg installer
-- **Linux:** Download the .sh installer
-
-Choose the latest Python 3.x version (currently Python 3.11 or 3.12).
-
-**Step 2: Run the Installer**
-
-- **Windows:** Double-click the .exe file and follow the installation wizard
-  - Choose "Just Me" when asked who to install for
-  - Accept the default installation location
-  - **Important:** Check "Add Anaconda to my PATH environment variable" if you want to use conda from any command prompt
-
-- **Mac:** Double-click the .pkg file and follow the prompts
-  - Enter your password when requested
-  - Accept the license agreement
-  - Install for "Just Me"
-
-**Step 3: Verify Installation**
-
-Open **Anaconda Prompt** (Windows) or **Terminal** (Mac/Linux) and type:
-
-\`\`\`bash
-conda --version
-python --version
-\`\`\`
-
-Both commands should display version numbers. You're ready to go!
-
-### Launch Anaconda Navigator
-
-Anaconda Navigator is a desktop application that lets you launch Jupyter Notebook, manage packages, and more.
-
-- **Windows:** Search for "Anaconda Navigator" in the Start menu
-- **Mac:** Find Anaconda Navigator in your Applications folder
-- **Or from terminal:** Type \`anaconda-navigator\`
-    `.trim()
-  },
-  {
-    number: 2,
-    title: 'Choose Your Coding Environment',
-    description: 'Select a development environment to write and run your Python code.',
-    content: `
-### Recommended Options
-
-**Option 1: Jupyter Notebook (Included with Anaconda - Recommended)**
-
-Jupyter Notebook is perfect for SCCs because you can:
-- Run code in interactive cells
-- See outputs immediately
-- Mix code with explanatory text
-- Save your work automatically
-
-**To Launch Jupyter:**
-1. Open Anaconda Navigator
-2. Click "Launch" under Jupyter Notebook
-3. Your browser will open showing your files
-4. Click "New" → "Python 3" to create a new notebook
-5. Type code in a cell and press Shift+Enter to run it
-
-**Option 2: Visual Studio Code**
-
-VS Code is a powerful, free code editor that works great with Python.
-
-1. Download from [code.visualstudio.com](https://code.visualstudio.com/)
-2. Install VS Code
-3. Open VS Code
-4. Click the Extensions icon (or press Ctrl+Shift+X)
-5. Search for "Python" and install the official Python extension by Microsoft
-6. Restart VS Code
-
-VS Code works seamlessly with Anaconda - it will automatically detect your Anaconda Python installation.
-
-**Option 3: PyCharm Community Edition**
-
-PyCharm is a full-featured IDE specifically designed for Python development.
-
-1. Download PyCharm Community (free) from [jetbrains.com/pycharm](https://www.jetbrains.com/pycharm/)
-2. Install and run PyCharm
-3. When creating a project, select your Anaconda Python interpreter
-
-### Test Your Setup
-
-**In Jupyter Notebook:**
-1. Create a new notebook
-2. In the first cell, type: \`print("Hello from my SCC!")\`
-3. Press Shift+Enter to run
-4. You should see the output below the cell
-
-**In VS Code or PyCharm:**
-1. Create a new file named \`test_scc.py\`
-2. Type: \`print("Hello from my SCC!")\`
-3. Run the file (F5 or click "Run")
-4. You should see the output in the terminal
-    `.trim()
-  },
-  {
-    number: 3,
-    title: 'Install Required Python Packages',
-    description: 'Install the libraries needed to interact with LLM APIs.',
-    content: `
-### Install the OpenAI Library
-
-Open **Anaconda Prompt** (Windows) or **Terminal** (Mac/Linux) and run:
-
-\`\`\`bash
-conda install -c conda-forge openai
-\`\`\`
-
-Or use pip (works with Anaconda):
-
-\`\`\`bash
-pip install openai
-\`\`\`
-
-### Install the Anthropic Library (for Claude)
-
-If you plan to use Claude instead of GPT-4:
-
-\`\`\`bash
-pip install anthropic
-\`\`\`
-
-### Good News: Many Packages Are Already Installed!
-
-Anaconda includes many useful packages by default:
-- **pandas** - For working with spreadsheets and data
-- **pillow** - For working with images
-- **numpy** - For numerical operations
-
-You can check what's installed by typing:
-
-\`\`\`bash
-conda list
-\`\`\`
-
-### Verify OpenAI Installation
-
-**In Jupyter Notebook:**
-1. Create a new cell
-2. Type:
-\`\`\`python
-import openai
-print("OpenAI library installed successfully!")
-\`\`\`
-3. Press Shift+Enter to run
-
-**In a Python file:**
-Create \`test_openai.py\` with the same code and run it.
-
-If you see the success message, you're ready to go!
-    `.trim()
-  },
-  {
-    number: 4,
-    title: 'Get an OpenAI API Key',
-    description: 'Create an OpenAI account and obtain an API key to use GPT-4.',
-    content: `
-### Step-by-Step Instructions
-
-**1. Create an OpenAI Account**
-
-- Visit [platform.openai.com/signup](https://platform.openai.com/signup)
-- Sign up with your email address
-- Verify your email
-
-**2. Add Payment Method**
-
-- Go to [platform.openai.com/account/billing](https://platform.openai.com/account/billing)
-- Click "Add payment method"
-- Enter your credit card information
-- **Note:** OpenAI charges pay-as-you-go. You only pay for what you use.
-
-**3. Set Spending Limits (Recommended)**
-
-- In the Billing section, set a monthly spending limit
-- Start with a low limit (e.g., $10) while testing
-- This prevents unexpected charges
-
-**4. Generate Your API Key**
-
-- Go to [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
-- Click "Create new secret key"
-- Give it a name (e.g., "SCC Research Project")
-- **Important:** Copy the key immediately - you won't be able to see it again!
-- Store it somewhere safe (like a password manager)
-
-**5. Test Your API Key**
-
-Create a file named \`test_api.py\`:
-
-\`\`\`python
-from openai import OpenAI
-
-# Replace with your actual API key
-client = OpenAI(api_key="sk-proj-...")
-
-response = client.chat.completions.create(
-    model="gpt-4",
-    messages=[{"role": "user", "content": "Say hello!"}],
-    max_tokens=10
-)
-
-print(response.choices[0].message.content)
-\`\`\`
-
-Run it. If you see a response from GPT-4, your API key works!
-
-### API Key Security Tips
-
-**Never share your API key publicly:**
-- Don't commit it to GitHub
-- Don't post it in forums or chat
-- Don't share it via email
-
-**Use environment variables (recommended):**
-
-Instead of putting the key in your code:
-
-\`\`\`python
-import os
-from openai import OpenAI
-
-# Set this in your terminal before running:
-# export OPENAI_API_KEY="sk-proj-..."
-
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-\`\`\`
-
-**Monitor your usage:**
-- Regularly check [platform.openai.com/usage](https://platform.openai.com/usage)
-- Review your spending to avoid surprises
-    `.trim()
-  },
-  {
-    number: 5,
-    title: 'Optional: Get an Anthropic API Key (for Claude)',
-    description: 'If you want to use Claude instead of GPT-4, follow these steps.',
-    content: `
-### Step-by-Step Instructions
-
-**1. Create an Anthropic Account**
-
-- Visit [console.anthropic.com](https://console.anthropic.com/)
-- Sign up with your email address
-- Verify your email
-
-**2. Add Credits**
-
-- Go to the Billing section
-- Add credits to your account (minimum $5)
-- **Note:** Anthropic uses a prepaid credit system
-
-**3. Generate Your API Key**
-
-- Go to API Keys section
-- Click "Create Key"
-- Give it a name (e.g., "SCC Research")
-- **Important:** Copy and save the key immediately!
-
-**4. Test Your API Key**
-
-Create a file named \`test_claude.py\`:
-
-\`\`\`python
-from anthropic import Anthropic
-
-# Replace with your actual API key
-client = Anthropic(api_key="sk-ant-...")
-
-message = client.messages.create(
-    model="claude-sonnet-4-20250514",
-    max_tokens=10,
-    messages=[{"role": "user", "content": "Say hello!"}]
-)
-
-print(message.content[0].text)
-\`\`\`
-
-Run it. If you see a response from Claude, your API key works!
-
-### When to Use Claude vs GPT-4
-
-**Use GPT-4 when:**
-- You want the most widely-used model
-- You prefer pay-as-you-go billing
-- You're following published SCC research (most examples use GPT-4)
-
-**Use Claude when:**
-- You want longer context windows
-- You prefer prepaid credits
-- You want to compare model performance
-    `.trim()
-  }
-];
+import { ChevronDown, ChevronRight } from 'lucide-react';
 
 export default function GettingStartedSection() {
-  const [expandedStep, setExpandedStep] = useState(null);
+  const [expandedSteps, setExpandedSteps] = useState({});
+  const [expandedSubsections, setExpandedSubsections] = useState({});
 
-  const toggleStep = (number) => {
-    setExpandedStep(expandedStep === number ? null : number);
+  const toggleStep = (stepId) => {
+    setExpandedSteps(prev => ({ ...prev, [stepId]: !prev[stepId] }));
   };
 
-  // Simple markdown-like rendering
-  const renderContent = (content) => {
-    const lines = content.split('\n');
-    const elements = [];
-    let currentList = [];
-    let currentCodeBlock = null;
-    let codeLines = [];
-
-    const flushCodeBlock = () => {
-      if (currentCodeBlock !== null) {
-        elements.push(
-          <div key={`code-${elements.length}`} className="bg-slate-900 text-slate-100 rounded-lg p-4 my-4 overflow-x-auto">
-            <div className="text-xs text-slate-400 mb-2">{currentCodeBlock}</div>
-            <pre className="text-sm">
-              <code>{codeLines.join('\n')}</code>
-            </pre>
-          </div>
-        );
-        currentCodeBlock = null;
-        codeLines = [];
-      }
-    };
-
-    const flushList = () => {
-      if (currentList.length > 0) {
-        elements.push(
-          <ul key={`list-${elements.length}`} className="list-disc list-inside text-slate-700 space-y-2 my-4">
-            {currentList.map((item, i) => (
-              <li key={i} dangerouslySetInnerHTML={{ __html: item }} />
-            ))}
-          </ul>
-        );
-        currentList = [];
-      }
-    };
-
-    lines.forEach((line, i) => {
-      // Code block start
-      if (line.startsWith('```')) {
-        flushList();
-        if (currentCodeBlock === null) {
-          currentCodeBlock = line.substring(3) || 'code';
-        } else {
-          flushCodeBlock();
-        }
-        return;
-      }
-
-      // Inside code block
-      if (currentCodeBlock !== null) {
-        codeLines.push(line);
-        return;
-      }
-
-      // Heading
-      if (line.startsWith('### ')) {
-        flushList();
-        elements.push(
-          <h4 key={`h-${i}`} className="font-bold text-slate-900 mt-6 mb-3 text-lg">
-            {line.substring(4)}
-          </h4>
-        );
-        return;
-      }
-
-      // List item or numbered list
-      if (line.match(/^[-*]\s/) || line.match(/^\d+\.\s/)) {
-        const content = line.replace(/^[-*]\s/, '').replace(/^\d+\.\s/, '')
-          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-          .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">$1</a>');
-        currentList.push(content);
-        return;
-      }
-
-      // Regular paragraph
-      if (line.trim()) {
-        flushList();
-        const content = line
-          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-          .replace(/`(.*?)`/g, '<code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded text-sm">$1</code>')
-          .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline inline-flex items-center gap-1">$1 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a>');
-
-        elements.push(
-          <p key={`p-${i}`} className="text-slate-700 leading-relaxed my-3" dangerouslySetInnerHTML={{ __html: content }} />
-        );
-      }
-    });
-
-    flushList();
-    flushCodeBlock();
-
-    return elements;
+  const toggleSubsection = (subsectionId) => {
+    setExpandedSubsections(prev => ({ ...prev, [subsectionId]: !prev[subsectionId] }));
   };
 
   return (
     <div className="space-y-8">
+      {/* Hero Section */}
       <div className="space-y-4">
         <h2 className="text-3xl font-bold text-slate-900">
-          Getting Started with SCCs
+          System Setup: Getting Your Computer Ready for SCCs
         </h2>
         <p className="leading-relaxed text-slate-700">
-          Follow these steps to set up your development environment and get your API credentials.
-          If you're new to programming, start with Step 1. If you already have Anaconda or Python installed, skip to Step 3.
+          To run an SCC, you will need to install a programming language and an application to write
+          these programs in. This application is called an <strong>Integrated Development Environment (IDE)</strong>.
+          You will also need to install a few <strong>packages</strong> (extra commands) for your programming
+          language that allow you to access your LLM.
+        </p>
+        <p className="leading-relaxed text-slate-700">
+          In this walkthrough, we will show you how to install the Python programming language, the
+          Spyder IDE, and some key packages.
         </p>
       </div>
 
-      <div className="space-y-4">
-        {steps.map((step) => {
-          const isExpanded = expandedStep === step.number;
-
-          return (
-            <div
-              key={step.number}
-              className="bg-white rounded-lg shadow-md border border-slate-200 hover:shadow-lg transition-all duration-200 hover:border-accent/50"
-            >
-              <button
-                onClick={() => toggleStep(step.number)}
-                className="w-full p-6 text-left focus:outline-none focus:ring-2 focus:ring-accent/50 rounded-lg"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg">
-                    {step.number}
-                  </div>
-
-                  <div className="flex-1">
-                    <h4 className="font-bold text-lg text-slate-900 mb-2">
-                      {step.title}
-                    </h4>
-                    <p className="text-slate-600 leading-relaxed">
-                      {step.description}
-                    </p>
-                  </div>
-
-                  <div className="flex-shrink-0 text-slate-400">
-                    {isExpanded ? (
-                      <ChevronDown size={24} />
-                    ) : (
-                      <ChevronRight size={24} />
-                    )}
-                  </div>
-                </div>
-              </button>
-
-              {isExpanded && (
-                <div className="px-6 pb-6 pt-2 border-t border-slate-100">
-                  <div className="pl-16">
-                    {renderContent(step.content)}
-                  </div>
-                </div>
-              )}
+      {/* STEP 1: Get Your Computer Ready - BLUE */}
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-8">
+        <div className="mb-6">
+          <button
+            onClick={() => toggleStep(1)}
+            className="w-full text-left flex items-start gap-3 hover:bg-blue-100/50 p-3 rounded-lg transition-colors"
+          >
+            <div className="flex-shrink-0 mt-0.5 text-blue-700">
+              {expandedSteps[1] ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
             </div>
-          );
-        })}
+            <h3 className="text-xl font-bold text-blue-900 flex-1">Step 1: Get Your Computer Ready</h3>
+          </button>
+
+          {expandedSteps[1] && (
+            <div className="ml-9 mt-3 space-y-6">
+
+              {/* Subsection 1a: Download and Install Anaconda */}
+              <div className="border-l-2 border-blue-300 pl-4">
+                <button
+                  onClick={() => toggleSubsection('1a-anaconda')}
+                  className="w-full text-left flex items-start gap-2 hover:text-blue-700 transition-colors py-2"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['1a-anaconda'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-blue-900">1a. Download and Install Anaconda</h4>
+                </button>
+                {expandedSubsections['1a-anaconda'] && (
+                  <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-blue-900">
+                      For beginners, we recommend using the Python programming language and the Spyder
+                      IDE. This is because both can be downloaded together from an organization named
+                      Anaconda. <strong>Anaconda is a free software that bundles Python with scientific computing
+                      tools.</strong> It's the simplest way to get everything you need.
+                    </p>
+
+                    <p className="text-blue-900">
+                      Go to{' '}
+                      <a
+                        href="https://www.anaconda.com/download"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-700 underline font-medium"
+                      >
+                        www.anaconda.com/download
+                      </a>
+                      {' '}and download it based on your operating system. In the image below, you can see the part
+                      of the site that you will download from in the red box.
+                    </p>
+
+                    {/* Anaconda Download Screenshot */}
+                    <div className="bg-white border border-blue-200 rounded-lg p-4 my-4">
+                      <img
+                        src="/images/anaconda/Anaconda1.png"
+                        alt="Anaconda download page showing installer options for Windows, Mac, and Linux"
+                        className="w-full rounded-lg shadow-md"
+                      />
+                      <p className="text-sm text-slate-600 mt-3 text-center italic">
+                        Download Anaconda from the official website for your operating system
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Subsection 1b: Running Spyder and Accessing Python */}
+              <div className="border-l-2 border-blue-300 pl-4">
+                <button
+                  onClick={() => toggleSubsection('1b-spyder')}
+                  className="w-full text-left flex items-start gap-2 hover:text-blue-700 transition-colors py-2"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['1b-spyder'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-blue-900">1b. Running Spyder and Accessing Python</h4>
+                </button>
+                {expandedSubsections['1b-spyder'] && (
+                  <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-blue-900">
+                      After installing Anaconda, look for a program on your computer called <strong>Anaconda Navigator</strong>
+                      {' '}and open it. From here, you will see a menu with many programs. Pick the one called
+                      <strong> Spyder</strong>. Spyder is a program that lets you access the Python programming language.
+                    </p>
+
+                    <p className="text-blue-900">
+                      In the image below, you will see Anaconda Navigator with Spyder in a red box.
+                    </p>
+
+                    {/* Anaconda Navigator Screenshot */}
+                    <div className="bg-white border border-blue-200 rounded-lg p-4 my-4">
+                      <img
+                        src="/images/anaconda/Anaconda2.png"
+                        alt="Anaconda Navigator interface showing various applications including Spyder"
+                        className="w-full rounded-lg shadow-md"
+                      />
+                      <p className="text-sm text-slate-600 mt-3 text-center italic">
+                        Launch Spyder from the Anaconda Navigator application menu
+                      </p>
+                    </div>
+
+                    <h5 className="text-md font-bold text-blue-900 mt-6">Getting Used to Spyder</h5>
+
+                    <p className="text-blue-900">
+                      Spyder can look intimidating at first but it's not too bad. You should see a few panels.
+                      Typically, <strong>the one on the left is where you write your programs</strong> (also called scripts). We
+                      provide templates that you can use here. <strong>The one on the right is where you interact with
+                      Python and run programs.</strong> We won't go into lots of detail here, but{' '}
+                      <a
+                        href="https://docs.spyder-ide.org/current/videos/first-steps-with-spyder.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-700 underline font-medium"
+                      >
+                        this
+                      </a>
+                      {' '}is an excellent guide.
+                    </p>
+
+                    {/* Spyder Interface Screenshot */}
+                    <div className="bg-white border border-blue-200 rounded-lg p-4 my-4">
+                      <img
+                        src="/images/anaconda/Spyder1.png"
+                        alt="Spyder IDE interface showing the script editor panel on the left and Python console on the right"
+                        className="w-full rounded-lg shadow-md"
+                      />
+                      <p className="text-sm text-slate-600 mt-3 text-center italic">
+                        Spyder interface: Left panel for writing scripts, right panel for interacting with Python
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Subsection 1c: Install the API */}
+              <div className="border-l-2 border-blue-300 pl-4">
+                <button
+                  onClick={() => toggleSubsection('1c-api')}
+                  className="w-full text-left flex items-start gap-2 hover:text-blue-700 transition-colors py-2"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['1c-api'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-blue-900">1c. Install the API</h4>
+                </button>
+                {expandedSubsections['1c-api'] && (
+                  <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-blue-900">
+                      The API is installed within Python as a <strong>package</strong>. You can think of this as a way of adding
+                      extra commands for Python to use that allow it to communicate with an LLM. To install the
+                      OpenAI API, type this in the right panel and hit enter:
+                    </p>
+
+                    {/* Code block for pip install command */}
+                    <div className="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-sm my-4">
+                      <div className="flex items-center gap-2">
+                        <span className="text-slate-500">In [1]:</span>
+                        <span>pip install OpenAI</span>
+                      </div>
+                    </div>
+
+                    <p className="text-blue-900">
+                      See the image below for how this should look. You will likely see a lot of text appear in the window.
+                      <strong> Wait for it to finish.</strong> Once that's done, your computer is ready to create an SCC!
+                    </p>
+
+                    {/* Spyder Console Screenshot */}
+                    <div className="bg-white border border-blue-200 rounded-lg p-4 my-4">
+                      <img
+                        src="/images/anaconda/Spyder2.png"
+                        alt="Spyder console showing the pip install OpenAI command"
+                        className="w-full rounded-lg shadow-md"
+                      />
+                      <p className="text-sm text-slate-600 mt-3 text-center italic">
+                        Type the pip install command in the Python console (right panel)
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mt-8">
-        <h3 className="font-bold text-blue-900 mb-3 text-lg">What's Next?</h3>
-        <div className="space-y-2 text-blue-800">
+      {/* STEP 2: Get an API Key - EMERALD (Placeholder) */}
+      <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-8">
+        <div className="mb-6">
+          <button
+            onClick={() => toggleStep(2)}
+            className="w-full text-left flex items-start gap-3 hover:bg-emerald-100/50 p-3 rounded-lg transition-colors"
+          >
+            <div className="flex-shrink-0 mt-0.5 text-emerald-700">
+              {expandedSteps[2] ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+            </div>
+            <h3 className="text-xl font-bold text-emerald-900 flex-1">Step 2: Get an API Key</h3>
+          </button>
+
+          {expandedSteps[2] && (
+            <div className="ml-9 mt-3">
+              <div className="bg-emerald-100 border border-emerald-300 rounded-lg p-6">
+                <p className="text-emerald-900 italic">
+                  Content coming soon. This section will guide you through obtaining API keys from OpenAI and Anthropic.
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* STEP 3: Testing Your API - PURPLE (Placeholder) */}
+      <div className="bg-purple-50 border border-purple-200 rounded-lg p-8">
+        <div className="mb-6">
+          <button
+            onClick={() => toggleStep(3)}
+            className="w-full text-left flex items-start gap-3 hover:bg-purple-100/50 p-3 rounded-lg transition-colors"
+          >
+            <div className="flex-shrink-0 mt-0.5 text-purple-700">
+              {expandedSteps[3] ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+            </div>
+            <h3 className="text-xl font-bold text-purple-900 flex-1">Step 3: Testing Your API</h3>
+          </button>
+
+          {expandedSteps[3] && (
+            <div className="ml-9 mt-3">
+              <div className="bg-purple-100 border border-purple-300 rounded-lg p-6">
+                <p className="text-purple-900 italic">
+                  Content coming soon. This section will show you how to test that your API connection is working properly.
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Bottom CTA Section */}
+      <div className="bg-slate-100 border border-slate-200 rounded-lg p-6">
+        <h3 className="font-bold text-slate-900 mb-3 text-lg">What's Next?</h3>
+        <div className="space-y-2 text-slate-700">
           <p>
-            <strong>Tutorial:</strong> See step-by-step code examples for different content types
+            Once you've completed system setup, you can:
           </p>
-          <p>
-            <strong>Code Generator:</strong> Generate customized Python code for your SCC
-          </p>
-          <p>
-            <strong>Validation:</strong> Learn about the 9-step SCC development process
-          </p>
+          <ul className="list-disc list-inside space-y-1 ml-4">
+            <li>
+              <strong>Create SCC:</strong> Learn the 9-step process for developing and validating SCCs
+            </li>
+            <li>
+              <strong>Tutorial:</strong> See step-by-step code examples for different content types
+            </li>
+            <li>
+              <strong>Code Generator:</strong> Generate customized Python code for GPT-4 or Claude
+            </li>
+          </ul>
         </div>
       </div>
     </div>
