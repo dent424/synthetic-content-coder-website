@@ -5,7 +5,7 @@ import autoTable from 'jspdf-autotable';
 function formatCheckboxList(selected, options, otherValue = '') {
   return options.map(opt => {
     const isChecked = selected.includes(opt.value);
-    const checkmark = isChecked ? '☑' : '☐';
+    const checkmark = isChecked ? '[X]' : '[ ]';
     let label = opt.label;
     if (opt.value === 'other' && isChecked && otherValue) {
       label = `Other: ${otherValue}`;
@@ -18,7 +18,7 @@ function formatCheckboxList(selected, options, otherValue = '') {
 function formatRadioList(selected, options, otherValue = '') {
   return options.map(opt => {
     const isChecked = selected === opt.value;
-    const checkmark = isChecked ? '☑' : '☐';
+    const checkmark = isChecked ? '[X]' : '[ ]';
     let label = opt.label;
     if (opt.value === 'other' && isChecked && otherValue) {
       label = `Other: ${otherValue}`;
@@ -181,7 +181,7 @@ export function generatePreregistrationPDF(formData) {
 
   let uploadedDatasetText = validationUploaded;
   if (formData.validationSet.uploadedDataset === 'yes' && formData.validationSet.repositoryLink) {
-    uploadedDatasetText = `☑ Yes, repository link: ${formData.validationSet.repositoryLink}\n☐ No`;
+    uploadedDatasetText = `[X] Yes, repository link: ${formData.validationSet.repositoryLink}\n[ ] No`;
   }
 
   const validationBody = [
@@ -386,7 +386,7 @@ export function generatePreregistrationPDF(formData) {
 
   let finetuneUploadedText = finetuneUploaded;
   if (formData.finetuning.uploadedDataset === 'yes' && formData.finetuning.repositoryLink) {
-    finetuneUploadedText = `☑ Yes, repository link: ${formData.finetuning.repositoryLink}\n☐ No`;
+    finetuneUploadedText = `[X] Yes, repository link: ${formData.finetuning.repositoryLink}\n[ ] No`;
   }
 
   autoTable(doc, {
@@ -431,8 +431,8 @@ export function downloadBlankPDF() {
   const margin = 14;
 
   // Helper for blank checkbox/radio lists
-  const blankRadio = (options) => options.map(opt => `☐ ${opt}`).join('\n');
-  const blankCheckbox = (options) => options.map(opt => `☐ ${opt}`).join('\n');
+  const blankRadio = (options) => options.map(opt => `[ ] ${opt}`).join('\n');
+  const blankCheckbox = (options) => options.map(opt => `[ ] ${opt}`).join('\n');
 
   // Title
   doc.setFontSize(14);
