@@ -17,13 +17,18 @@ export default function ModelSelector({ selectedProvider, onProviderChange, conf
             <button
               key={provider}
               onClick={() => onProviderChange(provider)}
-              className={`
-                flex-1 px-4 py-3 rounded-lg font-medium transition-all
-                ${selectedProvider === provider
-                  ? 'bg-primary text-white shadow-md'
-                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                }
-              `}
+              className="flex-1 px-4 py-3 rounded-lg font-medium transition-all"
+              style={selectedProvider === provider
+                ? {
+                    backgroundColor: '#1e3a8a',
+                    color: 'white',
+                    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)'
+                  }
+                : {
+                    backgroundColor: '#f1f5f9',
+                    color: '#334155'
+                  }
+              }
             >
               {modelConfigs[provider].label}
             </button>
