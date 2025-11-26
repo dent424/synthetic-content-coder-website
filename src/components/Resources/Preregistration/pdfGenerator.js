@@ -1,5 +1,5 @@
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 
 // Helper to format checkbox display
 function formatCheckboxList(selected, options, otherValue = '') {
@@ -50,7 +50,7 @@ export function generatePreregistrationPDF(formData) {
   doc.text('Context of SCC', margin, yPosition);
   yPosition += 2;
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPosition,
     head: [],
     body: [
@@ -77,7 +77,7 @@ export function generatePreregistrationPDF(formData) {
   doc.text('Model Specification and Prompts', margin, yPosition);
   yPosition += 2;
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPosition,
     head: [],
     body: [
@@ -123,7 +123,7 @@ export function generatePreregistrationPDF(formData) {
     }
   });
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPosition,
     head: [],
     body: promptRows,
@@ -205,7 +205,7 @@ export function generatePreregistrationPDF(formData) {
 
   validationBody.push(['Uploaded validation dataset coded by SCC', uploadedDatasetText]);
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPosition,
     head: [],
     body: validationBody,
@@ -252,7 +252,7 @@ export function generatePreregistrationPDF(formData) {
     formData.humanRating.aggregationOther
   );
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPosition,
     head: [],
     body: [
@@ -300,7 +300,7 @@ export function generatePreregistrationPDF(formData) {
     formData.sccRating.aggregationOther
   );
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPosition,
     head: [],
     body: [
@@ -344,7 +344,7 @@ export function generatePreregistrationPDF(formData) {
     formData.comparison.methodOther
   );
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPosition,
     head: [],
     body: [
@@ -389,7 +389,7 @@ export function generatePreregistrationPDF(formData) {
     finetuneUploadedText = `☑ Yes, repository link: ${formData.finetuning.repositoryLink}\n☐ No`;
   }
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPosition,
     head: [],
     body: [
@@ -447,7 +447,7 @@ export function downloadBlankPDF() {
   doc.text('Context of SCC', margin, yPosition);
   yPosition += 2;
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPosition,
     head: [],
     body: [
@@ -470,7 +470,7 @@ export function downloadBlankPDF() {
   doc.text('Model Specification and Prompts', margin, yPosition);
   yPosition += 2;
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPosition,
     head: [],
     body: [
@@ -500,7 +500,7 @@ export function downloadBlankPDF() {
   );
   yPosition += 5;
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPosition,
     head: [],
     body: [
@@ -532,7 +532,7 @@ export function downloadBlankPDF() {
   doc.text('Validation Set Stimuli', margin, yPosition);
   yPosition += 2;
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPosition,
     head: [],
     body: [
@@ -563,7 +563,7 @@ export function downloadBlankPDF() {
   doc.text('Human Rating Collection Procedures', margin, yPosition);
   yPosition += 2;
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPosition,
     head: [],
     body: [
@@ -596,7 +596,7 @@ export function downloadBlankPDF() {
   doc.text('SCC Rating Procedures', margin, yPosition);
   yPosition += 2;
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPosition,
     head: [],
     body: [
@@ -625,7 +625,7 @@ export function downloadBlankPDF() {
   doc.text('Compare SCC and Human Rating, and Sufficient Criterion', margin, yPosition);
   yPosition += 2;
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPosition,
     head: [],
     body: [
@@ -653,7 +653,7 @@ export function downloadBlankPDF() {
   doc.text('Finetuning (Optional)', margin, yPosition);
   yPosition += 2;
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPosition,
     head: [],
     body: [
