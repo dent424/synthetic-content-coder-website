@@ -143,7 +143,7 @@ export default function PreregistrationModal({ onClose }) {
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col">
         {/* Header */}
-        <div className="flex-shrink-0 bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center rounded-t-lg">
+        <div className="shrink-0 bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center rounded-t-lg">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
               <FileText size={20} />
@@ -219,7 +219,7 @@ export default function PreregistrationModal({ onClose }) {
         </div>
 
         {/* Footer */}
-        <div className="flex-shrink-0 bg-white border-t border-slate-200 px-6 py-4 flex justify-between items-center rounded-b-lg">
+        <div className="shrink-0 bg-white border-t border-slate-200 px-6 py-4 flex justify-between items-center rounded-b-lg">
           <p className="text-sm text-slate-500">
             All fields will be included in the downloaded PDF
           </p>
