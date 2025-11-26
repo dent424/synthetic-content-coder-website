@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { FileText, CheckSquare, Code } from 'lucide-react';
+import PreregistrationModal from './Preregistration/PreregistrationModal';
 
 const resources = [
   {
@@ -6,25 +8,36 @@ const resources = [
     title: 'LLM API Guide',
     description: 'Deep dive into LLM API anatomy: parameters, authentication, rate limits, structured outputs, and best practices for research applications.',
     icon: Code,
-    status: 'Coming Soon'
+    status: 'Coming Soon',
+    onClick: null
   },
   {
     id: 'preregistration',
     title: 'Preregistration Template',
-    description: 'Download a template for preregistering your LLM content coding study.',
+    description: 'Fill out and download a preregistration form for your SCC validation study.',
     icon: FileText,
-    status: 'Coming Soon'
+    status: 'Available',
+    onClick: 'preregistration'
   },
   {
     id: 'checklist',
     title: 'Implementation Checklist',
     description: 'Step-by-step checklist for implementing and validating your SPC.',
     icon: CheckSquare,
-    status: 'Coming Soon'
+    status: 'Coming Soon',
+    onClick: null
   }
 ];
 
 export default function ResourcesSection() {
+  const [showPreregistration, setShowPreregistration] = useState(false);
+
+  const handleResourceClick = (resourceId) => {
+    if (resourceId === 'preregistration') {
+      setShowPreregistration(true);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="mb-8">
@@ -39,13 +52,24 @@ export default function ResourcesSection() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {resources.map((resource) => {
           const Icon = resource.icon;
+          const isClickable = resource.onClick !== null;
+
           return (
             <div
               key={resource.id}
-              className="bg-white rounded-lg shadow-md border border-slate-200 p-6 hover:shadow-lg transition-shadow"
+              onClick={() => isClickable && handleResourceClick(resource.onClick)}
+              className={`bg-white rounded-lg shadow-md border border-slate-200 p-6 transition-shadow ${
+                isClickable
+                  ? 'hover:shadow-lg cursor-pointer hover:border-primary/30'
+                  : 'hover:shadow-lg'
+              }`}
             >
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center ${
+                  isClickable
+                    ? 'bg-primary/10 text-primary'
+                    : 'bg-slate-100 text-slate-400'
+                }`}>
                   <Icon size={24} />
                 </div>
                 <div className="flex-1">
@@ -53,13 +77,22 @@ export default function ResourcesSection() {
                     <h3 className="font-semibold text-slate-900">
                       {resource.title}
                     </h3>
-                    <span className="text-xs px-2 py-1 bg-amber-100 text-amber-700 rounded-full">
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                      resource.status === 'Available'
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-amber-100 text-amber-700'
+                    }`}>
                       {resource.status}
                     </span>
                   </div>
                   <p className="text-sm text-slate-600">
                     {resource.description}
                   </p>
+                  {isClickable && (
+                    <p className="text-sm text-primary mt-2 font-medium">
+                      Click to open →
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -77,6 +110,11 @@ export default function ResourcesSection() {
           <li>• Save all raw ratings (not just means) for transparency and reanalysis</li>
         </ul>
       </div>
+
+      {/* Preregistration Modal */}
+      {showPreregistration && (
+        <PreregistrationModal onClose={() => setShowPreregistration(false)} />
+      )}
     </div>
   );
 }
