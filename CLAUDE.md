@@ -112,18 +112,25 @@ The generator is a controlled form that:
      - `claude-haiku-4-5-20251015` (Haiku 4.5)
      - `claude-sonnet-4-20250514` (Sonnet 4)
 
-2. **Settings Panel** (`SettingsPanel.jsx`): Configure parameters
+2. **Data Modality Selection** (`DataModalitySelector.jsx`): Choose data type
+   - **Text**: CSV with text content column - generates code to read text items from CSV
+   - **Image (URL)**: CSV with image filenames + base URL - generates code for URL-based images
+   - **Image (Local)**: Local image files - generates code with base64 encoding for local files
+   - State: `dataModality` ('text' or 'image') and `imageSource` ('url' or 'local')
+   - Claude image templates use httpx to download and base64-encode URL images (Claude API requires base64)
+
+3. **Settings Panel** (`SettingsPanel.jsx`): Configure parameters
    - Temperature, max tokens, repetitions
    - Ranges and defaults defined in `src/data/models.js`
 
-3. **Template-based generation**: Uses string interpolation
-   - Templates in `codeTemplates` object in `src/data/models.js`
-   - Substitutes user inputs into Python code template
+4. **Template-based generation**: Uses string interpolation
+   - 6 template functions in `src/data/models.js`: openaiTextTemplate, openaiImageUrlTemplate, openaiImageLocalTemplate, claudeTextTemplate, claudeImageUrlTemplate, claudeImageLocalTemplate
+   - `codeTemplates` object routes to correct template based on provider, dataModality, and imageSource
    - Generates production-ready OpenAI or Anthropic API code
 
-4. **Code Output** (`CodeOutput.jsx`): Display with syntax highlighting and copy/download
+5. **Code Output** (`CodeOutput.jsx`): Display with syntax highlighting and copy/download
 
-5. **Preregistration Header**: Generated code includes a comment block at the top with key parameters for preregistration (Provider, Model, Temperature, Repetitions, Max Tokens)
+6. **Preregistration Header**: Generated code includes a comment block at the top with key parameters for preregistration (Provider, Model, Temperature, Repetitions, Max Tokens, Data Modality)
 
 ### Styling System
 
@@ -171,7 +178,8 @@ src/
 │   │   └── ScrollSyncedCodeViewer.jsx  # Core scroll-sync + highlighting logic
 │   ├── Generator/
 │   │   ├── GeneratorSection.jsx    # Main generator component
-│   │   ├── ModelSelector.jsx       # GPT-4 vs Claude selection
+│   │   ├── ModelSelector.jsx       # OpenAI vs Claude selection
+│   │   ├── DataModalitySelector.jsx # Text vs Image data selection
 │   │   ├── SettingsPanel.jsx       # Temperature, tokens, repetitions
 │   │   └── CodeOutput.jsx          # Display generated code
 │   └── Resources/

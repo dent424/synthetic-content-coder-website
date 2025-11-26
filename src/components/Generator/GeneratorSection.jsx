@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { modelConfigs, codeTemplates } from '../../data/models';
 import ModelSelector from './ModelSelector';
+import DataModalitySelector from './DataModalitySelector';
 import SettingsPanel from './SettingsPanel';
 import CodeOutput from './CodeOutput';
 
 export default function GeneratorSection() {
   const [selectedProvider, setSelectedProvider] = useState('gpt-4');
+  const [dataModality, setDataModality] = useState('text');
+  const [imageSource, setImageSource] = useState('url');
   const [config, setConfig] = useState({
     model: 'gpt-4-turbo',
     temperature: 1,
@@ -41,7 +44,11 @@ Rating:`
     setConfig({ ...config, [key]: value });
   };
 
-  const generatedCode = codeTemplates[selectedProvider](config);
+  const generatedCode = codeTemplates[selectedProvider]({
+    ...config,
+    dataModality,
+    imageSource
+  });
 
   return (
     <div className="space-y-6">
@@ -63,6 +70,13 @@ Rating:`
             onProviderChange={handleProviderChange}
             config={config}
             onConfigChange={handleConfigChange}
+          />
+
+          <DataModalitySelector
+            dataModality={dataModality}
+            onModalityChange={setDataModality}
+            imageSource={imageSource}
+            onImageSourceChange={setImageSource}
           />
 
           <div className="bg-white rounded-lg shadow-md border border-slate-200 p-6">

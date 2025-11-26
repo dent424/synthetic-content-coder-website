@@ -67,8 +67,14 @@ export const modelConfigs = {
   }
 };
 
-export const codeTemplates = {
-  'gpt-4': (config) => `# ==============================================================================
+// Helper function to get data modality label
+const getModalityLabel = (dataModality, imageSource) => {
+  if (dataModality === 'text') return 'Text';
+  return imageSource === 'url' ? 'Image (URL)' : 'Image (Local)';
+};
+
+// OpenAI template for TEXT data
+const openaiTextTemplate = (config) => `# ==============================================================================
 # PREREGISTRATION PARAMETERS (for SCC validation study)
 # ==============================================================================
 # Provider:          OpenAI
@@ -76,9 +82,11 @@ export const codeTemplates = {
 # Temperature:       ${config.temperature}
 # Repetitions:       ${config.repetitions}
 # Max Tokens:        ${config.maxTokens}
+# Data Modality:     Text
 # ==============================================================================
 
 import openai
+import pandas as pd
 import os
 import numpy as np
 from time import sleep
@@ -87,7 +95,7 @@ from time import sleep
 client = openai.OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 # Your construct definition (include in preregistration)
-prompt_template = """${config.prompt}"""
+PROMPT = """${config.prompt}"""
 
 # Configuration
 MODEL = "${config.model}"
@@ -95,71 +103,242 @@ TEMPERATURE = ${config.temperature}
 MAX_TOKENS = ${config.maxTokens}
 REPETITIONS = ${config.repetitions}
 
-def get_spc_rating(item_description):
-    """
-    Get SPC rating for a single item with multiple repetitions.
+# Data file
+INPUT_CSV = r"path/to/your/data.csv"
+TEXT_COLUMN = "text"  # Column name containing text to rate
+OUTPUT_CSV = r"path/to/output/ratings.csv"
 
-    Args:
-        item_description: The item to rate
+def get_rating(text):
+    """Get a single rating for a text item."""
+    response = client.chat.completions.create(
+        model=MODEL,
+        temperature=TEMPERATURE,
+        max_tokens=MAX_TOKENS,
+        messages=[
+            {"role": "system", "content": "You are a content rating assistant."},
+            {"role": "user", "content": f"{PROMPT}\\n\\nText to rate: \\"{text}\\""}
+        ]
+    )
+    return response.choices[0].message.content.strip()
 
-    Returns:
-        dict with mean, std, and all ratings
-    """
-    ratings = []
+# Load data
+df = pd.read_csv(INPUT_CSV)
+results = []
 
-    for i in range(REPETITIONS):
+# Process each item
+for index, row in df.iterrows():
+    text = str(row[TEXT_COLUMN])
+    item_ratings = []
+
+    for rep in range(REPETITIONS):
         try:
-            # Format prompt with item
-            prompt = prompt_template.format(item=item_description)
-
-            # API call
-            response = client.chat.completions.create(
-                model=MODEL,
-                temperature=TEMPERATURE,
-                max_tokens=MAX_TOKENS,
-                messages=[
-                    {"role": "system", "content": "You are a content rating assistant."},
-                    {"role": "user", "content": prompt}
-                ]
-            )
-
-            # Extract rating
-            rating_text = response.choices[0].message.content.strip()
-            rating = float(rating_text)
-
-            # Validate rating is in expected range (adjust as needed)
-            if 1 <= rating <= 7:
-                ratings.append(rating)
-
-            # Rate limiting (adjust based on your API tier)
-            sleep(0.1)
-
+            rating = get_rating(text)
+            rating_val = float(rating)
+            if 1 <= rating_val <= 7:
+                item_ratings.append(rating_val)
+            sleep(0.1)  # Rate limiting
         except Exception as e:
-            print(f"Error on repetition {i+1}: {e}")
+            print(f"Error on item {index}, rep {rep}: {e}")
             continue
 
-    return {
-        'mean': np.mean(ratings) if ratings else None,
-        'std': np.std(ratings) if ratings else None,
-        'n_valid': len(ratings),
-        'all_ratings': ratings
-    }
+    results.append({
+        'item_index': index,
+        'text': text[:100],  # First 100 chars for reference
+        'mean_rating': np.mean(item_ratings) if item_ratings else None,
+        'std_rating': np.std(item_ratings) if item_ratings else None,
+        'n_valid': len(item_ratings)
+    })
+    print(f"Processed item {index + 1}/{len(df)}")
 
-# Example usage
-if __name__ == "__main__":
-    # Test with a single item
-    test_item = "Your test item description here"
-    result = get_spc_rating(test_item)
+# Save results
+results_df = pd.DataFrame(results)
+results_df.to_csv(OUTPUT_CSV, index=False)
+print(f"Results saved to {OUTPUT_CSV}")
+`;
 
-    if result['mean'] is not None:
-        print(f"Mean rating: {result['mean']:.2f}")
-        print(f"Std dev: {result['std']:.2f}")
-        print(f"Valid ratings: {result['n_valid']}/{REPETITIONS}")
-    else:
-        print("No valid ratings obtained")
-`,
+// OpenAI template for IMAGE URL data
+const openaiImageUrlTemplate = (config) => `# ==============================================================================
+# PREREGISTRATION PARAMETERS (for SCC validation study)
+# ==============================================================================
+# Provider:          OpenAI
+# Model:             ${config.model}
+# Temperature:       ${config.temperature}
+# Repetitions:       ${config.repetitions}
+# Max Tokens:        ${config.maxTokens}
+# Data Modality:     Image (URL)
+# ==============================================================================
 
-  'claude': (config) => `# ==============================================================================
+import openai
+import pandas as pd
+import os
+import numpy as np
+from time import sleep
+
+# Initialize OpenAI client
+client = openai.OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+
+# Your construct definition (include in preregistration)
+PROMPT = """${config.prompt}"""
+
+# Configuration
+MODEL = "${config.model}"
+TEMPERATURE = ${config.temperature}
+MAX_TOKENS = ${config.maxTokens}
+REPETITIONS = ${config.repetitions}
+
+# Data file - CSV with image filenames
+INPUT_CSV = r"path/to/your/filenames.csv"
+BASE_URL = "https://your-bucket.s3.amazonaws.com/images/"  # Base URL for images
+OUTPUT_CSV = r"path/to/output/ratings.csv"
+
+def get_rating(image_url):
+    """Get a single rating for an image URL."""
+    response = client.chat.completions.create(
+        model=MODEL,
+        temperature=TEMPERATURE,
+        max_tokens=MAX_TOKENS,
+        messages=[
+            {"role": "system", "content": "You are a content rating assistant."},
+            {"role": "user", "content": [
+                {"type": "text", "text": PROMPT},
+                {"type": "image_url", "image_url": {"url": image_url, "detail": "high"}}
+            ]}
+        ]
+    )
+    return response.choices[0].message.content.strip()
+
+# Load data
+df = pd.read_csv(INPUT_CSV)
+results = []
+
+# Process each image
+for index, row in df.iterrows():
+    filename = str(row.iloc[0])  # First column contains filename
+    image_url = BASE_URL + filename
+    item_ratings = []
+
+    for rep in range(REPETITIONS):
+        try:
+            rating = get_rating(image_url)
+            rating_val = float(rating)
+            if 1 <= rating_val <= 7:
+                item_ratings.append(rating_val)
+            sleep(0.1)  # Rate limiting
+        except Exception as e:
+            print(f"Error on {filename}, rep {rep}: {e}")
+            continue
+
+    results.append({
+        'filename': filename,
+        'mean_rating': np.mean(item_ratings) if item_ratings else None,
+        'std_rating': np.std(item_ratings) if item_ratings else None,
+        'n_valid': len(item_ratings)
+    })
+    print(f"Processed {index + 1}/{len(df)}: {filename}")
+
+# Save results
+results_df = pd.DataFrame(results)
+results_df.to_csv(OUTPUT_CSV, index=False)
+print(f"Results saved to {OUTPUT_CSV}")
+`;
+
+// OpenAI template for LOCAL IMAGE data
+const openaiImageLocalTemplate = (config) => `# ==============================================================================
+# PREREGISTRATION PARAMETERS (for SCC validation study)
+# ==============================================================================
+# Provider:          OpenAI
+# Model:             ${config.model}
+# Temperature:       ${config.temperature}
+# Repetitions:       ${config.repetitions}
+# Max Tokens:        ${config.maxTokens}
+# Data Modality:     Image (Local)
+# ==============================================================================
+
+import openai
+import base64
+import os
+import numpy as np
+from time import sleep
+
+# Initialize OpenAI client
+client = openai.OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+
+# Your construct definition (include in preregistration)
+PROMPT = """${config.prompt}"""
+
+# Configuration
+MODEL = "${config.model}"
+TEMPERATURE = ${config.temperature}
+MAX_TOKENS = ${config.maxTokens}
+REPETITIONS = ${config.repetitions}
+
+# Image folder
+IMAGE_FOLDER = r"path/to/your/image/folder"
+OUTPUT_CSV = r"path/to/output/ratings.csv"
+
+def encode_image(image_path):
+    """Encode image to base64."""
+    with open(image_path, "rb") as f:
+        return base64.b64encode(f.read()).decode('utf-8')
+
+def get_rating(image_path):
+    """Get a single rating for a local image."""
+    base64_image = encode_image(image_path)
+    ext = os.path.splitext(image_path)[1].lower()
+    media_type = "image/jpeg" if ext in ['.jpg', '.jpeg'] else "image/png"
+
+    response = client.chat.completions.create(
+        model=MODEL,
+        temperature=TEMPERATURE,
+        max_tokens=MAX_TOKENS,
+        messages=[
+            {"role": "system", "content": "You are a content rating assistant."},
+            {"role": "user", "content": [
+                {"type": "text", "text": PROMPT},
+                {"type": "image_url", "image_url": {"url": f"data:{media_type};base64,{base64_image}", "detail": "high"}}
+            ]}
+        ]
+    )
+    return response.choices[0].message.content.strip()
+
+# Get list of images
+image_files = [f for f in os.listdir(IMAGE_FOLDER)
+               if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+results = []
+
+# Process each image
+for i, filename in enumerate(image_files):
+    image_path = os.path.join(IMAGE_FOLDER, filename)
+    item_ratings = []
+
+    for rep in range(REPETITIONS):
+        try:
+            rating = get_rating(image_path)
+            rating_val = float(rating)
+            if 1 <= rating_val <= 7:
+                item_ratings.append(rating_val)
+            sleep(0.1)  # Rate limiting
+        except Exception as e:
+            print(f"Error on {filename}, rep {rep}: {e}")
+            continue
+
+    results.append({
+        'filename': filename,
+        'mean_rating': np.mean(item_ratings) if item_ratings else None,
+        'std_rating': np.std(item_ratings) if item_ratings else None,
+        'n_valid': len(item_ratings)
+    })
+    print(f"Processed {i + 1}/{len(image_files)}: {filename}")
+
+# Save results
+import pandas as pd
+results_df = pd.DataFrame(results)
+results_df.to_csv(OUTPUT_CSV, index=False)
+print(f"Results saved to {OUTPUT_CSV}")
+`;
+
+// Claude template for TEXT data
+const claudeTextTemplate = (config) => `# ==============================================================================
 # PREREGISTRATION PARAMETERS (for SCC validation study)
 # ==============================================================================
 # Provider:          Anthropic
@@ -167,9 +346,11 @@ if __name__ == "__main__":
 # Temperature:       ${config.temperature}
 # Repetitions:       ${config.repetitions}
 # Max Tokens:        ${config.maxTokens}
+# Data Modality:     Text
 # ==============================================================================
 
 import anthropic
+import pandas as pd
 import os
 import numpy as np
 from time import sleep
@@ -178,7 +359,7 @@ from time import sleep
 client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
 # Your construct definition (include in preregistration)
-prompt_template = """${config.prompt}"""
+PROMPT = """${config.prompt}"""
 
 # Configuration
 MODEL = "${config.model}"
@@ -186,66 +367,270 @@ TEMPERATURE = ${config.temperature}
 MAX_TOKENS = ${config.maxTokens}
 REPETITIONS = ${config.repetitions}
 
-def get_spc_rating(item_description):
-    """
-    Get SPC rating for a single item with multiple repetitions.
+# Data file
+INPUT_CSV = r"path/to/your/data.csv"
+TEXT_COLUMN = "text"  # Column name containing text to rate
+OUTPUT_CSV = r"path/to/output/ratings.csv"
 
-    Args:
-        item_description: The item to rate
+def get_rating(text):
+    """Get a single rating for a text item."""
+    message = client.messages.create(
+        model=MODEL,
+        max_tokens=MAX_TOKENS,
+        temperature=TEMPERATURE,
+        messages=[
+            {"role": "user", "content": f"{PROMPT}\\n\\nText to rate: \\"{text}\\""}
+        ]
+    )
+    return message.content[0].text.strip()
 
-    Returns:
-        dict with mean, std, and all ratings
-    """
-    ratings = []
+# Load data
+df = pd.read_csv(INPUT_CSV)
+results = []
 
-    for i in range(REPETITIONS):
+# Process each item
+for index, row in df.iterrows():
+    text = str(row[TEXT_COLUMN])
+    item_ratings = []
+
+    for rep in range(REPETITIONS):
         try:
-            # Format prompt with item
-            prompt = prompt_template.format(item=item_description)
-
-            # API call
-            message = client.messages.create(
-                model=MODEL,
-                max_tokens=MAX_TOKENS,
-                temperature=TEMPERATURE,
-                messages=[
-                    {"role": "user", "content": prompt}
-                ]
-            )
-
-            # Extract rating
-            rating_text = message.content[0].text.strip()
-            rating = float(rating_text)
-
-            # Validate rating is in expected range (adjust as needed)
-            if 1 <= rating <= 7:
-                ratings.append(rating)
-
-            # Rate limiting (adjust based on your API tier)
-            sleep(0.1)
-
+            rating = get_rating(text)
+            rating_val = float(rating)
+            if 1 <= rating_val <= 7:
+                item_ratings.append(rating_val)
+            sleep(0.1)  # Rate limiting
         except Exception as e:
-            print(f"Error on repetition {i+1}: {e}")
+            print(f"Error on item {index}, rep {rep}: {e}")
             continue
 
-    return {
-        'mean': np.mean(ratings) if ratings else None,
-        'std': np.std(ratings) if ratings else None,
-        'n_valid': len(ratings),
-        'all_ratings': ratings
+    results.append({
+        'item_index': index,
+        'text': text[:100],  # First 100 chars for reference
+        'mean_rating': np.mean(item_ratings) if item_ratings else None,
+        'std_rating': np.std(item_ratings) if item_ratings else None,
+        'n_valid': len(item_ratings)
+    })
+    print(f"Processed item {index + 1}/{len(df)}")
+
+# Save results
+results_df = pd.DataFrame(results)
+results_df.to_csv(OUTPUT_CSV, index=False)
+print(f"Results saved to {OUTPUT_CSV}")
+`;
+
+// Claude template for IMAGE URL data
+const claudeImageUrlTemplate = (config) => `# ==============================================================================
+# PREREGISTRATION PARAMETERS (for SCC validation study)
+# ==============================================================================
+# Provider:          Anthropic
+# Model:             ${config.model}
+# Temperature:       ${config.temperature}
+# Repetitions:       ${config.repetitions}
+# Max Tokens:        ${config.maxTokens}
+# Data Modality:     Image (URL)
+# ==============================================================================
+
+import anthropic
+import pandas as pd
+import httpx
+import base64
+import os
+import numpy as np
+from time import sleep
+
+# Initialize Anthropic client
+client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+
+# Your construct definition (include in preregistration)
+PROMPT = """${config.prompt}"""
+
+# Configuration
+MODEL = "${config.model}"
+TEMPERATURE = ${config.temperature}
+MAX_TOKENS = ${config.maxTokens}
+REPETITIONS = ${config.repetitions}
+
+# Data file - CSV with image filenames
+INPUT_CSV = r"path/to/your/filenames.csv"
+BASE_URL = "https://your-bucket.s3.amazonaws.com/images/"  # Base URL for images
+OUTPUT_CSV = r"path/to/output/ratings.csv"
+
+def get_rating(image_url):
+    """Get a single rating for an image URL (Claude requires base64)."""
+    # Download and encode image
+    response = httpx.get(image_url)
+    base64_image = base64.b64encode(response.content).decode('utf-8')
+
+    # Determine media type from URL
+    ext = image_url.split('.')[-1].lower()
+    media_type = "image/jpeg" if ext in ['jpg', 'jpeg'] else "image/png"
+
+    message = client.messages.create(
+        model=MODEL,
+        max_tokens=MAX_TOKENS,
+        temperature=TEMPERATURE,
+        messages=[
+            {"role": "user", "content": [
+                {"type": "text", "text": PROMPT},
+                {"type": "image", "source": {
+                    "type": "base64",
+                    "media_type": media_type,
+                    "data": base64_image
+                }}
+            ]}
+        ]
+    )
+    return message.content[0].text.strip()
+
+# Load data
+df = pd.read_csv(INPUT_CSV)
+results = []
+
+# Process each image
+for index, row in df.iterrows():
+    filename = str(row.iloc[0])  # First column contains filename
+    image_url = BASE_URL + filename
+    item_ratings = []
+
+    for rep in range(REPETITIONS):
+        try:
+            rating = get_rating(image_url)
+            rating_val = float(rating)
+            if 1 <= rating_val <= 7:
+                item_ratings.append(rating_val)
+            sleep(0.1)  # Rate limiting
+        except Exception as e:
+            print(f"Error on {filename}, rep {rep}: {e}")
+            continue
+
+    results.append({
+        'filename': filename,
+        'mean_rating': np.mean(item_ratings) if item_ratings else None,
+        'std_rating': np.std(item_ratings) if item_ratings else None,
+        'n_valid': len(item_ratings)
+    })
+    print(f"Processed {index + 1}/{len(df)}: {filename}")
+
+# Save results
+results_df = pd.DataFrame(results)
+results_df.to_csv(OUTPUT_CSV, index=False)
+print(f"Results saved to {OUTPUT_CSV}")
+`;
+
+// Claude template for LOCAL IMAGE data
+const claudeImageLocalTemplate = (config) => `# ==============================================================================
+# PREREGISTRATION PARAMETERS (for SCC validation study)
+# ==============================================================================
+# Provider:          Anthropic
+# Model:             ${config.model}
+# Temperature:       ${config.temperature}
+# Repetitions:       ${config.repetitions}
+# Max Tokens:        ${config.maxTokens}
+# Data Modality:     Image (Local)
+# ==============================================================================
+
+import anthropic
+import base64
+import os
+import numpy as np
+from time import sleep
+
+# Initialize Anthropic client
+client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+
+# Your construct definition (include in preregistration)
+PROMPT = """${config.prompt}"""
+
+# Configuration
+MODEL = "${config.model}"
+TEMPERATURE = ${config.temperature}
+MAX_TOKENS = ${config.maxTokens}
+REPETITIONS = ${config.repetitions}
+
+# Image folder
+IMAGE_FOLDER = r"path/to/your/image/folder"
+OUTPUT_CSV = r"path/to/output/ratings.csv"
+
+def encode_image(image_path):
+    """Encode image to base64."""
+    with open(image_path, "rb") as f:
+        return base64.b64encode(f.read()).decode('utf-8')
+
+def get_rating(image_path):
+    """Get a single rating for a local image."""
+    base64_image = encode_image(image_path)
+    ext = os.path.splitext(image_path)[1].lower()
+    media_type = "image/jpeg" if ext in ['.jpg', '.jpeg'] else "image/png"
+
+    message = client.messages.create(
+        model=MODEL,
+        max_tokens=MAX_TOKENS,
+        temperature=TEMPERATURE,
+        messages=[
+            {"role": "user", "content": [
+                {"type": "text", "text": PROMPT},
+                {"type": "image", "source": {
+                    "type": "base64",
+                    "media_type": media_type,
+                    "data": base64_image
+                }}
+            ]}
+        ]
+    )
+    return message.content[0].text.strip()
+
+# Get list of images
+image_files = [f for f in os.listdir(IMAGE_FOLDER)
+               if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+results = []
+
+# Process each image
+for i, filename in enumerate(image_files):
+    image_path = os.path.join(IMAGE_FOLDER, filename)
+    item_ratings = []
+
+    for rep in range(REPETITIONS):
+        try:
+            rating = get_rating(image_path)
+            rating_val = float(rating)
+            if 1 <= rating_val <= 7:
+                item_ratings.append(rating_val)
+            sleep(0.1)  # Rate limiting
+        except Exception as e:
+            print(f"Error on {filename}, rep {rep}: {e}")
+            continue
+
+    results.append({
+        'filename': filename,
+        'mean_rating': np.mean(item_ratings) if item_ratings else None,
+        'std_rating': np.std(item_ratings) if item_ratings else None,
+        'n_valid': len(item_ratings)
+    })
+    print(f"Processed {i + 1}/{len(image_files)}: {filename}")
+
+# Save results
+import pandas as pd
+results_df = pd.DataFrame(results)
+results_df.to_csv(OUTPUT_CSV, index=False)
+print(f"Results saved to {OUTPUT_CSV}")
+`;
+
+export const codeTemplates = {
+  'gpt-4': (config) => {
+    if (config.dataModality === 'image') {
+      return config.imageSource === 'local'
+        ? openaiImageLocalTemplate(config)
+        : openaiImageUrlTemplate(config);
     }
-
-# Example usage
-if __name__ == "__main__":
-    # Test with a single item
-    test_item = "Your test item description here"
-    result = get_spc_rating(test_item)
-
-    if result['mean'] is not None:
-        print(f"Mean rating: {result['mean']:.2f}")
-        print(f"Std dev: {result['std']:.2f}")
-        print(f"Valid ratings: {result['n_valid']}/{REPETITIONS}")
-    else:
-        print("No valid ratings obtained")
-`
+    return openaiTextTemplate(config);
+  },
+  'claude': (config) => {
+    if (config.dataModality === 'image') {
+      return config.imageSource === 'local'
+        ? claudeImageLocalTemplate(config)
+        : claudeImageUrlTemplate(config);
+    }
+    return claudeTextTemplate(config);
+  }
 };
