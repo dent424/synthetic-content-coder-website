@@ -89,9 +89,15 @@ export default function ResourcesSection() {
                     {resource.description}
                   </p>
                   {isClickable && (
-                    <p className="text-sm text-primary mt-2 font-medium">
-                      Click to open →
-                    </p>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleResourceClick(resource.onClick);
+                      }}
+                      className="mt-3 px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg text-sm font-medium transition-colors"
+                    >
+                      Open Form
+                    </button>
                   )}
                 </div>
               </div>
