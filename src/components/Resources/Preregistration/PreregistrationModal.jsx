@@ -219,7 +219,7 @@ export default function PreregistrationModal({ onClose }) {
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-white border-t border-slate-200 px-6 py-4 flex justify-between items-center rounded-b-lg">
+        <div className="flex-shrink-0 bg-white border-t border-slate-200 px-6 py-4 flex justify-between items-center rounded-b-lg">
           <p className="text-sm text-slate-500">
             All fields will be included in the downloaded PDF
           </p>
