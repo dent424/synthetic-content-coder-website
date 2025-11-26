@@ -61,6 +61,7 @@ export default function OverviewSection({ setActiveTab }) {
                     Setting Up Python and a Development Environment
                   </button>
                 </li>
+                {/* TODO: Replace [LINK] with actual link to API key generation guide */}
                 <li>[LINK] Generating API Keys</li>
               </ul>
             </div>

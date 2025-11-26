@@ -11,8 +11,8 @@ export default function CodeOutput({ code }) {
       await navigator.clipboard.writeText(code);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy:', err);
+    } catch {
+      // Silent failure for clipboard copy
     }
   };
 

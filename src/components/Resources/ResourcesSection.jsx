@@ -3,6 +3,7 @@ import { FileText, CheckSquare, Code, Download } from 'lucide-react';
 import PreregistrationModal from './Preregistration/PreregistrationModal';
 
 const resources = [
+  // TODO: Implement LLM API Guide content and change status to 'Available'
   {
     id: 'api-guide',
     title: 'LLM API Guide',
@@ -19,6 +20,7 @@ const resources = [
     status: 'Available',
     onClick: 'preregistration'
   },
+  // TODO: Implement Implementation Checklist content and change status to 'Available'
   {
     id: 'checklist',
     title: 'Implementation Checklist',

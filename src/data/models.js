@@ -67,12 +67,6 @@ export const modelConfigs = {
   }
 };
 
-// Helper function to get data modality label
-const getModalityLabel = (dataModality, imageSource) => {
-  if (dataModality === 'text') return 'Text';
-  return imageSource === 'url' ? 'Image (URL)' : 'Image (Local)';
-};
-
 // OpenAI template for TEXT data
 const openaiTextTemplate = (config) => `# ==============================================================================
 # PREREGISTRATION PARAMETERS (for SCC validation study)

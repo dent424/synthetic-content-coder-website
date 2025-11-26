@@ -34,16 +34,18 @@ npm run lint             # Run ESLint
 
 ## Architecture
 
-### Four-Tab Application Structure
+### Six-Tab Application Structure
 
-The app uses a simple tab-based navigation system controlled by state in `App.jsx`:
+The app uses hash-based navigation controlled by state in `App.jsx`:
 
-- **Overview Tab** (default): Landing page presenting the 9-step SCC development process
-- **Tutorial Tab**: Scroll-synced code viewer with interactive line highlighting
-- **Generator Tab**: Form-based Python code generator for LLM content coding
-- **Resources Tab**: Preregistration form builder and downloadable templates
+- **Home** (default): Landing page with quick navigation cards
+- **Getting Started**: System setup guide (Python, IDE, API keys)
+- **Overview**: The 9-step SCC development process (Create SCC tab)
+- **Tutorial**: Scroll-synced code viewer with interactive line highlighting
+- **Generator**: Form-based Python code generator for LLM content coding
+- **Resources**: Preregistration form builder and downloadable templates
 
-Tab state (`activeTab`) is managed in `App.jsx` and passed to `Header.jsx`. Each tab conditionally renders its respective section component.
+Tab state (`activeTab`) is managed in `App.jsx` and synced with URL hash. Each tab conditionally renders its respective section component.
 
 ### Scroll-Synced Tutorial System
 
@@ -315,3 +317,4 @@ The preregistration form allows users to fill out and download a PDF for their S
 - All example Python files must use `?raw` import to load as strings
 - Manual navigation temporarily disables scroll observer for 1 second - avoid rapid clicking
 - jsPDF Helvetica font doesn't support Unicode characters - use ASCII text only in PDF generation
+- `src/utils/` and `src/assets/` directories are empty (Vite template remnants) - safe to ignore

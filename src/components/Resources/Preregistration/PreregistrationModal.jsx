@@ -132,8 +132,8 @@ export default function PreregistrationModal({ onClose }) {
     setIsGenerating(true);
     try {
       await downloadPDF(formData);
-    } catch (err) {
-      console.error('Failed to generate PDF:', err);
+    } catch {
+      // Silent failure for PDF generation
     } finally {
       setIsGenerating(false);
     }
