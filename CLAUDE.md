@@ -41,7 +41,7 @@ The app uses a simple tab-based navigation system controlled by state in `App.js
 - **Overview Tab** (default): Landing page presenting the 9-step SCC development process
 - **Tutorial Tab**: Scroll-synced code viewer with interactive line highlighting
 - **Generator Tab**: Form-based Python code generator for LLM content coding
-- **Resources Tab**: Placeholder for future tools and templates
+- **Resources Tab**: Preregistration form builder and downloadable templates
 
 Tab state (`activeTab`) is managed in `App.jsx` and passed to `Header.jsx`. Each tab conditionally renders its respective section component.
 
@@ -99,9 +99,18 @@ The component groups consecutive lines by section to render them in blocks with 
 
 The generator is a controlled form that:
 
-1. **Model Selection** (`ModelSelector.jsx`): Choose between GPT-4 or Claude
+1. **Model Selection** (`ModelSelector.jsx`): Choose between OpenAI or Claude
    - Each model has different temperature ranges (OpenAI: 0-2, Anthropic: 0-1)
-   - Different model variants (GPT-4 Turbo, Claude Sonnet 4, etc.)
+   - OpenAI models (exact API IDs):
+     - `gpt-5-2025-08-07` (GPT-5, recommended)
+     - `gpt-5-mini-2025-08-07` (GPT-5 Mini)
+     - `gpt-4.1-2025-04-14` (GPT-4.1)
+     - `gpt-4.1-mini-2025-04-14` (GPT-4.1 Mini)
+   - Claude models (exact API IDs):
+     - `claude-sonnet-4-5-20250929` (Sonnet 4.5, recommended)
+     - `claude-opus-4-5-20251124` (Opus 4.5)
+     - `claude-haiku-4-5-20251015` (Haiku 4.5)
+     - `claude-sonnet-4-20250514` (Sonnet 4)
 
 2. **Settings Panel** (`SettingsPanel.jsx`): Configure parameters
    - Temperature, max tokens, repetitions
@@ -114,6 +123,8 @@ The generator is a controlled form that:
 
 4. **Code Output** (`CodeOutput.jsx`): Display with syntax highlighting and copy/download
 
+5. **Preregistration Header**: Generated code includes a comment block at the top with key parameters for preregistration (Provider, Model, Temperature, Repetitions, Max Tokens)
+
 ### Styling System
 
 **Tailwind Configuration**: `tailwind.config.js`
@@ -124,10 +135,11 @@ Custom color scheme:
 - `annotation`: Amber (#fbbf24) - for line number badges and highlights
 
 **Button Design Pattern**:
-- Inactive: `bg-slate-100 text-slate-700 font-medium`
-- Active: `bg-slate-300 text-slate-700 font-bold shadow-lg`
-- Hover/Active states use darker grays and bold text
-- Consistent gray scheme throughout (no blue backgrounds for active buttons)
+- **IMPORTANT**: Use inline styles for button colors, not Tailwind classes. Tailwind color classes (like `bg-primary`, `text-white`) may not compile correctly in this project.
+- Active state: `backgroundColor: '#1e3a8a'`, `color: 'white'` (inline styles)
+- Inactive state: `backgroundColor: '#f1f5f9'`, `color: '#334155'` (inline styles)
+- Layout classes like `flex`, `rounded-lg`, `transition-all` work fine with Tailwind
+- This pattern is used in `ModelSelector.jsx` and `TutorialSection.jsx`
 
 ### Text Wrapping Strategy
 
@@ -163,7 +175,19 @@ src/
 │   │   ├── SettingsPanel.jsx       # Temperature, tokens, repetitions
 │   │   └── CodeOutput.jsx          # Display generated code
 │   └── Resources/
-│       └── ResourcesSection.jsx    # Placeholder section
+│       ├── ResourcesSection.jsx    # Resources landing with cards
+│       └── Preregistration/        # Preregistration form system
+│           ├── PreregistrationModal.jsx  # Main modal with form state
+│           ├── FormSection.jsx           # Collapsible section wrapper
+│           ├── pdfGenerator.js           # jsPDF generation logic
+│           └── sections/                 # Individual form sections
+│               ├── ContextSection.jsx
+│               ├── ModelSpecSection.jsx
+│               ├── ValidationSetSection.jsx
+│               ├── HumanRatingSection.jsx
+│               ├── SCCRatingSection.jsx
+│               ├── ComparisonSection.jsx
+│               └── FinetuningSection.jsx
 ├── data/
 │   ├── codeExamples.js             # Tutorial sections + descriptions
 │   ├── models.js                   # Model configs + code templates
@@ -248,10 +272,38 @@ The example Python files are intentionally **minimalized for teaching**, not pro
 
 This makes examples ~30-40% smaller and easier for researchers to understand and adapt.
 
+### Preregistration Form System
+
+**Main Component**: `PreregistrationModal.jsx`
+
+The preregistration form allows users to fill out and download a PDF for their SCC validation study:
+
+1. **Form Structure**: 7 collapsible sections matching the preregistration template
+   - Context of SCC (construct, data modality)
+   - Model Specification (provider, model, temperature, repetitions, max tokens, prompts)
+   - Validation Set Stimuli
+   - Human Rating Collection Procedures
+   - SCC Rating Procedures
+   - Compare SCC and Human Rating
+   - Finetuning (optional)
+
+2. **PDF Generation** (`pdfGenerator.js`): Uses jsPDF + jspdf-autotable
+   - Import pattern: `import autoTable from 'jspdf-autotable'` (explicit import, not side-effect)
+   - Radio/checkbox selections render as plain text values (e.g., "Mean" not "[X] Mean")
+   - Repository links show as "Yes: https://..." format
+
+3. **Download Options**:
+   - Fill out form → Download as PDF (dynamic)
+   - Download blank .docx template (static file from `/public`)
+
+4. **Styling Note**: The Download PDF button in the modal header uses **inline styles** to guarantee visibility (same Tailwind compilation issue as other buttons)
+
 ## Known Constraints
 
+- **Tailwind color classes may not compile correctly** - Use inline styles for `backgroundColor` and `color` on buttons. Layout classes (`flex`, `rounded-lg`, etc.) work fine.
 - Line highlighting depends on accurate line numbers in `codeExamples.js` matching code after docstring removal
 - Text wrapping uses aggressive `break-all` - may break words mid-character
 - IntersectionObserver rootMargin tuned for desktop viewports
 - All example Python files must use `?raw` import to load as strings
 - Manual navigation temporarily disables scroll observer for 1 second - avoid rapid clicking
+- jsPDF Helvetica font doesn't support Unicode characters - use ASCII text only in PDF generation

@@ -3,10 +3,10 @@ export const modelConfigs = {
     label: 'OpenAI',
     provider: 'OpenAI',
     models: [
-      { value: 'gpt-5', label: 'GPT-5 (Recommended)' },
-      { value: 'gpt-5-mini', label: 'GPT-5 Mini' },
-      { value: 'gpt-4.1', label: 'GPT-4.1' },
-      { value: 'gpt-4.1-mini', label: 'GPT-4.1 Mini' }
+      { value: 'gpt-5-2025-08-07', label: 'GPT-5 (Recommended)' },
+      { value: 'gpt-5-mini-2025-08-07', label: 'GPT-5 Mini' },
+      { value: 'gpt-4.1-2025-04-14', label: 'GPT-4.1' },
+      { value: 'gpt-4.1-mini-2025-04-14', label: 'GPT-4.1 Mini' }
     ],
     settings: {
       temperature: {
