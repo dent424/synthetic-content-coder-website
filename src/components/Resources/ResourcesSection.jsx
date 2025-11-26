@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { FileText, CheckSquare, Code, Download } from 'lucide-react';
 import PreregistrationModal from './Preregistration/PreregistrationModal';
-import { downloadBlankPDF } from './Preregistration/pdfGenerator';
 
 const resources = [
   {
@@ -100,16 +99,15 @@ export default function ResourcesSection() {
                       >
                         Fill Out Form
                       </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          downloadBlankPDF();
-                        }}
+                      <a
+                        href="/SCC_Preregistration_Template.docx"
+                        download="SCC_Preregistration_Template.docx"
+                        onClick={(e) => e.stopPropagation()}
                         className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium transition-colors"
                       >
                         <Download size={16} />
-                        Download Blank PDF
-                      </button>
+                        Download Blank Template
+                      </a>
                     </div>
                   )}
                 </div>
