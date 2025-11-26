@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { FileText, CheckSquare, Code } from 'lucide-react';
+import { FileText, CheckSquare, Code, Download } from 'lucide-react';
 import PreregistrationModal from './Preregistration/PreregistrationModal';
+import { downloadBlankPDF } from './Preregistration/pdfGenerator';
 
 const resources = [
   {
@@ -88,16 +89,28 @@ export default function ResourcesSection() {
                   <p className="text-sm text-slate-600">
                     {resource.description}
                   </p>
-                  {isClickable && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleResourceClick(resource.onClick);
-                      }}
-                      className="mt-3 px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg text-sm font-medium transition-colors"
-                    >
-                      Open Form
-                    </button>
+                  {resource.id === 'preregistration' && (
+                    <div className="mt-3 flex gap-2">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleResourceClick(resource.onClick);
+                        }}
+                        className="px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg text-sm font-medium transition-colors"
+                      >
+                        Fill Out Form
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          downloadBlankPDF();
+                        }}
+                        className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium transition-colors"
+                      >
+                        <Download size={16} />
+                        Download Blank PDF
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>
