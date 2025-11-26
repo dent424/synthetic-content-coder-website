@@ -1,30 +1,27 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
-// Helper to format checkbox display
+// Helper to format checkbox selections - returns only selected items as text
 function formatCheckboxList(selected, options, otherValue = '') {
-  return options.map(opt => {
-    const isChecked = selected.includes(opt.value);
-    const checkmark = isChecked ? '[X]' : '[ ]';
-    let label = opt.label;
-    if (opt.value === 'other' && isChecked && otherValue) {
-      label = `Other: ${otherValue}`;
-    }
-    return `${checkmark} ${label}`;
-  }).join('\n');
+  const selectedLabels = options
+    .filter(opt => selected.includes(opt.value))
+    .map(opt => {
+      if (opt.value === 'other' && otherValue) {
+        return otherValue;
+      }
+      return opt.label;
+    });
+  return selectedLabels.join(', ') || '';
 }
 
-// Helper to format radio display
-function formatRadioList(selected, options, otherValue = '') {
-  return options.map(opt => {
-    const isChecked = selected === opt.value;
-    const checkmark = isChecked ? '[X]' : '[ ]';
-    let label = opt.label;
-    if (opt.value === 'other' && isChecked && otherValue) {
-      label = `Other: ${otherValue}`;
-    }
-    return `${checkmark} ${label}`;
-  }).join('\n');
+// Helper to format radio selection - returns only the selected item as text
+function formatRadioSelection(selected, options, otherValue = '') {
+  const selectedOpt = options.find(opt => opt.value === selected);
+  if (!selectedOpt) return '';
+  if (selectedOpt.value === 'other' && otherValue) {
+    return otherValue;
+  }
+  return selectedOpt.label;
 }
 
 export function generatePreregistrationPDF(formData) {
@@ -155,34 +152,27 @@ export function generatePreregistrationPDF(formData) {
   doc.text('Validation Set Stimuli', margin, yPosition);
   yPosition += 2;
 
-  const validationObtainedBy = formatRadioList(
+  const validationObtainedBy = formatRadioSelection(
     formData.validationSet.obtainedBy,
     [
       { value: 'random', label: 'Random partition' },
-      { value: 'other', label: 'Other, please specify below' }
-    ]
+      { value: 'other', label: 'Other' }
+    ],
+    formData.validationSet.obtainedByOther
   );
 
-  const validationExcluded = formatRadioList(
+  const validationExcluded = formatRadioSelection(
     formData.validationSet.dataExcluded,
     [
       { value: 'no', label: 'No' },
-      { value: 'yes', label: 'Yes, please specify below' }
+      { value: 'yes', label: 'Yes' }
     ]
   );
 
-  const validationUploaded = formatRadioList(
-    formData.validationSet.uploadedDataset,
-    [
-      { value: 'yes', label: 'Yes, repository link' },
-      { value: 'no', label: 'No' }
-    ]
-  );
-
-  let uploadedDatasetText = validationUploaded;
-  if (formData.validationSet.uploadedDataset === 'yes' && formData.validationSet.repositoryLink) {
-    uploadedDatasetText = `[X] Yes, repository link: ${formData.validationSet.repositoryLink}\n[ ] No`;
-  }
+  // For uploaded dataset, show "Yes" with the link, or just "No"
+  let uploadedDatasetText = formData.validationSet.uploadedDataset === 'yes'
+    ? (formData.validationSet.repositoryLink ? `Yes: ${formData.validationSet.repositoryLink}` : 'Yes')
+    : 'No';
 
   const validationBody = [
     ['Number of stimuli', formData.validationSet.numStimuli || ''],
@@ -237,17 +227,17 @@ export function generatePreregistrationPDF(formData) {
   const ratedByOptions = [
     { value: 'trained', label: 'Trained researcher' },
     { value: 'crowdsourced', label: 'Crowd-sourced workers (e.g., MTurk, Prolific)' },
-    { value: 'other', label: 'Other, please specify' }
+    { value: 'other', label: 'Other' }
   ];
   const ratedByText = formatCheckboxList(formData.humanRating.ratedBy, ratedByOptions, formData.humanRating.ratedByOther);
 
-  const humanAggregation = formatRadioList(
+  const humanAggregation = formatRadioSelection(
     formData.humanRating.aggregation,
     [
       { value: 'mean', label: 'Mean' },
       { value: 'median', label: 'Median' },
       { value: 'na', label: 'N/A' },
-      { value: 'other', label: 'Other, please specify' }
+      { value: 'other', label: 'Other' }
     ],
     formData.humanRating.aggregationOther
   );
@@ -289,13 +279,13 @@ export function generatePreregistrationPDF(formData) {
   doc.text('SCC Rating Procedures', margin, yPosition);
   yPosition += 2;
 
-  const sccAggregation = formatRadioList(
+  const sccAggregation = formatRadioSelection(
     formData.sccRating.aggregation,
     [
       { value: 'mean', label: 'Mean' },
       { value: 'median', label: 'Median' },
       { value: 'majority', label: 'Majority vote' },
-      { value: 'other', label: 'Other, please specify' }
+      { value: 'other', label: 'Other' }
     ],
     formData.sccRating.aggregationOther
   );
@@ -339,7 +329,7 @@ export function generatePreregistrationPDF(formData) {
       { value: 'correlation', label: 'Correlation coefficients' },
       { value: 'rmse', label: 'Root Mean Square Error (RMSE)' },
       { value: 'accuracy', label: 'Accuracy/F1' },
-      { value: 'other', label: 'Other, please specify' }
+      { value: 'other', label: 'Other' }
     ],
     formData.comparison.methodOther
   );
@@ -376,18 +366,10 @@ export function generatePreregistrationPDF(formData) {
   doc.text('Finetuning (Optional)', margin, yPosition);
   yPosition += 2;
 
-  const finetuneUploaded = formatRadioList(
-    formData.finetuning.uploadedDataset,
-    [
-      { value: 'yes', label: 'Yes, repository link' },
-      { value: 'no', label: 'No' }
-    ]
-  );
-
-  let finetuneUploadedText = finetuneUploaded;
-  if (formData.finetuning.uploadedDataset === 'yes' && formData.finetuning.repositoryLink) {
-    finetuneUploadedText = `[X] Yes, repository link: ${formData.finetuning.repositoryLink}\n[ ] No`;
-  }
+  // For finetuning uploaded dataset, show "Yes" with the link, or just "No"
+  let finetuneUploadedText = formData.finetuning.uploadedDataset === 'yes'
+    ? (formData.finetuning.repositoryLink ? `Yes: ${formData.finetuning.repositoryLink}` : 'Yes')
+    : 'No';
 
   autoTable(doc, {
     startY: yPosition,
