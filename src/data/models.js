@@ -1,11 +1,12 @@
 export const modelConfigs = {
   'gpt-4': {
-    label: 'GPT-4.1',
+    label: 'OpenAI',
     provider: 'OpenAI',
     models: [
-      { value: 'gpt-4-turbo', label: 'GPT-4 Turbo (Recommended)' },
-      { value: 'gpt-4o', label: 'GPT-4o' },
-      { value: 'gpt-4', label: 'GPT-4' }
+      { value: 'gpt-5', label: 'GPT-5 (Recommended)' },
+      { value: 'gpt-5-mini', label: 'GPT-5 Mini' },
+      { value: 'gpt-4.1', label: 'GPT-4.1' },
+      { value: 'gpt-4.1-mini', label: 'GPT-4.1 Mini' }
     ],
     settings: {
       temperature: {
@@ -35,9 +36,10 @@ export const modelConfigs = {
     label: 'Claude',
     provider: 'Anthropic',
     models: [
-      { value: 'claude-sonnet-4-20250514', label: 'Claude Sonnet 4 (Recommended)' },
-      { value: 'claude-opus-4-20250514', label: 'Claude Opus 4' },
-      { value: 'claude-3-5-sonnet-20241022', label: 'Claude 3.5 Sonnet' }
+      { value: 'claude-sonnet-4-5-20250929', label: 'Claude Sonnet 4.5 (Recommended)' },
+      { value: 'claude-opus-4-5-20251124', label: 'Claude Opus 4.5' },
+      { value: 'claude-haiku-4-5-20251015', label: 'Claude Haiku 4.5' },
+      { value: 'claude-sonnet-4-20250514', label: 'Claude Sonnet 4' }
     ],
     settings: {
       temperature: {

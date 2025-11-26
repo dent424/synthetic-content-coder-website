@@ -63,19 +63,26 @@ export default function TutorialSection() {
             <button
               key={tab.id}
               onClick={() => setActiveExample(tab.id)}
-              className={`
-                flex items-center gap-2 px-6 py-3 rounded-lg transition-all
-                focus:outline-none focus:ring-2 focus:ring-slate-400
-                ${isActive
-                  ? 'bg-slate-300 text-slate-700 shadow-lg font-bold active:bg-slate-400'
-                  : 'bg-white border border-slate-200 text-slate-700 font-medium hover:border-slate-300 hover:bg-slate-50 active:bg-slate-200 active:font-bold'
-                }
-              `}
+              className="flex items-center gap-2 px-6 py-3 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-slate-400"
+              style={isActive
+                ? {
+                    backgroundColor: '#1e3a8a',
+                    color: 'white',
+                    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+                    fontWeight: '700'
+                  }
+                : {
+                    backgroundColor: 'white',
+                    color: '#334155',
+                    border: '1px solid #e2e8f0',
+                    fontWeight: '500'
+                  }
+              }
             >
               <Icon size={18} />
               <div className="text-left">
-                <div className={isActive ? 'font-bold' : 'font-semibold'}>{tab.label}</div>
-                <div className={`text-xs ${isActive ? 'text-slate-600' : 'text-slate-500'}`}>
+                <div style={{ fontWeight: isActive ? '700' : '600' }}>{tab.label}</div>
+                <div style={{ fontSize: '0.75rem', color: isActive ? 'rgba(255,255,255,0.8)' : '#64748b' }}>
                   {tab.data.contentType} • {tab.data.model}
                 </div>
               </div>
