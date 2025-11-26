@@ -158,7 +158,18 @@ export default function PreregistrationModal({ onClose }) {
               <button
                 onClick={handleDownload}
                 disabled={isGenerating}
-                className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-white rounded-lg font-medium transition-colors"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '8px 16px',
+                  backgroundColor: isGenerating ? '#6b7280' : '#1e3a8a',
+                  color: 'white',
+                  borderRadius: '8px',
+                  fontWeight: '500',
+                  border: 'none',
+                  cursor: isGenerating ? 'not-allowed' : 'pointer',
+                }}
               >
                 <Download size={18} />
                 {isGenerating ? 'Generating...' : 'Download PDF'}
