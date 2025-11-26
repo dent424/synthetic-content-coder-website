@@ -68,7 +68,17 @@ export const modelConfigs = {
 };
 
 export const codeTemplates = {
-  'gpt-4': (config) => `import openai
+  'gpt-4': (config) => `# ==============================================================================
+# PREREGISTRATION PARAMETERS (for SCC validation study)
+# ==============================================================================
+# Provider:          OpenAI
+# Model:             ${config.model}
+# Temperature:       ${config.temperature}
+# Repetitions:       ${config.repetitions}
+# Max Tokens:        ${config.maxTokens}
+# ==============================================================================
+
+import openai
 import os
 import numpy as np
 from time import sleep
@@ -76,7 +86,7 @@ from time import sleep
 # Initialize OpenAI client
 client = openai.OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
-# Your construct definition
+# Your construct definition (include in preregistration)
 prompt_template = """${config.prompt}"""
 
 # Configuration
@@ -149,7 +159,17 @@ if __name__ == "__main__":
         print("No valid ratings obtained")
 `,
 
-  'claude': (config) => `import anthropic
+  'claude': (config) => `# ==============================================================================
+# PREREGISTRATION PARAMETERS (for SCC validation study)
+# ==============================================================================
+# Provider:          Anthropic
+# Model:             ${config.model}
+# Temperature:       ${config.temperature}
+# Repetitions:       ${config.repetitions}
+# Max Tokens:        ${config.maxTokens}
+# ==============================================================================
+
+import anthropic
 import os
 import numpy as np
 from time import sleep
@@ -157,7 +177,7 @@ from time import sleep
 # Initialize Anthropic client
 client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
-# Your construct definition
+# Your construct definition (include in preregistration)
 prompt_template = """${config.prompt}"""
 
 # Configuration
