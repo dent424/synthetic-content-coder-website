@@ -143,22 +143,34 @@ export default function PreregistrationModal({ onClose }) {
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col">
         {/* Header */}
-        <div className="shrink-0 bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center rounded-t-lg">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-              <FileText size={20} />
+        <div className="shrink-0 bg-white border-b border-slate-200 px-6 py-4 rounded-t-lg">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                <FileText size={20} />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-slate-900">SCC Preregistration Form</h2>
+                <p className="text-sm text-slate-500">Fill out all sections, then download as PDF</p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-xl font-bold text-slate-900">SCC Preregistration Form</h2>
-              <p className="text-sm text-slate-500">Fill out all sections, then download as PDF</p>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={handleDownload}
+                disabled={isGenerating}
+                className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-white rounded-lg font-medium transition-colors"
+              >
+                <Download size={18} />
+                {isGenerating ? 'Generating...' : 'Download PDF'}
+              </button>
+              <button
+                onClick={onClose}
+                className="text-slate-400 hover:text-slate-600 transition-colors p-2 hover:bg-slate-100 rounded-lg"
+              >
+                <X size={24} />
+              </button>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="text-slate-400 hover:text-slate-600 transition-colors p-2 hover:bg-slate-100 rounded-lg"
-          >
-            <X size={24} />
-          </button>
         </div>
 
         {/* Scrollable Form Content */}
@@ -218,20 +230,6 @@ export default function PreregistrationModal({ onClose }) {
           </FormSection>
         </div>
 
-        {/* Footer */}
-        <div className="shrink-0 bg-white border-t border-slate-200 px-6 py-4 flex justify-between items-center rounded-b-lg">
-          <p className="text-sm text-slate-500">
-            All fields will be included in the downloaded PDF
-          </p>
-          <button
-            onClick={handleDownload}
-            disabled={isGenerating}
-            className="flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-white rounded-lg font-medium transition-colors"
-          >
-            <Download size={18} />
-            {isGenerating ? 'Generating...' : 'Download PDF'}
-          </button>
-        </div>
       </div>
     </div>
   );
