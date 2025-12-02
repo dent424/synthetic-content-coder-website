@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { FileText, CheckSquare, Code, Download } from 'lucide-react';
+import { FileText, CheckSquare, Code, Download, BookOpen } from 'lucide-react';
 import PreregistrationModal from './Preregistration/PreregistrationModal';
+import GlossaryModal from './Glossary/GlossaryModal';
 
 const resources = [
   // TODO: Implement LLM API Guide content and change status to 'Available'
@@ -20,6 +21,14 @@ const resources = [
     status: 'Available',
     onClick: 'preregistration'
   },
+  {
+    id: 'glossary',
+    title: 'Glossary of Terms',
+    description: 'Key terminology for understanding LLM-based content coding, from foundational concepts to practical implementation.',
+    icon: BookOpen,
+    status: 'Available',
+    onClick: 'glossary'
+  },
   // TODO: Implement Implementation Checklist content and change status to 'Available'
   {
     id: 'checklist',
@@ -33,10 +42,13 @@ const resources = [
 
 export default function ResourcesSection() {
   const [showPreregistration, setShowPreregistration] = useState(false);
+  const [showGlossary, setShowGlossary] = useState(false);
 
   const handleResourceClick = (resourceId) => {
     if (resourceId === 'preregistration') {
       setShowPreregistration(true);
+    } else if (resourceId === 'glossary') {
+      setShowGlossary(true);
     }
   };
 
@@ -133,6 +145,11 @@ export default function ResourcesSection() {
       {/* Preregistration Modal */}
       {showPreregistration && (
         <PreregistrationModal onClose={() => setShowPreregistration(false)} />
+      )}
+
+      {/* Glossary Modal */}
+      {showGlossary && (
+        <GlossaryModal onClose={() => setShowGlossary(false)} />
       )}
     </div>
   );
