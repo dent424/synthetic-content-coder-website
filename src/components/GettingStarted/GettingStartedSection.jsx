@@ -635,14 +635,13 @@ print(response.output_text)`;
                 {expandedSubsections['3c-run'] && (
                   <div className="ml-6 mt-2 space-y-4">
                     <p className="text-purple-900">
-                      Click the green <strong>Run</strong> button in Spyder's toolbar (or press <strong>F5</strong> on your keyboard).
-                      Look at the console on the right side of Spyder. If everything is working, you should see
-                      the answer <strong>"4"</strong> printed in the console.
+                      In the image below, the <strong style={{color: '#a855f7'}}>lavender box</strong> shows where you need to
+                      replace <code className="bg-purple-100 px-1 rounded">YOUR_API_KEY_HERE</code> with your actual API key.
+                      To run the code, click the <strong style={{color: '#3b82f6'}}>play button</strong> shown in the blue box
+                      (or press <strong>F5</strong> on your keyboard).
                     </p>
 
                     <p className="text-purple-900">
-                      In the image below, the <strong style={{color: '#22c55e'}}>green box</strong> shows where you need to
-                      replace <code className="bg-purple-100 px-1 rounded">YOUR_API_KEY_HERE</code> with your actual API key.
                       The <strong style={{color: '#eab308'}}>yellow box</strong> at the bottom of the console shows the
                       successful output "4" — this means GPT-5 received your question and sent back the correct answer.
                     </p>
@@ -655,7 +654,7 @@ print(response.output_text)`;
                         className="w-full rounded-lg shadow-md"
                       />
                       <p className="text-sm text-slate-600 mt-3 text-center italic">
-                        Green box: where to put your API key. Yellow box: the successful output "4".
+                        Lavender box: API key location. Blue box: Run button. Yellow box: successful output "4".
                       </p>
                     </div>
 
