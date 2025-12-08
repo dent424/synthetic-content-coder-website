@@ -91,6 +91,9 @@ print(response.output_text)`;
             </div>
             <h3 className="text-xl font-bold text-blue-900 flex-1">Step 1: Get Your Computer Ready</h3>
           </button>
+          <p className="ml-9 mt-2 text-blue-800">
+            Install Python and the tools you need to write and run code.
+          </p>
 
           {expandedSteps[1] && (
             <div className="ml-9 mt-3 space-y-6">
@@ -276,6 +279,9 @@ print(response.output_text)`;
             </div>
             <h3 className="text-xl font-bold text-emerald-900 flex-1">Step 2: Get an API Key</h3>
           </button>
+          <p className="ml-9 mt-2 text-emerald-800">
+            Create an OpenAI account and get the key that lets your code talk to GPT-5.
+          </p>
 
           {expandedSteps[2] && (
             <div className="ml-9 mt-3 space-y-6">
@@ -529,41 +535,147 @@ print(response.output_text)`;
             </div>
             <h3 className="text-xl font-bold text-purple-900 flex-1">Step 3: Try the API</h3>
           </button>
+          <p className="ml-9 mt-2 text-purple-800">
+            Test your setup by sending a simple question to GPT-5 and getting a response.
+          </p>
 
           {expandedSteps[3] && (
-            <div className="ml-9 mt-3 space-y-4">
-              <p className="text-purple-900">
-                Before building a full SCC, let's make sure everything is working. Copy the code below into Spyder
-                and run it. If successful, you'll see GPT-5's response printed in the console.
-              </p>
+            <div className="ml-9 mt-3 space-y-6">
 
-              <p className="text-purple-900">
-                <strong>Important:</strong> Replace <code className="bg-purple-100 px-1 rounded">YOUR_API_KEY_HERE</code> with
-                the API key you generated in Step 2.
-              </p>
-
-              {/* Code Block */}
-              <div className="relative bg-slate-900 rounded-lg p-4 overflow-x-auto">
+              {/* Subsection 3a: Open a New File in Spyder */}
+              <div className="border-l-2 border-purple-300 pl-4">
                 <button
-                  onClick={handleCopy}
-                  className="absolute top-3 right-3 p-2 rounded-md bg-slate-700 hover:bg-slate-600 transition-colors"
-                  title="Copy code"
+                  onClick={() => toggleSubsection('3a-newfile')}
+                  className="w-full text-left flex items-start gap-2 hover:text-purple-700 transition-colors py-2"
                 >
-                  {copied ? (
-                    <Check size={16} className="text-green-400" />
-                  ) : (
-                    <Copy size={16} className="text-slate-300" />
-                  )}
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['3a-newfile'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-purple-900">3a. Open a New File in Spyder</h4>
                 </button>
-                <pre className="text-sm text-slate-100 font-mono whitespace-pre-wrap pr-12">
-                  {testCode}
-                </pre>
+                {expandedSubsections['3a-newfile'] && (
+                  <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-purple-900">
+                      Open <strong>Spyder</strong> from Anaconda Navigator (as shown in Step 1b). When Spyder opens,
+                      you'll see a default file called <code className="bg-purple-100 px-1 rounded">untitled0.py</code> in the left panel.
+                      This is where you'll paste your code.
+                    </p>
+
+                    {/* API Test Screenshot 1 */}
+                    <div className="bg-white border border-purple-200 rounded-lg p-4 my-4">
+                      <img
+                        src="/images/apitest/APITest1.png"
+                        alt="Spyder IDE showing where to paste code in the left panel"
+                        className="w-full rounded-lg shadow-md"
+                      />
+                      <p className="text-sm text-slate-600 mt-3 text-center italic">
+                        Paste your code in the left panel of Spyder (the script editor)
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
 
-              <p className="text-purple-900 text-sm">
-                If you see "4" (or a similar answer) printed in Spyder's console, your setup is complete!
-                You're ready to start building SCCs.
-              </p>
+              {/* Subsection 3b: Paste the Code and Add Your API Key */}
+              <div className="border-l-2 border-purple-300 pl-4">
+                <button
+                  onClick={() => toggleSubsection('3b-paste')}
+                  className="w-full text-left flex items-start gap-2 hover:text-purple-700 transition-colors py-2"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['3b-paste'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-purple-900">3b. Paste the Code and Add Your API Key</h4>
+                </button>
+                {expandedSubsections['3b-paste'] && (
+                  <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-purple-900">
+                      Copy the code below and paste it into Spyder's left panel. Then find the line that
+                      says <code className="bg-purple-100 px-1 rounded">YOUR_API_KEY_HERE</code> and replace it with
+                      the API key you generated in Step 2.
+                    </p>
+
+                    {/* Code Block */}
+                    <div className="relative bg-slate-900 rounded-lg p-4 overflow-x-auto">
+                      <button
+                        onClick={handleCopy}
+                        className="absolute top-3 right-3 p-2 rounded-md bg-slate-700 hover:bg-slate-600 transition-colors"
+                        title="Copy code"
+                      >
+                        {copied ? (
+                          <Check size={16} className="text-green-400" />
+                        ) : (
+                          <Copy size={16} className="text-slate-300" />
+                        )}
+                      </button>
+                      <pre className="text-sm text-slate-100 font-mono whitespace-pre-wrap pr-12">
+                        {testCode}
+                      </pre>
+                    </div>
+
+                    <p className="text-purple-900">
+                      <strong>Important:</strong> Make sure to replace <code className="bg-purple-100 px-1 rounded">YOUR_API_KEY_HERE</code> with
+                      your actual API key. The line is highlighted in the image below.
+                    </p>
+
+                    {/* API Test Screenshot 2 - API Key highlight */}
+                    <div className="bg-white border border-purple-200 rounded-lg p-4 my-4">
+                      <img
+                        src="/images/apitest/APITest2.png"
+                        alt="Spyder IDE showing the API key line highlighted and the successful output"
+                        className="w-full rounded-lg shadow-md"
+                      />
+                      <p className="text-sm text-slate-600 mt-3 text-center italic">
+                        Replace YOUR_API_KEY_HERE (highlighted in green) with your actual API key
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Subsection 3c: Run the Code and Check the Output */}
+              <div className="border-l-2 border-purple-300 pl-4">
+                <button
+                  onClick={() => toggleSubsection('3c-run')}
+                  className="w-full text-left flex items-start gap-2 hover:text-purple-700 transition-colors py-2"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['3c-run'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-purple-900">3c. Run the Code and Check the Output</h4>
+                </button>
+                {expandedSubsections['3c-run'] && (
+                  <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-purple-900">
+                      Click the green <strong>Run</strong> button in Spyder's toolbar (or press <strong>F5</strong> on your keyboard).
+                      Look at the console on the right side of Spyder. If everything is working, you should see
+                      the answer <strong>"4"</strong> printed in the console.
+                    </p>
+
+                    <p className="text-purple-900">
+                      In the image below, you can see the successful output highlighted in yellow at the bottom
+                      of the console. This means GPT-5 received your question ("What is 2 + 2?") and sent back
+                      the correct answer.
+                    </p>
+
+                    {/* API Test Screenshot 2 - Output highlight */}
+                    <div className="bg-white border border-purple-200 rounded-lg p-4 my-4">
+                      <img
+                        src="/images/apitest/APITest2.png"
+                        alt="Spyder IDE showing the successful output of 4 in the console"
+                        className="w-full rounded-lg shadow-md"
+                      />
+                      <p className="text-sm text-slate-600 mt-3 text-center italic">
+                        The output "4" (highlighted in yellow) confirms your setup is working correctly
+                      </p>
+                    </div>
+
+                    <p className="text-purple-900 font-medium">
+                      If you see "4" printed in the console, your setup is complete! You're ready to start building SCCs.
+                    </p>
+                  </div>
+                )}
+              </div>
 
               {/* Troubleshooting */}
               <div className="border-l-2 border-purple-300 pl-4">
