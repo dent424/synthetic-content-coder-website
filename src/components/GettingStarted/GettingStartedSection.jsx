@@ -1,9 +1,49 @@
 import { useState } from 'react';
-import { ChevronDown, ChevronRight } from 'lucide-react';
+import { ChevronDown, ChevronRight, Copy, Check } from 'lucide-react';
 
 export default function GettingStartedSection() {
   const [expandedSteps, setExpandedSteps] = useState({});
   const [expandedSubsections, setExpandedSubsections] = useState({});
+  const [copied, setCopied] = useState(false);
+
+  const testCode = `# Install the OpenAI package first (run this once in Anaconda Prompt):
+# pip install openai
+
+from openai import OpenAI
+
+# =============================================================================
+# SETUP - Replace with your API key
+# =============================================================================
+client = OpenAI(api_key="YOUR_API_KEY_HERE")
+
+# =============================================================================
+# SEND A MESSAGE TO GPT-5
+# =============================================================================
+response = client.responses.create(
+
+    # The model to use (gpt-5 is the most capable, gpt-5-mini is cheaper)
+    model="gpt-5",
+
+    # Your question or instructions for the model
+    input="What is 2 + 2?",
+
+    # Temperature controls randomness (0 = deterministic, 1 = more creative)
+    temperature=0,
+
+    # Maximum length of the response (in tokens, roughly 4 characters each)
+    max_output_tokens=500
+)
+
+# =============================================================================
+# PRINT THE RESPONSE
+# =============================================================================
+print(response.output_text)`;
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(testCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const toggleStep = (stepId) => {
     setExpandedSteps(prev => ({ ...prev, [stepId]: !prev[stepId] }));
@@ -496,24 +536,20 @@ export default function GettingStartedSection() {
               </p>
 
               {/* Code Block */}
-              <div className="bg-slate-900 rounded-lg p-4 overflow-x-auto">
-                <pre className="text-sm text-slate-100 font-mono whitespace-pre-wrap">
-{`# Install the OpenAI package first (run this once in Anaconda Prompt):
-# pip install openai
-
-from openai import OpenAI
-
-# Create a connection to OpenAI using your API key
-client = OpenAI(api_key="YOUR_API_KEY_HERE")
-
-# Send a message to GPT-5 and get a response
-response = client.responses.create(
-    model="gpt-5",
-    input="What is 2 + 2?"
-)
-
-# Print the response
-print(response.output_text)`}
+              <div className="relative bg-slate-900 rounded-lg p-4 overflow-x-auto">
+                <button
+                  onClick={handleCopy}
+                  className="absolute top-3 right-3 p-2 rounded-md bg-slate-700 hover:bg-slate-600 transition-colors"
+                  title="Copy code"
+                >
+                  {copied ? (
+                    <Check size={16} className="text-green-400" />
+                  ) : (
+                    <Copy size={16} className="text-slate-300" />
+                  )}
+                </button>
+                <pre className="text-sm text-slate-100 font-mono whitespace-pre-wrap pr-12">
+                  {testCode}
                 </pre>
               </div>
 
