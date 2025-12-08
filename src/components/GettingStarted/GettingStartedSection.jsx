@@ -562,7 +562,7 @@ print(response.output_text)`;
                     </p>
 
                     {/* API Test Screenshot 1 */}
-                    <div className="bg-white border border-purple-200 rounded-lg p-4 my-4">
+                    <div className="bg-white border border-purple-200 rounded-lg p-4 my-4 max-w-2xl">
                       <img
                         src="/images/apitest/APITest1.png"
                         alt="Spyder IDE showing where to paste code in the left panel"
@@ -619,7 +619,7 @@ print(response.output_text)`;
                     </p>
 
                     {/* API Test Screenshot 2 - API Key highlight */}
-                    <div className="bg-white border border-purple-200 rounded-lg p-4 my-4">
+                    <div className="bg-white border border-purple-200 rounded-lg p-4 my-4 max-w-2xl">
                       <img
                         src="/images/apitest/APITest2.png"
                         alt="Spyder IDE showing the API key line highlighted and the successful output"
@@ -659,7 +659,7 @@ print(response.output_text)`;
                     </p>
 
                     {/* API Test Screenshot 2 - Output highlight */}
-                    <div className="bg-white border border-purple-200 rounded-lg p-4 my-4">
+                    <div className="bg-white border border-purple-200 rounded-lg p-4 my-4 max-w-2xl">
                       <img
                         src="/images/apitest/APITest2.png"
                         alt="Spyder IDE showing the successful output of 4 in the console"
