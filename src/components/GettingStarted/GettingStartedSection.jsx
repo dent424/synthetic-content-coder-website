@@ -24,14 +24,20 @@ response = client.responses.create(
     # The model to use (gpt-5 is the most capable, gpt-5-mini is cheaper)
     model="gpt-5",
 
-    # Your question or instructions for the model
+    # THE PROMPT: This is what you're asking the model to do.
+    # Change this text to ask any question or give any instructions.
     input="What is 2 + 2?",
 
     # Temperature controls randomness (0 = deterministic, 1 = more creative)
     temperature=0,
 
     # Maximum length of the response (in tokens, roughly 4 characters each)
-    max_output_tokens=500
+    max_output_tokens=500,
+
+    # Reasoning effort controls how much the model "thinks" before responding
+    # Options: "minimal", "low", "medium" (default), "high"
+    # Higher = better quality but slower; Lower = faster but less thorough
+    reasoning={"effort": "medium"}
 )
 
 # =============================================================================
