@@ -470,7 +470,7 @@ export default function GettingStartedSection() {
         </div>
       </div>
 
-      {/* STEP 3: Testing Your API - PURPLE (Placeholder) */}
+      {/* STEP 3: Try the API - PURPLE */}
       <div className="bg-purple-50 border border-purple-200 rounded-lg p-8">
         <div className="mb-6">
           <button
@@ -480,15 +480,90 @@ export default function GettingStartedSection() {
             <div className="flex-shrink-0 mt-0.5 text-purple-700">
               {expandedSteps[3] ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
             </div>
-            <h3 className="text-xl font-bold text-purple-900 flex-1">Step 3: Testing Your API</h3>
+            <h3 className="text-xl font-bold text-purple-900 flex-1">Step 3: Try the API</h3>
           </button>
 
           {expandedSteps[3] && (
-            <div className="ml-9 mt-3">
-              <div className="bg-purple-100 border border-purple-300 rounded-lg p-6">
-                <p className="text-purple-900 italic">
-                  Content coming soon. This section will show you how to test that your API connection is working properly.
-                </p>
+            <div className="ml-9 mt-3 space-y-4">
+              <p className="text-purple-900">
+                Before building a full SCC, let's make sure everything is working. Copy the code below into Spyder
+                and run it. If successful, you'll see GPT-5's response printed in the console.
+              </p>
+
+              <p className="text-purple-900">
+                <strong>Important:</strong> Replace <code className="bg-purple-100 px-1 rounded">YOUR_API_KEY_HERE</code> with
+                the API key you generated in Step 2.
+              </p>
+
+              {/* Code Block */}
+              <div className="bg-slate-900 rounded-lg p-4 overflow-x-auto">
+                <pre className="text-sm text-slate-100 font-mono whitespace-pre-wrap">
+{`# Install the OpenAI package first (run this once in Anaconda Prompt):
+# pip install openai
+
+from openai import OpenAI
+
+# Create a connection to OpenAI using your API key
+client = OpenAI(api_key="YOUR_API_KEY_HERE")
+
+# Send a message to GPT-5 and get a response
+response = client.responses.create(
+    model="gpt-5",
+    input="What is 2 + 2?"
+)
+
+# Print the response
+print(response.output_text)`}
+                </pre>
+              </div>
+
+              <p className="text-purple-900 text-sm">
+                If you see "4" (or a similar answer) printed in Spyder's console, your setup is complete!
+                You're ready to start building SCCs.
+              </p>
+
+              {/* Troubleshooting */}
+              <div className="border-l-2 border-purple-300 pl-4">
+                <button
+                  onClick={() => toggleSubsection('3-troubleshoot')}
+                  className="w-full text-left flex items-start gap-2 hover:text-purple-700 transition-colors py-2"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['3-troubleshoot'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-purple-900">Troubleshooting</h4>
+                </button>
+                {expandedSubsections['3-troubleshoot'] && (
+                  <div className="ml-6 mt-2 space-y-3">
+                    <div>
+                      <p className="text-purple-900 font-medium">Error: "No module named 'openai'"</p>
+                      <p className="text-purple-800 text-sm">
+                        You need to install the OpenAI package. Open Anaconda Prompt (not Spyder) and type: <code className="bg-purple-100 px-1 rounded">pip install openai</code>
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-purple-900 font-medium">Error: "Invalid API key"</p>
+                      <p className="text-purple-800 text-sm">
+                        Double-check that you copied your API key correctly. Make sure there are no extra spaces before or after the key.
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-purple-900 font-medium">Error: "Insufficient quota" or billing error</p>
+                      <p className="text-purple-800 text-sm">
+                        You need to add payment information to your OpenAI account. Go to{' '}
+                        <a
+                          href="https://platform.openai.com/account/billing"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-purple-600 hover:text-purple-700 underline"
+                        >
+                          platform.openai.com/account/billing
+                        </a>
+                        {' '}to add a payment method.
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
