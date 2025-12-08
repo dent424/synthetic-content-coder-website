@@ -615,20 +615,8 @@ print(response.output_text)`;
 
                     <p className="text-purple-900">
                       <strong>Important:</strong> Make sure to replace <code className="bg-purple-100 px-1 rounded">YOUR_API_KEY_HERE</code> with
-                      your actual API key. The line is highlighted in the image below.
+                      your actual API key.
                     </p>
-
-                    {/* API Test Screenshot 2 - API Key highlight */}
-                    <div className="bg-white border border-purple-200 rounded-lg p-4 my-4 max-w-2xl">
-                      <img
-                        src="/images/apitest/APITest2.png"
-                        alt="Spyder IDE showing the API key line highlighted and the successful output"
-                        className="w-full rounded-lg shadow-md"
-                      />
-                      <p className="text-sm text-slate-600 mt-3 text-center italic">
-                        Replace YOUR_API_KEY_HERE (highlighted in green) with your actual API key
-                      </p>
-                    </div>
                   </div>
                 )}
               </div>
@@ -653,20 +641,21 @@ print(response.output_text)`;
                     </p>
 
                     <p className="text-purple-900">
-                      In the image below, you can see the successful output highlighted in yellow at the bottom
-                      of the console. This means GPT-5 received your question ("What is 2 + 2?") and sent back
-                      the correct answer.
+                      In the image below, the <strong style={{color: '#22c55e'}}>green box</strong> shows where you need to
+                      replace <code className="bg-purple-100 px-1 rounded">YOUR_API_KEY_HERE</code> with your actual API key.
+                      The <strong style={{color: '#eab308'}}>yellow box</strong> at the bottom of the console shows the
+                      successful output "4" — this means GPT-5 received your question and sent back the correct answer.
                     </p>
 
                     {/* API Test Screenshot 2 - Output highlight */}
-                    <div className="bg-white border border-purple-200 rounded-lg p-4 my-4 max-w-2xl">
+                    <div className="bg-white border border-purple-200 rounded-lg p-4 my-4 max-w-4xl">
                       <img
                         src="/images/apitest/APITest2.png"
-                        alt="Spyder IDE showing the successful output of 4 in the console"
+                        alt="Spyder IDE showing the API key location (green box) and successful output (yellow box)"
                         className="w-full rounded-lg shadow-md"
                       />
                       <p className="text-sm text-slate-600 mt-3 text-center italic">
-                        The output "4" (highlighted in yellow) confirms your setup is working correctly
+                        Green box: where to put your API key. Yellow box: the successful output "4".
                       </p>
                     </div>
 
