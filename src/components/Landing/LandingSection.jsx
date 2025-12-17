@@ -50,7 +50,7 @@ const navigationCards = [
       'Choose GPT-4.1, GPT-5, or Llama',
       'Configure temperature and settings',
       'Customize your rating prompt',
-      'Download production-ready code'
+      'Generate and download code templates for your specific SCC'
     ]
   },
   {
