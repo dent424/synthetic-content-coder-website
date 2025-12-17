@@ -776,7 +776,8 @@ print(response.output_text)`;
                     <p className="text-amber-900">
                       There are many image hosting services available, including <strong>AWS S3</strong>, <strong>Google Cloud Storage</strong>,
                       {' '}<strong>Cloudinary</strong>, and <strong>Imgur</strong>. For this guide, we'll use <strong>ImgBB</strong> because
-                      it's free, requires no technical setup, and is easy to use.
+                      it's free, requires no technical setup, and is easy to use. The remaining instructions are specific to ImgBB,
+                      but you can follow similar procedures with other services.
                     </p>
                     <p className="text-amber-900">
                       Go to{' '}
