@@ -148,7 +148,7 @@ export default function LandingSection({ setActiveTab }) {
               <button
                 key={card.id}
                 onClick={() => setActiveTab(card.id)}
-                className="group bg-white rounded-lg shadow-md border border-slate-200 hover:shadow-xl transition-all duration-300 hover:scale-105 text-left overflow-hidden"
+                className="group rounded-lg shadow-md border border-slate-200 hover:shadow-xl transition-all duration-300 hover:scale-105 text-left overflow-hidden"
               >
                 {/* Card Header with Gradient */}
                 <div className={`bg-gradient-to-r ${card.color} p-6 text-white`}>
@@ -162,7 +162,7 @@ export default function LandingSection({ setActiveTab }) {
                 </div>
 
                 {/* Card Body */}
-                <div className="p-6">
+                <div className="p-6 bg-white">
                   <ul className="space-y-2 text-slate-700">
                     {card.items.map((item, i) => (
                       <li key={i} className="flex items-start gap-2">
