@@ -844,8 +844,15 @@ print(response.output_text)`;
                     </div>
 
                     <p className="text-amber-900">
-                      <strong>Important:</strong> Each image gets a unique URL with a random code (like <code className="bg-amber-100 px-1 rounded">abc123xyz</code>).
-                      You'll need to copy the full URL for each image individually.
+                      ImgBB URLs have a base (<code className="bg-amber-100 px-1 rounded">https://i.ibb.co/</code>) but each image
+                      also gets a unique code (like <code className="bg-amber-100 px-1 rounded">abc123xyz</code>) in the path.
+                      This means you can't use a simple base URL + filename approach — you'll need to copy the <strong>complete URL</strong> for
+                      each image individually.
+                    </p>
+
+                    <p className="text-amber-900">
+                      <strong>For the code template:</strong> Save the full URL string in the first column of your CSV file.
+                      The generated code will read directly from this column.
                     </p>
                   </div>
                 )}
