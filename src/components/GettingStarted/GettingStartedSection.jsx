@@ -780,6 +780,11 @@ print(response.output_text)`;
                       but you can follow similar procedures with other services.
                     </p>
                     <p className="text-amber-900">
+                      <strong>Note:</strong> Links from services like <strong>Google Drive</strong> or <strong>Dropbox</strong> typically
+                      don't work because they point to a preview page rather than the actual image file. You need a <strong>direct link</strong> to
+                      the image itself (a URL that ends in <code className="bg-amber-100 px-1 rounded">.jpg</code>, <code className="bg-amber-100 px-1 rounded">.png</code>, etc.).
+                    </p>
+                    <p className="text-amber-900">
                       Go to{' '}
                       <a
                         href="https://imgbb.com"
