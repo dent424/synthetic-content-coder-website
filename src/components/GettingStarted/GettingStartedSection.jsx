@@ -726,7 +726,7 @@ print(response.output_text)`;
             <h3 className="text-xl font-bold text-amber-900 flex-1">Step 4: Host Your Images Online (For URL-Based Images Only)</h3>
           </button>
           <p className="ml-9 mt-2 text-amber-800">
-            If you're analyzing images, you'll need to host them online so the LLM can access them. This step is optional if you're only working with text.
+            If you're analyzing images, particularly with open-source models, you'll need to put them online so that the LLM can access them. You don't need to do this step if you're working with text.
           </p>
 
           {expandedSteps[4] && (
@@ -747,12 +747,14 @@ print(response.output_text)`;
                   <div className="ml-6 mt-2 space-y-4">
                     <p className="text-amber-900">
                       When you want an LLM to analyze images, you have two options: send the image as a <strong>URL</strong> (a web link)
-                      or encode the image directly in your code (<strong>base64</strong>). URL-based images are often easier to work with,
-                      especially when you have many images to analyze.
+                      or encode the image directly in your code (<strong>base64</strong>), which reads images right off your computer.
+                      URL-based images are often easier to work with, especially when you have many images to analyze.
+                      Some models may also require URL-based images and don't support reading local files.
                     </p>
                     <p className="text-amber-900">
                       To use URLs, your images need to be hosted somewhere online where the LLM can access them.
-                      We recommend <strong>ImgBB</strong> — it's free, easy to use, and doesn't require technical setup.
+                      <strong>ImgBB</strong> provides an easy way to host images online — it's free and doesn't require technical setup.
+                      However, be mindful of the sensitivity of your images when using any public hosting service.
                     </p>
                   </div>
                 )}
