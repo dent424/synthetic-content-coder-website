@@ -862,8 +862,10 @@ print(response.output_text)`;
                     </p>
 
                     <p className="text-amber-900">
-                      <strong>For the code template:</strong> Save the full URL string in the first column of your CSV file.
-                      The generated code will read directly from this column.
+                      <strong>For the code template:</strong> In the <strong>Code Generator</strong> section of this site, the generated
+                      code combines a "Base URL" with whatever is in the first column of your CSV file. For ImgBB, leave the
+                      Base URL field <strong>empty</strong> and put the complete URL for each image in your CSV. The code will then
+                      read the full URL directly from each row.
                     </p>
                   </div>
                 )}
