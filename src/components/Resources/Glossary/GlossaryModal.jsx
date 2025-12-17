@@ -72,7 +72,7 @@ export default function GlossaryModal({ onClose }) {
         </div>
 
         {/* Scrollable Content */}
-        <div className="flex-1 min-h-0 overflow-y-auto px-6 py-6 space-y-6">
+        <div className="flex-1 min-h-0 overflow-y-auto px-6 pb-6 space-y-6">
           {filteredCategories.length === 0 ? (
             <div className="text-center py-12">
               <Search className="mx-auto text-slate-300 mb-4" size={48} />

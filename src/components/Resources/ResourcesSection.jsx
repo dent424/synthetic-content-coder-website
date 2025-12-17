@@ -1,18 +1,9 @@
 import { useState } from 'react';
-import { FileText, CheckSquare, Code, Download, BookOpen } from 'lucide-react';
+import { FileText, Download, BookOpen } from 'lucide-react';
 import PreregistrationModal from './Preregistration/PreregistrationModal';
 import GlossaryModal from './Glossary/GlossaryModal';
 
 const resources = [
-  // TODO: Implement LLM API Guide content and change status to 'Available'
-  {
-    id: 'api-guide',
-    title: 'LLM API Guide',
-    description: 'Deep dive into LLM API anatomy: parameters, authentication, rate limits, structured outputs, and best practices for research applications.',
-    icon: Code,
-    status: 'Coming Soon',
-    onClick: null
-  },
   {
     id: 'preregistration',
     title: 'Preregistration Template',
@@ -28,15 +19,6 @@ const resources = [
     icon: BookOpen,
     status: 'Available',
     onClick: 'glossary'
-  },
-  // TODO: Implement Implementation Checklist content and change status to 'Available'
-  {
-    id: 'checklist',
-    title: 'Implementation Checklist',
-    description: 'Step-by-step checklist for implementing and validating your SPC.',
-    icon: CheckSquare,
-    status: 'Coming Soon',
-    onClick: null
   }
 ];
 
@@ -56,10 +38,10 @@ export default function ResourcesSection() {
     <div className="space-y-6">
       <div className="mb-8">
         <h2 className="text-3xl font-bold text-slate-900">
-          Resources
+          Additional Resources
         </h2>
         <p className="text-slate-600 mt-2">
-          Additional tools and templates to support your LLM content coding research.
+          Tools and templates to support your LLM content coding research.
         </p>
       </div>
 
