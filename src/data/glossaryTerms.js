@@ -64,6 +64,93 @@ export const glossaryCategories = [
     ]
   },
   {
+    name: 'Synthetic Content Coders',
+    terms: [
+      {
+        term: 'Synthetic Content Coder (SCC)',
+        definition: 'An LLM configured to rate or categorize content (text, images, video) based on how human observers would perceive it. SCCs combine the flexibility of human coders with computational scalability, enabling researchers to code large datasets without manual annotation.'
+      },
+      {
+        term: 'Training Set',
+        definition: 'In machine learning, the portion of labeled data used to teach a model to recognize patterns. For fine-tuned SCCs, this is the set of human-coded examples the model learns from.'
+      },
+      {
+        term: 'Testing Set',
+        definition: 'A portion of data used to evaluate model performance during development. Unlike the validation set, the testing set may be used repeatedly to guide adjustments. This iterative use means testing set performance can be optimistically biased.'
+      },
+      {
+        term: 'Development Set',
+        definition: 'A portion of research data used to refine prompts and model settings during SCC creation. Researchers iterate on this data to improve performance before final testing.'
+      },
+      {
+        term: 'Validation Set',
+        definition: 'A portion of research data held back during development and used only for final testing. Because this data was not used to refine the SCC, performance on it provides an unbiased estimate of how well the SCC will perform on new content.'
+      },
+      {
+        term: 'Coding Set',
+        definition: 'The full dataset of content to be coded after the SCC has been validated. This is the data the researcher ultimately wants to analyze.'
+      },
+      {
+        term: 'Model Drift',
+        definition: 'Changes in how an LLM behaves over time, even when using the same model name. Providers may update models without notification, potentially altering coding results and threatening reproducibility.'
+      }
+    ]
+  },
+  {
+    name: 'LLM Architecture & Processing',
+    terms: [
+      {
+        term: 'Transformer',
+        definition: 'The neural network architecture underlying modern LLMs. Transformers process text by attending to relationships between all words simultaneously, enabling them to capture context and meaning across long passages.'
+      },
+      {
+        term: 'Tokens',
+        definition: 'The units LLMs use to process text—roughly corresponding to word fragments (e.g., "understanding" might be split into "under" + "stand" + "ing"). Token counts determine processing costs and context limits.'
+      },
+      {
+        term: 'Context Window',
+        definition: 'The maximum amount of content an LLM can process in a single request, measured in tokens. Larger context windows (e.g., 128,000 tokens) allow processing longer documents or more examples.'
+      },
+      {
+        term: 'Embeddings',
+        definition: 'Numerical representations that capture the meaning of text or images as coordinates in a high-dimensional space. Similar content produces similar embeddings, enabling models to recognize semantic relationships.'
+      },
+      {
+        term: 'Pre-training',
+        definition: 'The initial large-scale training phase where an LLM learns language patterns from massive text datasets. This general knowledge is later adapted through post-training, fine-tuning, or prompting for specific tasks.'
+      },
+      {
+        term: 'Post-Training',
+        definition: 'Additional training applied after pre-training to make LLMs more useful and aligned with human expectations. This typically includes instruction-following training and safety tuning, transforming base models into conversational assistants like ChatGPT or Claude.'
+      },
+      {
+        term: 'Inference',
+        definition: 'Running a trained model to generate outputs, as opposed to training it. When researchers use an SCC to code content, they are performing inference.'
+      }
+    ]
+  },
+  {
+    name: 'Prompting & Output Control',
+    terms: [
+      {
+        term: 'Zero-shot Learning',
+        definition: 'Using an LLM to perform a task without providing examples in the prompt. The model relies on detailed instructions and its pre-trained knowledge to complete the task. Contrast with few-shot learning, which includes examples.'
+      },
+      {
+        term: 'Few-shot Learning',
+        definition: 'Providing an LLM with a small number of examples in the prompt to demonstrate the desired task. This often improves performance without requiring fine-tuning.'
+      },
+      {
+        term: 'Sampling',
+        definition: 'The process by which LLMs select each word from a probability distribution of possible next words. Temperature settings control how this selection occurs.'
+      },
+      {
+        term: 'Deterministic Output',
+        definition: 'When an LLM produces identical responses to identical prompts, achieved by setting temperature to zero. This ensures reproducibility but may miss nuance captured by probabilistic sampling.'
+      }
+    ]
+  },
+  {
     name: 'Practical Implementation of SCCs',
     terms: [
       {
@@ -83,8 +170,20 @@ export const glossaryCategories = [
         definition: 'The process of adapting an existing LLM to a specific task by training it on a smaller, domain-specific dataset, allowing researchers to customize LLMs for specialized consumer behavior applications.'
       },
       {
-        term: 'Open-Source',
-        definition: 'Models or tools whose code is publicly available, allowing researchers to download, inspect, and preserve versions for exact replication (e.g., Llama 4, Deepseek v3).'
+        term: 'Model Version',
+        definition: 'The specific release identifier for an LLM (e.g., "gpt-4o-2024-08-06" rather than just "GPT-4o"). Specifying exact versions is critical for reproducibility, as models with the same general name may behave differently across releases.'
+      },
+      {
+        term: 'Batch Processing',
+        definition: 'Sending many content items to an LLM programmatically through an API rather than manually one at a time. This enables efficient coding of large datasets.'
+      },
+      {
+        term: 'Open-Source Models',
+        definition: 'LLMs whose code is publicly available, allowing researchers to download, inspect, and preserve versions for exact replication (e.g., Llama 4, Deepseek v3). Contrast with closed-source models.'
+      },
+      {
+        term: 'Closed-Source Models',
+        definition: 'LLMs (e.g., GPT, Claude, Gemini) accessed only through provider APIs. Researchers cannot download or preserve these models, making exact replication dependent on continued provider support.'
       }
     ]
   }
