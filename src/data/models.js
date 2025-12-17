@@ -32,19 +32,19 @@ export const modelConfigs = {
       }
     }
   },
-  'claude': {
-    label: 'Claude',
-    provider: 'Anthropic',
+  'llama': {
+    label: 'Llama (Open Source)',
+    provider: 'DeepInfra',
     models: [
-      { value: 'claude-sonnet-4-5-20250929', label: 'Claude Sonnet 4.5 (Recommended)' },
-      { value: 'claude-opus-4-5-20251124', label: 'Claude Opus 4.5' },
-      { value: 'claude-haiku-4-5-20251015', label: 'Claude Haiku 4.5' },
-      { value: 'claude-sonnet-4-20250514', label: 'Claude Sonnet 4' }
+      { value: 'meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8', label: 'Llama 4 Maverick (Recommended)' },
+      { value: 'meta-llama/Llama-4-Scout-17B-16E-Instruct', label: 'Llama 4 Scout' },
+      { value: 'meta-llama/Llama-3.3-70B-Instruct', label: 'Llama 3.3 70B' },
+      { value: 'meta-llama/Llama-3.2-11B-Vision-Instruct', label: 'Llama 3.2 11B Vision' }
     ],
     settings: {
       temperature: {
         min: 0,
-        max: 1,
+        max: 2,
         default: 1,
         step: 0.1,
         description: 'Controls randomness. Higher = more diverse. Recommended: 1'
@@ -341,11 +341,11 @@ results_df.to_csv(OUTPUT_CSV, index=False)
 print(f"Results saved to {OUTPUT_CSV}")
 `;
 
-// Claude template for TEXT data
-const claudeTextTemplate = (config) => `# ==============================================================================
+// Llama template for TEXT data (via DeepInfra)
+const llamaTextTemplate = (config) => `# ==============================================================================
 # PREREGISTRATION PARAMETERS (for SCC validation study)
 # ==============================================================================
-# Provider:          Anthropic
+# Provider:          DeepInfra (Llama - Open Source)
 # Model:             ${config.model}
 # Temperature:       ${config.temperature}
 # Repetitions:       ${config.repetitions}
@@ -353,17 +353,20 @@ const claudeTextTemplate = (config) => `# ======================================
 # Data Modality:     Text
 # ==============================================================================
 
-import anthropic
+from openai import OpenAI
 import pandas as pd
 import numpy as np
 from time import sleep
 
 # IMPORTANT: Keep your API key private! Never share code with your real key.
 # Anyone with your key can use your account and incur charges.
-API_KEY = "PASTE_YOUR_API_KEY_HERE"
+API_KEY = "PASTE_YOUR_DEEPINFRA_API_KEY_HERE"
 
-# Initialize Anthropic client
-client = anthropic.Anthropic(api_key=API_KEY)
+# Initialize client with DeepInfra endpoint
+client = OpenAI(
+    api_key=API_KEY,
+    base_url="https://api.deepinfra.com/v1/openai"
+)
 
 # Your construct definition (include in preregistration)
 PROMPT = """${config.prompt}"""
@@ -381,15 +384,15 @@ OUTPUT_CSV = r"path/to/output/ratings.csv"
 
 def get_rating(text):
     """Get a single rating for a text item."""
-    message = client.messages.create(
+    response = client.chat.completions.create(
         model=MODEL,
-        max_tokens=MAX_TOKENS,
         temperature=TEMPERATURE,
+        max_tokens=MAX_TOKENS,
         messages=[
             {"role": "user", "content": f"{PROMPT}\\n\\nText to rate: \\"{text}\\""}
         ]
     )
-    return message.content[0].text.strip()
+    return response.choices[0].message.content.strip()
 
 # Load data
 df = pd.read_csv(INPUT_CSV)
@@ -426,11 +429,11 @@ results_df.to_csv(OUTPUT_CSV, index=False)
 print(f"Results saved to {OUTPUT_CSV}")
 `;
 
-// Claude template for IMAGE URL data
-const claudeImageUrlTemplate = (config) => `# ==============================================================================
+// Llama template for IMAGE URL data (via DeepInfra)
+const llamaImageUrlTemplate = (config) => `# ==============================================================================
 # PREREGISTRATION PARAMETERS (for SCC validation study)
 # ==============================================================================
-# Provider:          Anthropic
+# Provider:          DeepInfra (Llama - Open Source)
 # Model:             ${config.model}
 # Temperature:       ${config.temperature}
 # Repetitions:       ${config.repetitions}
@@ -438,19 +441,20 @@ const claudeImageUrlTemplate = (config) => `# ==================================
 # Data Modality:     Image (URL)
 # ==============================================================================
 
-import anthropic
+from openai import OpenAI
 import pandas as pd
-import httpx
-import base64
 import numpy as np
 from time import sleep
 
 # IMPORTANT: Keep your API key private! Never share code with your real key.
 # Anyone with your key can use your account and incur charges.
-API_KEY = "PASTE_YOUR_API_KEY_HERE"
+API_KEY = "PASTE_YOUR_DEEPINFRA_API_KEY_HERE"
 
-# Initialize Anthropic client
-client = anthropic.Anthropic(api_key=API_KEY)
+# Initialize client with DeepInfra endpoint
+client = OpenAI(
+    api_key=API_KEY,
+    base_url="https://api.deepinfra.com/v1/openai"
+)
 
 # Your construct definition (include in preregistration)
 PROMPT = """${config.prompt}"""
@@ -467,31 +471,19 @@ BASE_URL = "https://your-bucket.s3.amazonaws.com/images/"  # Base URL for images
 OUTPUT_CSV = r"path/to/output/ratings.csv"
 
 def get_rating(image_url):
-    """Get a single rating for an image URL (Claude requires base64)."""
-    # Download and encode image
-    response = httpx.get(image_url)
-    base64_image = base64.b64encode(response.content).decode('utf-8')
-
-    # Determine media type from URL
-    ext = image_url.split('.')[-1].lower()
-    media_type = "image/jpeg" if ext in ['jpg', 'jpeg'] else "image/png"
-
-    message = client.messages.create(
+    """Get a single rating for an image URL."""
+    response = client.chat.completions.create(
         model=MODEL,
-        max_tokens=MAX_TOKENS,
         temperature=TEMPERATURE,
+        max_tokens=MAX_TOKENS,
         messages=[
             {"role": "user", "content": [
                 {"type": "text", "text": PROMPT},
-                {"type": "image", "source": {
-                    "type": "base64",
-                    "media_type": media_type,
-                    "data": base64_image
-                }}
+                {"type": "image_url", "image_url": {"url": image_url}}
             ]}
         ]
     )
-    return message.content[0].text.strip()
+    return response.choices[0].message.content.strip()
 
 # Load data
 df = pd.read_csv(INPUT_CSV)
@@ -528,11 +520,11 @@ results_df.to_csv(OUTPUT_CSV, index=False)
 print(f"Results saved to {OUTPUT_CSV}")
 `;
 
-// Claude template for LOCAL IMAGE data
-const claudeImageLocalTemplate = (config) => `# ==============================================================================
+// Llama template for LOCAL IMAGE data (via DeepInfra)
+const llamaImageLocalTemplate = (config) => `# ==============================================================================
 # PREREGISTRATION PARAMETERS (for SCC validation study)
 # ==============================================================================
-# Provider:          Anthropic
+# Provider:          DeepInfra (Llama - Open Source)
 # Model:             ${config.model}
 # Temperature:       ${config.temperature}
 # Repetitions:       ${config.repetitions}
@@ -540,7 +532,7 @@ const claudeImageLocalTemplate = (config) => `# ================================
 # Data Modality:     Image (Local)
 # ==============================================================================
 
-import anthropic
+from openai import OpenAI
 import base64
 import os
 import numpy as np
@@ -548,10 +540,13 @@ from time import sleep
 
 # IMPORTANT: Keep your API key private! Never share code with your real key.
 # Anyone with your key can use your account and incur charges.
-API_KEY = "PASTE_YOUR_API_KEY_HERE"
+API_KEY = "PASTE_YOUR_DEEPINFRA_API_KEY_HERE"
 
-# Initialize Anthropic client
-client = anthropic.Anthropic(api_key=API_KEY)
+# Initialize client with DeepInfra endpoint
+client = OpenAI(
+    api_key=API_KEY,
+    base_url="https://api.deepinfra.com/v1/openai"
+)
 
 # Your construct definition (include in preregistration)
 PROMPT = """${config.prompt}"""
@@ -577,22 +572,18 @@ def get_rating(image_path):
     ext = os.path.splitext(image_path)[1].lower()
     media_type = "image/jpeg" if ext in ['.jpg', '.jpeg'] else "image/png"
 
-    message = client.messages.create(
+    response = client.chat.completions.create(
         model=MODEL,
-        max_tokens=MAX_TOKENS,
         temperature=TEMPERATURE,
+        max_tokens=MAX_TOKENS,
         messages=[
             {"role": "user", "content": [
                 {"type": "text", "text": PROMPT},
-                {"type": "image", "source": {
-                    "type": "base64",
-                    "media_type": media_type,
-                    "data": base64_image
-                }}
+                {"type": "image_url", "image_url": {"url": f"data:{media_type};base64,{base64_image}"}}
             ]}
         ]
     )
-    return message.content[0].text.strip()
+    return response.choices[0].message.content.strip()
 
 # Get list of images
 image_files = [f for f in os.listdir(IMAGE_FOLDER)
@@ -639,12 +630,12 @@ export const codeTemplates = {
     }
     return openaiTextTemplate(config);
   },
-  'claude': (config) => {
+  'llama': (config) => {
     if (config.dataModality === 'image') {
       return config.imageSource === 'local'
-        ? claudeImageLocalTemplate(config)
-        : claudeImageUrlTemplate(config);
+        ? llamaImageLocalTemplate(config)
+        : llamaImageUrlTemplate(config);
     }
-    return claudeTextTemplate(config);
+    return llamaTextTemplate(config);
   }
 };
