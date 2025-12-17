@@ -113,17 +113,6 @@ export default function ResourcesSection() {
         })}
       </div>
 
-      <div className="mt-8 p-6 bg-slate-100 border border-slate-200 rounded-lg">
-        <h3 className="font-semibold text-slate-900 mb-2">Quick Tips</h3>
-        <ul className="space-y-2 text-sm text-slate-700">
-          <li>• Start with the Tutorial to understand the 6-stage implementation process</li>
-          <li>• Use the Code Generator to create customized Python code for your project</li>
-          <li>• Always validate your SPC with bootstrap resampling before deployment</li>
-          <li>• Report both correlation and RMSE metrics in your research</li>
-          <li>• Save all raw ratings (not just means) for transparency and reanalysis</li>
-        </ul>
-      </div>
-
       {/* Preregistration Modal */}
       {showPreregistration && (
         <PreregistrationModal onClose={() => setShowPreregistration(false)} />
