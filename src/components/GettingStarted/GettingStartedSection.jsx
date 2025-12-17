@@ -262,6 +262,70 @@ print(response.output_text)`;
                 )}
               </div>
 
+              {/* Subsection 1d: Prepare Your Data */}
+              <div className="border-l-2 border-blue-300 pl-4">
+                <button
+                  onClick={() => toggleSubsection('1d-data')}
+                  className="w-full text-left flex items-start gap-2 hover:text-blue-700 transition-colors py-2"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['1d-data'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-blue-900">1d. Prepare Your Data</h4>
+                </button>
+                {expandedSubsections['1d-data'] && (
+                  <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-blue-900">
+                      Before running your SCC, you'll need to organize your data in a format the code can read.
+                    </p>
+
+                    <h5 className="text-md font-bold text-blue-900 mt-4">For Text Data</h5>
+                    <p className="text-blue-900">
+                      Create a CSV file (spreadsheet) with your text items. The column containing your text should be named
+                      to match what's specified in the code template — by default, this is <code className="bg-blue-100 px-1 rounded">text</code>.
+                      You can change this in the generated code if needed.
+                    </p>
+
+                    {/* Example CSV for text */}
+                    <div className="bg-white border border-blue-200 rounded-lg p-4 my-4 overflow-x-auto">
+                      <table className="text-sm font-mono">
+                        <thead>
+                          <tr className="border-b border-blue-200">
+                            <th className="text-left py-2 px-3 text-blue-900">text</th>
+                          </tr>
+                        </thead>
+                        <tbody className="text-blue-800">
+                          <tr className="border-b border-blue-100">
+                            <td className="py-2 px-3">This is my first item to analyze.</td>
+                          </tr>
+                          <tr className="border-b border-blue-100">
+                            <td className="py-2 px-3">Here is another piece of text.</td>
+                          </tr>
+                          <tr>
+                            <td className="py-2 px-3">A third example for the SCC.</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <h5 className="text-md font-bold text-blue-900 mt-4">For Image Data</h5>
+                    <p className="text-blue-900">
+                      You have two options for providing images to your SCC:
+                    </p>
+                    <ul className="list-disc list-inside space-y-2 text-blue-900 ml-4">
+                      <li>
+                        <strong>URL-based (hosted online):</strong> Upload your images to a hosting service and provide a CSV
+                        with the image paths. See <strong>Step 4</strong> below for detailed instructions on hosting images with ImgBB.
+                      </li>
+                      <li>
+                        <strong>Local files:</strong> Keep your images in a folder on your computer. The code will read them
+                        directly using base64 encoding. Just specify the folder path in the generated code.
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+
             </div>
           )}
         </div>
