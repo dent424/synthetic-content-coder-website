@@ -10,10 +10,13 @@ export default function GeneratorSection() {
   const [dataModality, setDataModality] = useState('text');
   const [imageSource, setImageSource] = useState('url');
   const [config, setConfig] = useState({
-    model: 'gpt-4-turbo',
+    model: 'gpt-4.1-2025-04-14',
     temperature: 1,
     maxTokens: 50,
     repetitions: 25,
+    // GPT-5 specific defaults
+    reasoningEffort: 'medium',
+    maxCompletionTokens: 5000,
     prompt: `Rate the following item on [CONSTRUCT NAME] on a scale from 1 to 7, where:
 - 1 = [LOWEST ANCHOR]
 - 7 = [HIGHEST ANCHOR]
@@ -31,13 +34,32 @@ Rating:`
   const handleProviderChange = (provider) => {
     setSelectedProvider(provider);
     const newConfig = modelConfigs[provider];
-    setConfig({
+    const settings = newConfig.settings;
+
+    // Build new config based on provider's available settings
+    const updatedConfig = {
       ...config,
       model: newConfig.models[0].value,
-      temperature: newConfig.settings.temperature.default,
-      maxTokens: newConfig.settings.maxTokens.default,
-      repetitions: newConfig.settings.repetitions.default,
-    });
+      repetitions: settings.repetitions.default,
+    };
+
+    // Add settings specific to non-reasoning models (GPT-4.1, Llama)
+    if (settings.temperature) {
+      updatedConfig.temperature = settings.temperature.default;
+    }
+    if (settings.maxTokens) {
+      updatedConfig.maxTokens = settings.maxTokens.default;
+    }
+
+    // Add settings specific to reasoning models (GPT-5)
+    if (settings.reasoningEffort) {
+      updatedConfig.reasoningEffort = settings.reasoningEffort.default;
+    }
+    if (settings.maxCompletionTokens) {
+      updatedConfig.maxCompletionTokens = settings.maxCompletionTokens.default;
+    }
+
+    setConfig(updatedConfig);
   };
 
   const handleConfigChange = (key, value) => {
