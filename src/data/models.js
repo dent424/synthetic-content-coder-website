@@ -822,105 +822,22 @@ results_df.to_csv(OUTPUT_CSV, index=False)
 print(f"Results saved to {OUTPUT_CSV}")
 `;
 
-// Llama template for LOCAL IMAGE data (via DeepInfra)
+// Llama template for LOCAL IMAGE data (via DeepInfra) - NOT SUPPORTED
 const llamaImageLocalTemplate = (config) => `# ==============================================================================
-# PREREGISTRATION PARAMETERS (for SCC validation study)
+# LOCAL IMAGES NOT SUPPORTED FOR LLAMA VIA DEEPINFRA
 # ==============================================================================
-# Provider:          DeepInfra (Llama - Open Source)
-# Model:             ${config.model}
-# Temperature:       ${config.temperature}
-# Repetitions:       ${config.repetitions}
-# Max Tokens:        ${config.maxTokens}
-# Data Modality:     Image (Local)
+#
+# DeepInfra's Llama models only support URL-based images, not local files.
+#
+# OPTIONS:
+#
+# 1. Upload your images to a cloud storage service (e.g., AWS S3, Google Cloud
+#    Storage, or any public hosting) and use the "Image (URL)" option instead.
+#
+# 2. Use OpenAI's GPT-4.1 or GPT-5 models, which support local images via
+#    base64 encoding.
+#
 # ==============================================================================
-
-from openai import OpenAI
-import base64
-import os
-import numpy as np
-from time import sleep
-
-# IMPORTANT: Keep your API key private! Never share code with your real key.
-# Anyone with your key can use your account and incur charges.
-API_KEY = "PASTE_YOUR_DEEPINFRA_API_KEY_HERE"
-
-# Initialize client with DeepInfra endpoint
-client = OpenAI(
-    api_key=API_KEY,
-    base_url="https://api.deepinfra.com/v1/openai"
-)
-
-# Your construct definition (include in preregistration)
-PROMPT = """${config.prompt}"""
-
-# Configuration
-MODEL = "${config.model}"
-TEMPERATURE = ${config.temperature}
-MAX_TOKENS = ${config.maxTokens}
-REPETITIONS = ${config.repetitions}
-
-# Image folder
-IMAGE_FOLDER = r"path/to/your/image/folder"
-OUTPUT_CSV = r"path/to/output/ratings.csv"
-
-def encode_image(image_path):
-    """Encode image to base64."""
-    with open(image_path, "rb") as f:
-        return base64.b64encode(f.read()).decode('utf-8')
-
-def get_rating(image_path):
-    """Get a single rating for a local image."""
-    base64_image = encode_image(image_path)
-    ext = os.path.splitext(image_path)[1].lower()
-    media_type = "image/jpeg" if ext in ['.jpg', '.jpeg'] else "image/png"
-
-    response = client.chat.completions.create(
-        model=MODEL,
-        temperature=TEMPERATURE,
-        max_tokens=MAX_TOKENS,
-        messages=[
-            {"role": "user", "content": [
-                {"type": "text", "text": PROMPT},
-                {"type": "image_url", "image_url": {"url": f"data:{media_type};base64,{base64_image}"}}
-            ]}
-        ]
-    )
-    return response.choices[0].message.content.strip()
-
-# Get list of images
-image_files = [f for f in os.listdir(IMAGE_FOLDER)
-               if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
-results = []
-
-# Process each image
-for i, filename in enumerate(image_files):
-    image_path = os.path.join(IMAGE_FOLDER, filename)
-    item_ratings = []
-
-    for rep in range(REPETITIONS):
-        try:
-            rating = get_rating(image_path)
-            rating_val = float(rating)
-            if 1 <= rating_val <= 7:
-                item_ratings.append(rating_val)
-            sleep(0.1)  # Rate limiting
-        except Exception as e:
-            print(f"Error on {filename}, rep {rep}: {e}")
-            continue
-
-    results.append({
-        'filename': filename,
-        'mean_rating': np.mean(item_ratings) if item_ratings else None,
-        'std_rating': np.std(item_ratings) if item_ratings else None,
-        'n_valid': len(item_ratings)
-    })
-    print(f"Processed {i + 1}/{len(image_files)}: {filename}")
-
-# Save results
-import pandas as pd
-results_df = pd.DataFrame(results)
-results_df.to_csv(OUTPUT_CSV, index=False)
-print(f"Results saved to {OUTPUT_CSV}")
 `;
 
 export const codeTemplates = {
