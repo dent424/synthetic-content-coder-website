@@ -216,7 +216,7 @@ REPETITIONS = ${config.repetitions}
 
 # Data file - CSV with image filenames
 INPUT_CSV = r"path/to/your/filenames.csv"
-BASE_URL = "https://your-bucket.s3.amazonaws.com/images/"  # Base URL for images
+BASE_URL = "${config.baseUrl}"
 OUTPUT_CSV = r"path/to/output/ratings.csv"
 
 def get_rating(image_url):
@@ -490,7 +490,7 @@ REPETITIONS = ${config.repetitions}
 
 # Data file - CSV with image filenames
 INPUT_CSV = r"path/to/your/filenames.csv"
-BASE_URL = "https://your-bucket.s3.amazonaws.com/images/"  # Base URL for images
+BASE_URL = "${config.baseUrl}"
 OUTPUT_CSV = r"path/to/output/ratings.csv"
 
 def get_rating(image_url):
@@ -769,7 +769,7 @@ REPETITIONS = ${config.repetitions}
 
 # Data file - CSV with image filenames
 INPUT_CSV = r"path/to/your/filenames.csv"
-BASE_URL = "https://your-bucket.s3.amazonaws.com/images/"  # Base URL for images
+BASE_URL = "${config.baseUrl}"
 OUTPUT_CSV = r"path/to/output/ratings.csv"
 
 def get_rating(image_url):

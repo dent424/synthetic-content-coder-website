@@ -17,6 +17,8 @@ export default function GeneratorSection() {
     // GPT-5 specific defaults
     reasoningEffort: 'low',
     maxCompletionTokens: 5000,
+    // Image URL default
+    baseUrl: 'https://your-bucket.s3.amazonaws.com/images/',
     prompt: `Rate the following item on [CONSTRUCT NAME] on a scale from 1 to 7, where:
 - 1 = [LOWEST ANCHOR]
 - 7 = [HIGHEST ANCHOR]
@@ -106,6 +108,8 @@ Rating:`
             onModalityChange={setDataModality}
             imageSource={imageSource}
             onImageSourceChange={setImageSource}
+            baseUrl={config.baseUrl}
+            onBaseUrlChange={(value) => handleConfigChange('baseUrl', value)}
           />
 
           <div className="bg-white rounded-lg shadow-md border border-slate-200 p-6">

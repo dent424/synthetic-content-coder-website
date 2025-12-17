@@ -4,7 +4,9 @@ export default function DataModalitySelector({
   dataModality,
   onModalityChange,
   imageSource,
-  onImageSourceChange
+  onImageSourceChange,
+  baseUrl,
+  onBaseUrlChange
 }) {
   return (
     <div className="bg-white rounded-lg shadow-md border border-slate-200 p-6">
@@ -102,6 +104,25 @@ export default function DataModalitySelector({
               ? 'Images hosted online (e.g., S3, cloud storage). Provide CSV with filenames and base URL.'
               : 'Images stored on your computer. Will use base64 encoding.'}
           </p>
+
+          {/* Base URL input for URL-based images */}
+          {imageSource === 'url' && (
+            <div className="mt-4">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Base URL
+              </label>
+              <input
+                type="text"
+                value={baseUrl}
+                onChange={(e) => onBaseUrlChange(e.target.value)}
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-primary focus:border-primary"
+                placeholder="https://your-bucket.s3.amazonaws.com/images/"
+              />
+              <p className="text-xs text-slate-500 mt-1">
+                The base URL that will be prepended to each filename in your CSV.
+              </p>
+            </div>
+          )}
         </div>
       )}
 
