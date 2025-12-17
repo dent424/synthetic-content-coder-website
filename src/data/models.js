@@ -65,9 +65,7 @@ export const modelConfigs = {
     provider: 'DeepInfra',
     models: [
       { value: 'meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8', label: 'Llama 4 Maverick (Recommended)' },
-      { value: 'meta-llama/Llama-4-Scout-17B-16E-Instruct', label: 'Llama 4 Scout' },
-      { value: 'meta-llama/Llama-3.3-70B-Instruct', label: 'Llama 3.3 70B' },
-      { value: 'meta-llama/Llama-3.2-11B-Vision-Instruct', label: 'Llama 3.2 11B Vision' }
+      { value: 'meta-llama/Llama-4-Scout-17B-16E-Instruct', label: 'Llama 4 Scout' }
     ],
     settings: {
       temperature: {
