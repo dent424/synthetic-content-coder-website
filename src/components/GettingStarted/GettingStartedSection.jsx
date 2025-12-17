@@ -713,6 +713,203 @@ print(response.output_text)`;
         </div>
       </div>
 
+      {/* STEP 4: Host Your Images Online - AMBER (Optional) */}
+      <div className="bg-amber-50 border border-amber-200 rounded-lg p-8">
+        <div className="mb-6">
+          <button
+            onClick={() => toggleStep(4)}
+            className="w-full text-left flex items-start gap-3 hover:bg-amber-100/50 p-3 rounded-lg transition-colors"
+          >
+            <div className="flex-shrink-0 mt-0.5 text-amber-700">
+              {expandedSteps[4] ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+            </div>
+            <h3 className="text-xl font-bold text-amber-900 flex-1">Step 4: Host Your Images Online (For URL-Based Images Only)</h3>
+          </button>
+          <p className="ml-9 mt-2 text-amber-800">
+            If you're analyzing images, you'll need to host them online so the LLM can access them. This step is optional if you're only working with text.
+          </p>
+
+          {expandedSteps[4] && (
+            <div className="ml-9 mt-3 space-y-6">
+
+              {/* Subsection 4a: Why Host Images Online? */}
+              <div className="border-l-2 border-amber-300 pl-4">
+                <button
+                  onClick={() => toggleSubsection('4a-why')}
+                  className="w-full text-left flex items-start gap-2 hover:text-amber-700 transition-colors py-2"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['4a-why'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-amber-900">4a. Why Host Images Online?</h4>
+                </button>
+                {expandedSubsections['4a-why'] && (
+                  <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-amber-900">
+                      When you want an LLM to analyze images, you have two options: send the image as a <strong>URL</strong> (a web link)
+                      or encode the image directly in your code (<strong>base64</strong>). URL-based images are often easier to work with,
+                      especially when you have many images to analyze.
+                    </p>
+                    <p className="text-amber-900">
+                      To use URLs, your images need to be hosted somewhere online where the LLM can access them.
+                      We recommend <strong>ImgBB</strong> — it's free, easy to use, and doesn't require technical setup.
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Subsection 4b: Create an ImgBB Account */}
+              <div className="border-l-2 border-amber-300 pl-4">
+                <button
+                  onClick={() => toggleSubsection('4b-account')}
+                  className="w-full text-left flex items-start gap-2 hover:text-amber-700 transition-colors py-2"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['4b-account'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-amber-900">4b. Create an ImgBB Account</h4>
+                </button>
+                {expandedSubsections['4b-account'] && (
+                  <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-amber-900">
+                      Go to{' '}
+                      <a
+                        href="https://imgbb.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-amber-600 hover:text-amber-700 underline font-medium"
+                      >
+                        imgbb.com
+                      </a>
+                      {' '}and click <strong>"Sign up"</strong> in the top right corner. You can create a free account
+                      using your email or sign in with Google or Facebook.
+                    </p>
+                    <p className="text-amber-900">
+                      While you can upload images without an account, creating one lets you organize your images
+                      and access them later.
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Subsection 4c: Upload Your Images */}
+              <div className="border-l-2 border-amber-300 pl-4">
+                <button
+                  onClick={() => toggleSubsection('4c-upload')}
+                  className="w-full text-left flex items-start gap-2 hover:text-amber-700 transition-colors py-2"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['4c-upload'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-amber-900">4c. Upload Your Images</h4>
+                </button>
+                {expandedSubsections['4c-upload'] && (
+                  <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-amber-900">
+                      Once logged in, click the <strong>"Start uploading"</strong> button on the homepage, or drag and drop
+                      your images directly onto the page. You can upload multiple images at once.
+                    </p>
+                    <p className="text-amber-900">
+                      After uploading, ImgBB will show you each image with several link options. For use with LLMs,
+                      you want the <strong>"Direct links"</strong> option — this gives you a URL ending in the image extension
+                      (like <code className="bg-amber-100 px-1 rounded">.jpg</code> or <code className="bg-amber-100 px-1 rounded">.png</code>).
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Subsection 4d: Get the Direct Link */}
+              <div className="border-l-2 border-amber-300 pl-4">
+                <button
+                  onClick={() => toggleSubsection('4d-link')}
+                  className="w-full text-left flex items-start gap-2 hover:text-amber-700 transition-colors py-2"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['4d-link'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-amber-900">4d. Get the Direct Link</h4>
+                </button>
+                {expandedSubsections['4d-link'] && (
+                  <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-amber-900">
+                      After uploading an image, click on it to view the details. Look for the <strong>"Direct links"</strong> section
+                      and copy the URL. It will look something like:
+                    </p>
+
+                    {/* Example URL */}
+                    <div className="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-sm my-4 break-all">
+                      https://i.ibb.co/abc123xyz/your-image.jpg
+                    </div>
+
+                    <p className="text-amber-900">
+                      <strong>Important:</strong> Each image gets a unique URL with a random code (like <code className="bg-amber-100 px-1 rounded">abc123xyz</code>).
+                      You'll need to copy the full URL for each image individually.
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Subsection 4e: Organize URLs for Your SCC */}
+              <div className="border-l-2 border-amber-300 pl-4">
+                <button
+                  onClick={() => toggleSubsection('4e-organize')}
+                  className="w-full text-left flex items-start gap-2 hover:text-amber-700 transition-colors py-2"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {expandedSubsections['4e-organize'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </div>
+                  <h4 className="text-lg font-bold text-amber-900">4e. Organize URLs for Your SCC</h4>
+                </button>
+                {expandedSubsections['4e-organize'] && (
+                  <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-amber-900">
+                      Create a spreadsheet (Excel or CSV) with one column containing all your image URLs. Each row
+                      should have one complete URL. For example:
+                    </p>
+
+                    {/* Example CSV */}
+                    <div className="bg-white border border-amber-200 rounded-lg p-4 my-4 overflow-x-auto">
+                      <table className="text-sm font-mono">
+                        <thead>
+                          <tr className="border-b border-amber-200">
+                            <th className="text-left py-2 px-3 text-amber-900">image_url</th>
+                          </tr>
+                        </thead>
+                        <tbody className="text-amber-800">
+                          <tr className="border-b border-amber-100">
+                            <td className="py-2 px-3">https://i.ibb.co/abc123/image1.jpg</td>
+                          </tr>
+                          <tr className="border-b border-amber-100">
+                            <td className="py-2 px-3">https://i.ibb.co/def456/image2.jpg</td>
+                          </tr>
+                          <tr>
+                            <td className="py-2 px-3">https://i.ibb.co/ghi789/image3.jpg</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <p className="text-amber-900">
+                      When using the <strong>Code Generator</strong>, select "Image (URL)" as your data type and leave the
+                      Base URL field <strong>empty</strong>. Your code will read the full URLs directly from your CSV file.
+                    </p>
+
+                    <div className="bg-amber-100 border border-amber-300 rounded-lg p-4 mt-4">
+                      <p className="text-amber-900 text-sm">
+                        <strong>Tip:</strong> If you're using a cloud service like AWS S3 or Google Cloud Storage where all
+                        images share the same base URL (e.g., <code className="bg-amber-50 px-1 rounded">https://mybucket.s3.amazonaws.com/images/</code>),
+                        you can enter that as the Base URL and just list filenames in your CSV instead of full URLs.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Bottom CTA Section */}
       <div className="bg-slate-100 border border-slate-200 rounded-lg p-6">
         <h3 className="font-bold text-slate-900 mb-3 text-lg">What's Next?</h3>
