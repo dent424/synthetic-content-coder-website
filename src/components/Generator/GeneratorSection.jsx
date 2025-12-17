@@ -60,6 +60,13 @@ Rating:`
           Generate customized Python code for your SCC.
           Configure your prompt and settings, then copy or download the generated code.
         </p>
+        <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <p className="text-sm text-blue-800">
+            <strong>Note:</strong> This code provides a starting point and may need adjustments for your specific setup
+            (file paths, column names, data format, etc.). If you encounter issues, try pasting the code into an LLM
+            like ChatGPT or Claude along with your error message—it can help you debug and adapt the code to your needs.
+          </p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -112,7 +119,7 @@ Rating:`
         <ul className="space-y-2 text-sm text-amber-800">
           <li>• Replace placeholder text in the prompt with your actual construct definition</li>
           <li>• Test your prompt on a small sample before running at scale</li>
-          <li>• Store API keys in environment variables, never in code</li>
+          <li>• Keep your API key private—never share code containing your real key</li>
           <li>• Validate outputs to ensure they match your expected format</li>
           <li>• Always run validation (Stage 5) before deployment</li>
         </ul>

@@ -81,12 +81,15 @@ const openaiTextTemplate = (config) => `# ======================================
 
 import openai
 import pandas as pd
-import os
 import numpy as np
 from time import sleep
 
+# IMPORTANT: Keep your API key private! Never share code with your real key.
+# Anyone with your key can use your account and incur charges.
+API_KEY = "PASTE_YOUR_API_KEY_HERE"
+
 # Initialize OpenAI client
-client = openai.OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+client = openai.OpenAI(api_key=API_KEY)
 
 # Your construct definition (include in preregistration)
 PROMPT = """${config.prompt}"""
@@ -164,12 +167,15 @@ const openaiImageUrlTemplate = (config) => `# ==================================
 
 import openai
 import pandas as pd
-import os
 import numpy as np
 from time import sleep
 
+# IMPORTANT: Keep your API key private! Never share code with your real key.
+# Anyone with your key can use your account and incur charges.
+API_KEY = "PASTE_YOUR_API_KEY_HERE"
+
 # Initialize OpenAI client
-client = openai.OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+client = openai.OpenAI(api_key=API_KEY)
 
 # Your construct definition (include in preregistration)
 PROMPT = """${config.prompt}"""
@@ -254,8 +260,12 @@ import os
 import numpy as np
 from time import sleep
 
+# IMPORTANT: Keep your API key private! Never share code with your real key.
+# Anyone with your key can use your account and incur charges.
+API_KEY = "PASTE_YOUR_API_KEY_HERE"
+
 # Initialize OpenAI client
-client = openai.OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+client = openai.OpenAI(api_key=API_KEY)
 
 # Your construct definition (include in preregistration)
 PROMPT = """${config.prompt}"""
@@ -345,12 +355,15 @@ const claudeTextTemplate = (config) => `# ======================================
 
 import anthropic
 import pandas as pd
-import os
 import numpy as np
 from time import sleep
 
+# IMPORTANT: Keep your API key private! Never share code with your real key.
+# Anyone with your key can use your account and incur charges.
+API_KEY = "PASTE_YOUR_API_KEY_HERE"
+
 # Initialize Anthropic client
-client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+client = anthropic.Anthropic(api_key=API_KEY)
 
 # Your construct definition (include in preregistration)
 PROMPT = """${config.prompt}"""
@@ -429,12 +442,15 @@ import anthropic
 import pandas as pd
 import httpx
 import base64
-import os
 import numpy as np
 from time import sleep
 
+# IMPORTANT: Keep your API key private! Never share code with your real key.
+# Anyone with your key can use your account and incur charges.
+API_KEY = "PASTE_YOUR_API_KEY_HERE"
+
 # Initialize Anthropic client
-client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+client = anthropic.Anthropic(api_key=API_KEY)
 
 # Your construct definition (include in preregistration)
 PROMPT = """${config.prompt}"""
@@ -530,8 +546,12 @@ import os
 import numpy as np
 from time import sleep
 
+# IMPORTANT: Keep your API key private! Never share code with your real key.
+# Anyone with your key can use your account and incur charges.
+API_KEY = "PASTE_YOUR_API_KEY_HERE"
+
 # Initialize Anthropic client
-client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+client = anthropic.Anthropic(api_key=API_KEY)
 
 # Your construct definition (include in preregistration)
 PROMPT = """${config.prompt}"""
