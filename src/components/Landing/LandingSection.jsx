@@ -10,8 +10,8 @@ const navigationCards = [
     items: [
       'Install Python and choose an IDE',
       'Install required packages',
-      'Get an OpenAI API key',
-      'Optional: Get an Anthropic API key'
+      'Get API keys (OpenAI or DeepInfra)',
+      'Host images online (for URL-based images)'
     ]
   },
   {
@@ -47,7 +47,7 @@ const navigationCards = [
     description: 'Generate customized Python code for your specific research needs',
     color: 'from-amber-500 to-amber-600',
     items: [
-      'Choose between GPT-4 or Claude',
+      'Choose GPT-4.1, GPT-5, or Llama',
       'Configure temperature and settings',
       'Customize your rating prompt',
       'Download production-ready code'
@@ -57,13 +57,11 @@ const navigationCards = [
     id: 'resources',
     title: 'Additional Resources',
     icon: Library,
-    description: 'Access additional tools, templates, and best practices',
+    description: 'Access additional tools and templates for your research',
     color: 'from-sky-500 to-sky-600',
     items: [
-      'Validation tools and calculators',
-      'Prompt templates',
-      'Best practices guide',
-      'Troubleshooting tips'
+      'Preregistration template for SCC validation',
+      'Glossary of LLM and content coding terms'
     ]
   }
 ];
@@ -130,7 +128,7 @@ export default function LandingSection({ setActiveTab }) {
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 mt-6">
             <p className="text-red-900">
               <strong>Important:</strong> SCCs must be validated before use. This site teaches you how to develop
-              a properly validated SCC following rigorous psychometric standards.
+              a properly validated SCC following rigorous content coding standards.
             </p>
           </div>
         </div>
