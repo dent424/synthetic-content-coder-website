@@ -886,7 +886,8 @@ print(response.output_text)`;
                   <div className="ml-6 mt-2 space-y-4">
                     <p className="text-amber-900">
                       Create a spreadsheet (Excel or CSV) with one column containing the path portion of each image URL
-                      (everything after <code className="bg-amber-100 px-1 rounded">https://i.ibb.co/</code>). For example:
+                      (everything after <code className="bg-amber-100 px-1 rounded">https://i.ibb.co/</code>). The generated code
+                      reads from the <strong>first column</strong> by position, so you can name the column whatever you like. For example:
                     </p>
 
                     {/* Example CSV */}
