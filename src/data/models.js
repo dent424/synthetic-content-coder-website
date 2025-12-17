@@ -41,7 +41,7 @@ export const modelConfigs = {
     settings: {
       reasoningEffort: {
         options: ['low', 'medium', 'high'],
-        default: 'medium',
+        default: 'low',
         description: 'Controls reasoning depth. Higher = more thorough but slower'
       },
       maxCompletionTokens: {

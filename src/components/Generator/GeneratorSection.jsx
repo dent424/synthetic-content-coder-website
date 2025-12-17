@@ -15,7 +15,7 @@ export default function GeneratorSection() {
     maxTokens: 50,
     repetitions: 25,
     // GPT-5 specific defaults
-    reasoningEffort: 'medium',
+    reasoningEffort: 'low',
     maxCompletionTokens: 5000,
     prompt: `Rate the following item on [CONSTRUCT NAME] on a scale from 1 to 7, where:
 - 1 = [LOWEST ANCHOR]
