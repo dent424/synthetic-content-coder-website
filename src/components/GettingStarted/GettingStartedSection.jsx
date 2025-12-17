@@ -281,9 +281,9 @@ print(response.output_text)`;
 
                     <h5 className="text-md font-bold text-blue-900 mt-4">For Text Data</h5>
                     <p className="text-blue-900">
-                      Create a CSV file (spreadsheet) with your text items. The column containing your text should be named
-                      to match what's specified in the code template — by default, this is <code className="bg-blue-100 px-1 rounded">text</code>.
-                      You can change this in the generated code if needed.
+                      Create a CSV file (spreadsheet) with your text items. The column header must be
+                      named <code className="bg-blue-100 px-1 rounded">text</code> to match the generated code template.
+                      (If you need a different column name, you can change the <code className="bg-blue-100 px-1 rounded">TEXT_COLUMN</code> variable in the code.)
                     </p>
 
                     {/* Example CSV for text */}
