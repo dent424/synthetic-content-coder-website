@@ -863,9 +863,9 @@ print(response.output_text)`;
 
                     <p className="text-amber-900">
                       <strong>For the code template:</strong> In the <strong>Code Generator</strong> section of this site, the generated
-                      code combines a "Base URL" with whatever is in the first column of your CSV file. For ImgBB, leave the
-                      Base URL field <strong>empty</strong> and put the complete URL for each image in your CSV. The code will then
-                      read the full URL directly from each row.
+                      code combines a "Base URL" with whatever is in the first column of your CSV file. For ImgBB, set the
+                      Base URL to <code className="bg-amber-100 px-1 rounded">https://i.ibb.co/</code> and put the remaining part of each
+                      URL (the unique code and filename, like <code className="bg-amber-100 px-1 rounded">abc123xyz/your-image.jpg</code>) in your CSV.
                     </p>
                   </div>
                 )}
@@ -885,8 +885,8 @@ print(response.output_text)`;
                 {expandedSubsections['4e-organize'] && (
                   <div className="ml-6 mt-2 space-y-4">
                     <p className="text-amber-900">
-                      Create a spreadsheet (Excel or CSV) with one column containing all your image URLs. Each row
-                      should have one complete URL. For example:
+                      Create a spreadsheet (Excel or CSV) with one column containing the path portion of each image URL
+                      (everything after <code className="bg-amber-100 px-1 rounded">https://i.ibb.co/</code>). For example:
                     </p>
 
                     {/* Example CSV */}
@@ -894,33 +894,34 @@ print(response.output_text)`;
                       <table className="text-sm font-mono">
                         <thead>
                           <tr className="border-b border-amber-200">
-                            <th className="text-left py-2 px-3 text-amber-900">image_url</th>
+                            <th className="text-left py-2 px-3 text-amber-900">image_path</th>
                           </tr>
                         </thead>
                         <tbody className="text-amber-800">
                           <tr className="border-b border-amber-100">
-                            <td className="py-2 px-3">https://i.ibb.co/abc123/image1.jpg</td>
+                            <td className="py-2 px-3">abc123/image1.jpg</td>
                           </tr>
                           <tr className="border-b border-amber-100">
-                            <td className="py-2 px-3">https://i.ibb.co/def456/image2.jpg</td>
+                            <td className="py-2 px-3">def456/image2.jpg</td>
                           </tr>
                           <tr>
-                            <td className="py-2 px-3">https://i.ibb.co/ghi789/image3.jpg</td>
+                            <td className="py-2 px-3">ghi789/image3.jpg</td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
 
                     <p className="text-amber-900">
-                      When using the <strong>Code Generator</strong>, select "Image (URL)" as your data type and leave the
-                      Base URL field <strong>empty</strong>. Your code will read the full URLs directly from your CSV file.
+                      When using the <strong>Code Generator</strong>, select "Image (URL)" as your data type and set the
+                      Base URL to <code className="bg-amber-100 px-1 rounded">https://i.ibb.co/</code>. The generated code will
+                      combine this base with each path in your CSV to form the complete URL.
                     </p>
 
                     <div className="bg-amber-100 border border-amber-300 rounded-lg p-4 mt-4">
                       <p className="text-amber-900 text-sm">
-                        <strong>Tip:</strong> If you're using a cloud service like AWS S3 or Google Cloud Storage where all
-                        images share the same base URL (e.g., <code className="bg-amber-50 px-1 rounded">https://mybucket.s3.amazonaws.com/images/</code>),
-                        you can enter that as the Base URL and just list filenames in your CSV instead of full URLs.
+                        <strong>Tip:</strong> Services like AWS S3 or Google Cloud Storage work the same way — set the Base URL
+                        (e.g., <code className="bg-amber-50 px-1 rounded">https://mybucket.s3.amazonaws.com/images/</code>) and
+                        list just the filenames in your CSV.
                       </p>
                     </div>
                   </div>
