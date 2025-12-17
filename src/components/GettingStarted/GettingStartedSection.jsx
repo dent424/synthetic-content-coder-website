@@ -760,7 +760,7 @@ print(response.output_text)`;
                 )}
               </div>
 
-              {/* Subsection 4b: Create an ImgBB Account */}
+              {/* Subsection 4b: Create an Image Hosting Account */}
               <div className="border-l-2 border-amber-300 pl-4">
                 <button
                   onClick={() => toggleSubsection('4b-account')}
@@ -769,10 +769,15 @@ print(response.output_text)`;
                   <div className="flex-shrink-0 mt-0.5">
                     {expandedSubsections['4b-account'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
                   </div>
-                  <h4 className="text-lg font-bold text-amber-900">4b. Create an ImgBB Account</h4>
+                  <h4 className="text-lg font-bold text-amber-900">4b. Create an Image Hosting Account</h4>
                 </button>
                 {expandedSubsections['4b-account'] && (
                   <div className="ml-6 mt-2 space-y-4">
+                    <p className="text-amber-900">
+                      There are many image hosting services available, including <strong>AWS S3</strong>, <strong>Google Cloud Storage</strong>,
+                      {' '}<strong>Cloudinary</strong>, and <strong>Imgur</strong>. For this guide, we'll use <strong>ImgBB</strong> because
+                      it's free, requires no technical setup, and is easy to use.
+                    </p>
                     <p className="text-amber-900">
                       Go to{' '}
                       <a
