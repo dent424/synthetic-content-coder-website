@@ -162,7 +162,7 @@ export default function LandingSection({ setActiveTab }) {
                 </div>
 
                 {/* Card Body */}
-                <div className="p-6 bg-white">
+                <div className="p-6 bg-white border-x border-b border-slate-200 rounded-b-lg">
                   <ul className="space-y-2 text-slate-700">
                     {card.items.map((item, i) => (
                       <li key={i} className="flex items-start gap-2">
